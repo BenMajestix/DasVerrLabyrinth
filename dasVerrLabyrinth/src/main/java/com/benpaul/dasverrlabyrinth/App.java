@@ -12,7 +12,8 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
+    tileModel[][] boardTiles =  new tileModel[7][7];
+    
     private static Scene scene;
 
     @Override
