@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class App extends Application {
     static ArrayList<tileModel> allTiles;
     static tileModel[][] boardTiles =  new tileModel[7][7];
-    tileModel offBoardTile;
+    static tileModel offBoardTile;
     private static Scene scene;
 
     @Override
@@ -105,6 +105,7 @@ public class App extends Application {
                 }
             }
         }
+        offBoardTile = getRandomTile();
     }
     
     
