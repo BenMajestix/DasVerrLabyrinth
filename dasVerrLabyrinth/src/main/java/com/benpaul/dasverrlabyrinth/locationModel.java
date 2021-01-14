@@ -13,13 +13,13 @@ public class locationModel {
     int rotation;
     int xCoor;
     int yCoor;
-    boolean ifAtEdge;
+    boolean atEdge;
 
     public locationModel(int rotation, int xCoor, int yCoor, boolean ifAtEdge) {
         this.rotation = rotation;
         this.xCoor = xCoor;
         this.yCoor = yCoor;
-        this.ifAtEdge = ifAtEdge;
+        this.atEdge = ifAtEdge;
     }
 
     public int getRotation() {
@@ -46,12 +46,12 @@ public class locationModel {
         this.yCoor = yCoor;
     }
 
-    public boolean isIfAtEdge() {
-        return ifAtEdge;
+    public boolean isAtEdge() {
+        return atEdge;
     }
 
-    public void setIfAtEdge(boolean ifAtEdge) {
-        this.ifAtEdge = ifAtEdge;
+    public void setAtEdge(boolean atEdge) {
+        this.atEdge = atEdge;
     }
     
     
