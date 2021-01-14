@@ -26,8 +26,39 @@ public class tileModel {
         this.collectable = collectable;
         this.playerOnTile = playerOnTile;
         this.tileKind = tileKind;
+        
+        checkExit();
     }
 
+    public void checkExit(){
+        switch(tileKind){
+            case "t-crossing": 
+                switch(location.rotation){
+                    case 0: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 1: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 2: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = true; break;
+                    case 3: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
+                }
+                break;
+            case "corner": 
+                switch(location.rotation){
+                    case 0: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 1: ableToExit[0] = false; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
+                    case 2: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 3: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = false; break;
+                }
+                break;
+            case "straight": 
+                switch(location.rotation){
+                    case 0: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 1: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 2: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 3: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                }
+                break;    
+        }
+    }
+    
     
     
     public locationModel getLocation() {
@@ -36,6 +67,7 @@ public class tileModel {
 
     public void setLocation(locationModel location) {
         this.location = location;
+        checkExit();
     }
 
     public String getCollectable() {

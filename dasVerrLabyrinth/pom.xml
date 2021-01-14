@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.benpaul</groupId>
     <artifactId>dasVerrLabyrinth</artifactId>
@@ -22,7 +22,9 @@
         </dependency>
     </dependencies>
     <build>
+        
         <plugins>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -68,15 +70,33 @@
                         <id>ide-profile</id>
                         <configuration>
                             <options>
-				<option>${profiler.jvmargs.arg1}</option>
-				<option>${profiler.jvmargs.arg2}</option>
-				<option>${profiler.jvmargs.arg3}</option>
-				<option>${profiler.jvmargs.arg4}</option>
-				<option>${profiler.jvmargs.arg5}</option>
+                                <option>${profiler.jvmargs.arg1}</option>
+                                <option>${profiler.jvmargs.arg2}</option>
+                                <option>${profiler.jvmargs.arg3}</option>
+                                <option>${profiler.jvmargs.arg4}</option>
+                                <option>${profiler.jvmargs.arg5}</option>
                             </options>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>com.jolira</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <mainClass>com.benpaul.dasVerrLabyrinth.App</mainClass>
+                            <attachToBuild>true</attachToBuild>
+                            <filename>VerrLabyrinth.${project.packaging}</filename>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                
             </plugin>
         </plugins>
     </build>
