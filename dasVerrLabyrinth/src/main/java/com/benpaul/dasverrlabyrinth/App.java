@@ -149,10 +149,45 @@ public class App extends Application {
             boardTiles[row][1] = boardTiles[row][0];
             boardTiles[row][0] = offBoardTemp;
         }
-        
     }
     
+    public void startMoveColumn(int column, int direction){
+        if(column == 1 || column == 3 || column == 5){
+            moveColumn(column, direction);
+        }
+        else{
+            System.out.println("err, Column cant be moved");
+        }
+    }
     
+    public void moveColumn(int column, int direction){
+        //Von oben schiebend
+        if(direction == 0){
+            tileModel offBoardTemp = offBoardTile;
+            
+            offBoardTile = boardTiles[0][column];
+            boardTiles[0][column] = boardTiles[1][column];
+            boardTiles[1][column] = boardTiles[2][column];
+            boardTiles[2][column] = boardTiles[3][column];
+            boardTiles[3][column] = boardTiles[4][column];
+            boardTiles[4][column] = boardTiles[5][column];
+            boardTiles[5][column] = boardTiles[6][column];
+            boardTiles[6][column] = offBoardTemp;
+        }
+        //von unten schiebend
+        else if(direction == 1){
+            tileModel offBoardTemp = offBoardTile;
+            
+            offBoardTile = boardTiles[6][column];
+            boardTiles[6][column] = boardTiles[5][column];
+            boardTiles[5][column] = boardTiles[4][column];
+            boardTiles[4][column] = boardTiles[3][column];
+            boardTiles[3][column] = boardTiles[2][column];
+            boardTiles[2][column] = boardTiles[1][column];
+            boardTiles[1][column] = boardTiles[0][column];
+            boardTiles[0][column] = offBoardTemp;
+        }
+    }
     
     
     
