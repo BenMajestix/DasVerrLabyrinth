@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -102,11 +101,13 @@ public class App extends Application {
                         case 6: boardTiles[x][y] = new tileModel(new locationModel(4, x, y, false), false, null, false, "corner"); break;//unten rechts
                     }
                 }
+                //Alle Plätze in den Spalten 1, 3 und 5 werden immer mit Random Tiles besetzt.
                 if(y == 1 || y == 3 || y == 5){
                     boardTiles[x][y] = getRandomTile(); 
                 }
             }
         }
+        //Das letzte übrige Tile wird auserhalb des Spiels platziert
         offBoardTile = getRandomTile();
     }
     
