@@ -43,22 +43,24 @@ public class App extends Application {
         launch();
     }
 
-    public static int randomRotation(){
-        int rotation;
-        rotation = (int) (Math.random() * 4);
-        return rotation;
-    }
     
     public static void createBoard(){
+        //Erstellt das Board und setzt die Karten auf das Bord.
+        //Die festen Karten werden festgesetzt, die anderen Slots werden Random mit anderen Karten besetzt
+        //Die letzte Karte wird außerhalb des Spiels als Handkarte gespeichert
         int x;
         int y;
-        
+        //Es werden alle x-Koordinaten durchgegangen
         for(x = 0; x < 7; x++){
+            //Für jede x-Koordinate wird noch jede Kombination mit y-Koordinaten abgefragt
             for(y = 0; y < 7; y++){
                 //Reihe 1
                 if(y == 0){
                     switch(x){
+                        //Wenn ein Feld mit einer festen karte erreicht wird, dann wird dort die richtige Karte hingesetzt
                         case 0: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), false, null, false, "corner"); break;//oben links
+                        //Wenn es ein Feld für eine Random Karte befüllt wird wird die getRandomTile Funktion aufgerufen
+                        //Diese Funktion gibt ein Tile zurück, welches noch nicht benutzt ist.
                         case 1: boardTiles[x][y] = getRandomTile(); break;
                         case 2: boardTiles[x][y] = new tileModel(new locationModel(2, x, y, false), true, "helmet", false, "t-crossing"); break;
                         case 3: boardTiles[x][y] = getRandomTile(); break;
@@ -116,8 +118,11 @@ public class App extends Application {
         return tile;
     }
     
-    
-    
+    public static int randomRotation(){
+        int rotation;
+        rotation = (int) (Math.random() * 4);
+        return rotation;
+    }
     
     public static void createTiles(){
         allTiles = new ArrayList();
