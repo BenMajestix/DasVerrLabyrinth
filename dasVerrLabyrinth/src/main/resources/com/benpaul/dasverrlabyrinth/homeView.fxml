@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.HomeController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.HomeController">
     <stylesheets>
-        <URL value="@/styles/homeview.css"/>
+        <URL value="@/styles/homeview.css" />
     </stylesheets>
+   <children>
+      <ImageView fx:id="imgViewTest" fitHeight="150.0" fitWidth="200.0" layoutX="59.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="59.0" layoutY="337.0" mnemonicParsing="false" onAction="#btnOof" text="Button" />
+   </children>
 </AnchorPane>

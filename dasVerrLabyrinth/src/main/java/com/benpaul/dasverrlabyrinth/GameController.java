@@ -5,9 +5,13 @@
  */
 package com.benpaul.dasverrlabyrinth;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -16,11 +20,17 @@ import javafx.fxml.Initializable;
  */
 public class GameController implements Initializable {
 
+    @FXML
+    public ImageView ingTile1;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        File file = new File("src/Box13.jpg");
+        Image image = new Image(file.toURI().toString());
+        ingTile1.setImage(image);
         // TODO
     }    
     
