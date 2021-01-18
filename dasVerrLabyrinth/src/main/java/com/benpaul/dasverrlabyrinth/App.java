@@ -57,7 +57,7 @@ public class App extends Application {
                 if(y == 0){
                     switch(x){
                         //Wenn ein Feld mit einer festen karte erreicht wird, dann wird dort die richtige Karte hingesetzt
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), false, null, false, "corner"); break;//oben links
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), false, null, false, "turn"); break;//oben links
                         //Wenn es ein Feld für eine Random Karte befüllt wird wird die getRandomTile Funktion aufgerufen
                         //Diese Funktion gibt ein Tile zurück, welches noch nicht benutzt ist.
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
@@ -65,7 +65,7 @@ public class App extends Application {
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 4: boardTiles[x][y] = new tileModel(new locationModel(2, x, y, false), true, "candleHolder", false, "t-crossing"); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(1, x, y, false), false, null, false, "corner"); break;//oben rechts
+                        case 6: boardTiles[x][y] = new tileModel(new locationModel(1, x, y, false), false, null, false, "turn"); break;//oben rechts
                     }
                 }
                 if(y == 2){
@@ -92,13 +92,13 @@ public class App extends Application {
                 }
                 if(y == 6){
                     switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(3, x, y, false), false, null, false, "corner"); break;//unten links
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(3, x, y, false), false, null, false, "turn"); break;//unten links
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 2: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "coins", false, "t-crossing"); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 4: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "bible", false, "t-crossing"); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(4, x, y, false), false, null, false, "corner"); break;//unten rechts
+                        case 6: boardTiles[x][y] = new tileModel(new locationModel(4, x, y, false), false, null, false, "turn"); break;//unten rechts
                     }
                 }
                 //Alle Plätze in den Spalten 1, 3 und 5 werden immer mit Random Tiles besetzt.
@@ -112,6 +112,49 @@ public class App extends Application {
         //Das letzte übrige Tile wird auserhalb des Spiels platziert
         offBoardTile = getRandomTile();
     }
+    
+    public void startMoveRow(int row, int direction){
+        if(row == 1 || row == 3 || row == 5){
+            moveRow(row, direction);
+        }
+        else{
+            System.out.println("err, row cant be moved");
+        }
+    }
+    
+    public void moveRow(int row, int direction){
+        //Von rechts schiebend
+        if(direction == 0){
+            tileModel offBoardTemp = offBoardTile;
+            
+            offBoardTile = boardTiles[row][0];
+            boardTiles[row][0] = boardTiles[row][1];
+            boardTiles[row][1] = boardTiles[row][2];
+            boardTiles[row][2] = boardTiles[row][3];
+            boardTiles[row][3] = boardTiles[row][4];
+            boardTiles[row][4] = boardTiles[row][5];
+            boardTiles[row][5] = boardTiles[row][6];
+            boardTiles[row][6] = offBoardTemp;
+        }
+        //von links schiebend
+        else if(direction == 1){
+            tileModel offBoardTemp = offBoardTile;
+            
+            offBoardTile = boardTiles[row][6];
+            boardTiles[row][6] = boardTiles[row][5];
+            boardTiles[row][5] = boardTiles[row][4];
+            boardTiles[row][4] = boardTiles[row][3];
+            boardTiles[row][3] = boardTiles[row][2];
+            boardTiles[row][2] = boardTiles[row][1];
+            boardTiles[row][1] = boardTiles[row][0];
+            boardTiles[row][0] = offBoardTemp;
+        }
+        
+    }
+    
+    
+    
+    
     
     
     public static tileModel getRandomTile(){
@@ -129,23 +172,23 @@ public class App extends Application {
     public static void createTiles(){
         allTiles = new ArrayList();
         //CORNERS
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "corner"));
-        //corners with tiles
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "owl", false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "moth", false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "mouse", false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "spider", false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "scarab", false, "corner"));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "salamander", false, "corner"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn"));
+        //turns with tiles
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "owl", false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "moth", false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "mouse", false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "spider", false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "scarab", false, "turn"));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "salamander", false, "turn"));
         
         //STRAIGHTS
         //all empty
