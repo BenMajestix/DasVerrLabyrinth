@@ -20,17 +20,12 @@ import javafx.scene.image.ImageView;
  */
 public class GameController implements Initializable {
 
-    @FXML
-    public ImageView ingTile1;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File file = new File("src/Box13.jpg");
-        Image image = new Image(file.toURI().toString());
-        ingTile1.setImage(image);
         // TODO
     }    
     
