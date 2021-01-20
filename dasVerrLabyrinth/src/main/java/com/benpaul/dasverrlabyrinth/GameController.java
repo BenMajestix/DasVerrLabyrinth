@@ -23,8 +23,6 @@ import javafx.scene.image.ImageView;
 public class GameController implements Initializable {
 
 
-    @FXML
-    private ImageView imgTile1;
     //Straight
     Image imageS;
     //Turn
@@ -42,6 +40,105 @@ public class GameController implements Initializable {
     Image imageScarab;
     Image imageSpider;
     Image imageWitch;
+    
+    @FXML
+    private ImageView i00;
+    @FXML
+    private ImageView i10;
+    @FXML
+    private ImageView i20;
+    @FXML
+    private ImageView i30;
+    @FXML
+    private ImageView i40;
+    @FXML
+    private ImageView i50;
+    @FXML
+    private ImageView i60;
+    @FXML
+    private ImageView i01;
+    @FXML
+    private ImageView i11;
+    @FXML
+    private ImageView i21;
+    @FXML
+    private ImageView i31;
+    @FXML
+    private ImageView i41;
+    @FXML
+    private ImageView i51;
+    @FXML
+    private ImageView i61;
+    @FXML
+    private ImageView i02;
+    @FXML
+    private ImageView i12;
+    @FXML
+    private ImageView i22;
+    @FXML
+    private ImageView i32;
+    @FXML
+    private ImageView i42;
+    @FXML
+    private ImageView i52;
+    @FXML
+    private ImageView i62;
+    @FXML
+    private ImageView i03;
+    @FXML
+    private ImageView i13;
+    @FXML
+    private ImageView i23;
+    @FXML
+    private ImageView i33;
+    @FXML
+    private ImageView i43;
+    @FXML
+    private ImageView i53;
+    @FXML
+    private ImageView i63;
+    @FXML
+    private ImageView i04;
+    @FXML
+    private ImageView i14;
+    @FXML
+    private ImageView i24;
+    @FXML
+    private ImageView i34;
+    @FXML
+    private ImageView i44;
+    @FXML
+    private ImageView i54;
+    @FXML
+    private ImageView i64;
+    @FXML
+    private ImageView i05;
+    @FXML
+    private ImageView i15;
+    @FXML
+    private ImageView i25;
+    @FXML
+    private ImageView i35;
+    @FXML
+    private ImageView i45;
+    @FXML
+    private ImageView i55;
+    @FXML
+    private ImageView i65;
+    @FXML
+    private ImageView i06;
+    @FXML
+    private ImageView i16;
+    @FXML
+    private ImageView i26;
+    @FXML
+    private ImageView i36;
+    @FXML
+    private ImageView i46;
+    @FXML
+    private ImageView i56;
+    @FXML
+    private ImageView i66;
     
     /**
      * Initializes the controller class.
@@ -76,6 +173,8 @@ public class GameController implements Initializable {
         imageSpider = new Image(file10.toURI().toString());
         File file11 = new File("src/main/resources/all_tiles/witch.png");
         imageWitch = new Image(file11.toURI().toString());
+        
+        makeBoard();
     }    
     
     
@@ -163,24 +262,98 @@ public class GameController implements Initializable {
         for(x = 0; x < 7; x++){
             //Für jede x-Koordinate wird noch jede Kombination mit y-Koordinaten abgefragt
             for(y = 0; y < 7; y++){
-                int imageViewName = x + y;
+                String koor = Integer.toString(x)+Integer.toString(y);
+                int imageViewName = Integer.parseInt(koor);
+                System.out.println(imageViewName);
                 switch(imageViewName){
                     //alle ImageViews haben namen wie ihre koordienate 
                     // zb.: 00, 01, 20, 30, 34, ...
-                    //case 00: 00.setImage(); break;
-                    case 01: break;
-                    case 02: break;
-                    case 03: break;
-                    case 04: break;
-                    case 05: break;
-                    case 06: break;
-                    case 10: break;
-                    case 11: break;
+                    case 00: i00.setImage(getTileImage(x, y)); break;
+                    case 01: i01.setImage(getTileImage(x, y)); break;
+                    case 02: i02.setImage(getTileImage(x, y)); break;
+                    case 03: i03.setImage(getTileImage(x, y)); break;
+                    case 04: i04.setImage(getTileImage(x, y)); break;
+                    case 05: i05.setImage(getTileImage(x, y)); break;
+                    case 06: i06.setImage(getTileImage(x, y)); break;
+                    case 10: i10.setImage(getTileImage(x, y)); break;
+                    case 11: i11.setImage(getTileImage(x, y)); break;
+                    case 12: i12.setImage(getTileImage(x, y)); break;
+                    case 13: i13.setImage(getTileImage(x, y)); break;
+                    case 14: i14.setImage(getTileImage(x, y)); break;
+                    case 15: i15.setImage(getTileImage(x, y)); break;
+                    case 16: i16.setImage(getTileImage(x, y)); break;
+                    case 20: i20.setImage(getTileImage(x, y)); break;
+                    case 21: i21.setImage(getTileImage(x, y)); break;
+                    case 22: i22.setImage(getTileImage(x, y)); break;
+                    case 23: i23.setImage(getTileImage(x, y)); break;
+                    case 24: i24.setImage(getTileImage(x, y)); break;
+                    case 25: i25.setImage(getTileImage(x, y)); break;
+                    case 26: i26.setImage(getTileImage(x, y)); break;
+                    case 30: i30.setImage(getTileImage(x, y)); break;
+                    case 31: i31.setImage(getTileImage(x, y)); break;
+                    case 32: i32.setImage(getTileImage(x, y)); break;
+                    case 33: i33.setImage(getTileImage(x, y)); break;
+                    case 34: i34.setImage(getTileImage(x, y)); break;
+                    case 35: i35.setImage(getTileImage(x, y)); break;
+                    case 36: i36.setImage(getTileImage(x, y)); break;
+                    case 40: i40.setImage(getTileImage(x, y)); break;
+                    case 41: i41.setImage(getTileImage(x, y)); break;
+                    case 42: i42.setImage(getTileImage(x, y)); break;
+                    case 43: i43.setImage(getTileImage(x, y)); break;
+                    case 44: i44.setImage(getTileImage(x, y)); break;
+                    case 45: i45.setImage(getTileImage(x, y)); break;
+                    case 46: i46.setImage(getTileImage(x, y)); break;
+                    case 50: i50.setImage(getTileImage(x, y)); break;
+                    case 51: i51.setImage(getTileImage(x, y)); break;
+                    case 52: i52.setImage(getTileImage(x, y)); break;
+                    case 53: i53.setImage(getTileImage(x, y)); break;
+                    case 54: i54.setImage(getTileImage(x, y)); break;
+                    case 55: i55.setImage(getTileImage(x, y)); break;
+                    case 56: i56.setImage(getTileImage(x, y)); break;
+                    case 60: i60.setImage(getTileImage(x, y)); break;
+                    case 61: i61.setImage(getTileImage(x, y)); break;
+                    case 62: i62.setImage(getTileImage(x, y)); break;
+                    case 63: i63.setImage(getTileImage(x, y)); break;
+                    case 64: i64.setImage(getTileImage(x, y)); break;
+                    case 65: i65.setImage(getTileImage(x, y)); break;
+                    case 66: i66.setImage(getTileImage(x, y)); break;
+                    
                 }
             }
         }
     }
     
+    public Image getTileImage(int x, int y){
+        System.out.println("gettile image");
+        Image image = null;
+        if(App.boardTiles[x][y].tileKind.equals("straight")){
+            System.out.println("straight");
+            image = imageS;
+        }
+        else if(App.boardTiles[x][y].tileKind.equals("turn") && !(App.boardTiles[x][y].collectableOnTile)){
+            System.out.println("turn");
+            image = imageT;
+        }
+        else if(App.boardTiles[x][y].collectableOnTile){
+            System.out.println("tile with obj");
+            switch(App.boardTiles[x][y].collectable){
+                case "owl": image = imageOwl; break;
+                case "moth": image = imageMoth; break;
+                case "mouse": image = imageMouse; break;
+                case "spider": image = imageSpider; break;
+                case "scarab": image = imageScarab; break;
+                case "salamander": image = imageSalamander; break;
+                case "witch": image = imageWitch; break;
+                case "dragon": image = imageDragon; break;
+                case "poltergeist": image = imagePoltergeist; break;
+                case "ghost": image = imageGhost; break;
+                case "bat": image = imageBat; break;
+                case "gnome": image = imageGnome; break;
+            }
+        }
+        
+        return image;
+    }
     
     /*
     public void fillView(){

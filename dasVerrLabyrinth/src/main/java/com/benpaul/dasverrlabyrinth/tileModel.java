@@ -40,7 +40,7 @@ public class tileModel {
                     case 3: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
                 }
                 break;
-            case "corner": 
+            case "turn": 
                 switch(location.rotation){
                     case 0: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
                     case 1: ableToExit[0] = false; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
