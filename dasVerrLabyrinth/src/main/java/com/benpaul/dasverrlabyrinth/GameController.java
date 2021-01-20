@@ -42,19 +42,11 @@ public class GameController implements Initializable {
     Image imageWitch;
     
     @FXML
-    private ImageView i00;
-    @FXML
     private ImageView i10;
-    @FXML
-    private ImageView i20;
     @FXML
     private ImageView i30;
     @FXML
-    private ImageView i40;
-    @FXML
     private ImageView i50;
-    @FXML
-    private ImageView i60;
     @FXML
     private ImageView i01;
     @FXML
@@ -70,19 +62,11 @@ public class GameController implements Initializable {
     @FXML
     private ImageView i61;
     @FXML
-    private ImageView i02;
-    @FXML
     private ImageView i12;
-    @FXML
-    private ImageView i22;
     @FXML
     private ImageView i32;
     @FXML
-    private ImageView i42;
-    @FXML
     private ImageView i52;
-    @FXML
-    private ImageView i62;
     @FXML
     private ImageView i03;
     @FXML
@@ -98,19 +82,11 @@ public class GameController implements Initializable {
     @FXML
     private ImageView i63;
     @FXML
-    private ImageView i04;
-    @FXML
     private ImageView i14;
-    @FXML
-    private ImageView i24;
     @FXML
     private ImageView i34;
     @FXML
-    private ImageView i44;
-    @FXML
     private ImageView i54;
-    @FXML
-    private ImageView i64;
     @FXML
     private ImageView i05;
     @FXML
@@ -126,19 +102,11 @@ public class GameController implements Initializable {
     @FXML
     private ImageView i65;
     @FXML
-    private ImageView i06;
-    @FXML
     private ImageView i16;
-    @FXML
-    private ImageView i26;
     @FXML
     private ImageView i36;
     @FXML
-    private ImageView i46;
-    @FXML
     private ImageView i56;
-    @FXML
-    private ImageView i66;
     
     /**
      * Initializes the controller class.
@@ -260,21 +228,15 @@ public class GameController implements Initializable {
     public void makeBoard(){
         int x, y;
         for(x = 0; x < 7; x++){
-            //Für jede x-Koordinate wird noch jede Kombination mit y-Koordinaten abgefragt
             for(y = 0; y < 7; y++){
                 String koor = Integer.toString(x)+Integer.toString(y);
                 int imageViewName = Integer.parseInt(koor);
-                System.out.println(imageViewName);
                 switch(imageViewName){
                     //alle ImageViews haben namen wie ihre koordienate 
                     // zb.: 00, 01, 20, 30, 34, ...
-                    case 00: i00.setImage(getTileImage(x, y)); break;
                     case 01: i01.setImage(getTileImage(x, y)); break;
-                    case 02: i02.setImage(getTileImage(x, y)); break;
                     case 03: i03.setImage(getTileImage(x, y)); break;
-                    case 04: i04.setImage(getTileImage(x, y)); break;
                     case 05: i05.setImage(getTileImage(x, y)); break;
-                    case 06: i06.setImage(getTileImage(x, y)); break;
                     case 10: i10.setImage(getTileImage(x, y)); break;
                     case 11: i11.setImage(getTileImage(x, y)); break;
                     case 12: i12.setImage(getTileImage(x, y)); break;
@@ -282,13 +244,9 @@ public class GameController implements Initializable {
                     case 14: i14.setImage(getTileImage(x, y)); break;
                     case 15: i15.setImage(getTileImage(x, y)); break;
                     case 16: i16.setImage(getTileImage(x, y)); break;
-                    case 20: i20.setImage(getTileImage(x, y)); break;
                     case 21: i21.setImage(getTileImage(x, y)); break;
-                    case 22: i22.setImage(getTileImage(x, y)); break;
                     case 23: i23.setImage(getTileImage(x, y)); break;
-                    case 24: i24.setImage(getTileImage(x, y)); break;
                     case 25: i25.setImage(getTileImage(x, y)); break;
-                    case 26: i26.setImage(getTileImage(x, y)); break;
                     case 30: i30.setImage(getTileImage(x, y)); break;
                     case 31: i31.setImage(getTileImage(x, y)); break;
                     case 32: i32.setImage(getTileImage(x, y)); break;
@@ -296,13 +254,9 @@ public class GameController implements Initializable {
                     case 34: i34.setImage(getTileImage(x, y)); break;
                     case 35: i35.setImage(getTileImage(x, y)); break;
                     case 36: i36.setImage(getTileImage(x, y)); break;
-                    case 40: i40.setImage(getTileImage(x, y)); break;
                     case 41: i41.setImage(getTileImage(x, y)); break;
-                    case 42: i42.setImage(getTileImage(x, y)); break;
                     case 43: i43.setImage(getTileImage(x, y)); break;
-                    case 44: i44.setImage(getTileImage(x, y)); break;
                     case 45: i45.setImage(getTileImage(x, y)); break;
-                    case 46: i46.setImage(getTileImage(x, y)); break;
                     case 50: i50.setImage(getTileImage(x, y)); break;
                     case 51: i51.setImage(getTileImage(x, y)); break;
                     case 52: i52.setImage(getTileImage(x, y)); break;
@@ -310,21 +264,15 @@ public class GameController implements Initializable {
                     case 54: i54.setImage(getTileImage(x, y)); break;
                     case 55: i55.setImage(getTileImage(x, y)); break;
                     case 56: i56.setImage(getTileImage(x, y)); break;
-                    case 60: i60.setImage(getTileImage(x, y)); break;
                     case 61: i61.setImage(getTileImage(x, y)); break;
-                    case 62: i62.setImage(getTileImage(x, y)); break;
                     case 63: i63.setImage(getTileImage(x, y)); break;
-                    case 64: i64.setImage(getTileImage(x, y)); break;
                     case 65: i65.setImage(getTileImage(x, y)); break;
-                    case 66: i66.setImage(getTileImage(x, y)); break;
-                    
                 }
             }
         }
     }
     
     public Image getTileImage(int x, int y){
-        System.out.println("gettile image");
         Image image = null;
         if(App.boardTiles[x][y].tileKind.equals("straight")){
             System.out.println("straight");
@@ -335,86 +283,37 @@ public class GameController implements Initializable {
             image = imageT;
         }
         else if(App.boardTiles[x][y].collectableOnTile){
-            System.out.println("tile with obj");
             switch(App.boardTiles[x][y].collectable){
-                case "owl": image = imageOwl; break;
-                case "moth": image = imageMoth; break;
-                case "mouse": image = imageMouse; break;
-                case "spider": image = imageSpider; break;
-                case "scarab": image = imageScarab; break;
-                case "salamander": image = imageSalamander; break;
-                case "witch": image = imageWitch; break;
-                case "dragon": image = imageDragon; break;
-                case "poltergeist": image = imagePoltergeist; break;
-                case "ghost": image = imageGhost; break;
-                case "bat": image = imageBat; break;
-                case "gnome": image = imageGnome; break;
+                case "owl": image = imageOwl; System.out.println("owl");break;
+                case "moth": image = imageMoth; System.out.println("moth");break;
+                case "mouse": image = imageMouse; System.out.println("mouse");break;
+                case "spider": image = imageSpider; System.out.println("spider");break;
+                case "scarab": image = imageScarab; System.out.println("scarab");break;
+                case "salamander": image = imageSalamander; System.out.println("salamander");break;
+                case "witch": image = imageWitch; System.out.println("witch");break;
+                case "dragon": image = imageDragon; System.out.println("dragon");break;
+                case "poltergeist": image = imagePoltergeist; System.out.println("poltergeist");break;
+                case "ghost": image = imageGhost; System.out.println("ghost");break;
+                case "bat": image = imageBat; System.out.println("bat");break;
+                case "gnome": image = imageGnome; System.out.println("gnome");break;
             }
         }
         
         return image;
     }
     
-    /*
-    public void fillView(){
-        int x;
-        int y;
-        
+    
+    public void rotateImages(){
+        int x, y;
         for(x = 0; x < 7; x++){
-            //Für jede x-Koordinate wird noch jede Kombination mit y-Koordinaten abgefragt
             for(y = 0; y < 7; y++){
-                //Reihe 1
-                if(y == 0){
-                    switch(x){
-                        //Wenn ein Feld mit einer festen karte erreicht wird, dann wird dort die richtige Karte hingesetzt
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), false, null, false, "turn"); break;//oben links
-                        //Wenn es ein Feld für eine Random Karte befüllt wird wird die getRandomTile Funktion aufgerufen
-                        //Diese Funktion gibt ein Tile zurück, welches noch nicht benutzt ist.
-                        case 1: switch (boardTiles[1][0].getTileKind()){
-                            case "Straight":
-                                imgTile1.set
-                        }
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(2, x, y, false), true, "helmet", false, "t-crossing"); break;
-                        case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(2, x, y, false), true, "candleHolder", false, "t-crossing"); break;
-                        case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(1, x, y, false), false, null, false, "turn"); break;//oben rechts
-                    }
-                }
-                if(y == 2){
-                    switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(1, x, y, false), true, "sword", false, "t-crossing"); break;
-                        case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(1, x, y, false), true, "emerald", false, "t-crossing"); break;
-                        case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(2, x, y, false), true, "chest", false, "t-crossing"); break;
-                        case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(3, x, y, false), true, "ring", false, "t-crossing"); break;
-                    }
-                }
-                if(y == 4){
-                    switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(1, x, y, false), true, "skull", false, "t-crossing"); break;
-                        case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "keys", false, "t-crossing"); break;
-                        case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(3, x, y, false), true, "crown", false, "t-crossing"); break;
-                        case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(3, x, y, false), true, "map", false, "t-crossing"); break;
-                    }
-                }
-                if(y == 6){
-                    switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(3, x, y, false), false, null, false, "turn"); break;//unten links
-                        case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "coins", false, "t-crossing"); break;
-                        case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "bible", false, "t-crossing"); break;
-                        case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(4, x, y, false), false, null, false, "turn"); break;//unten rechts
-                    }
-                }
+            
             }
+        
         }
-    }*/
+    }
+    
+    
+    
+    
 }

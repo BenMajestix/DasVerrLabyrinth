@@ -121,6 +121,7 @@ public class App extends Application {
     public static tileModel getRandomTile(){
         int i = (int) (Math.random() * allTiles.size());
         tileModel tile = allTiles.get(i);
+        allTiles.remove(i);
         return tile;
     }
     
