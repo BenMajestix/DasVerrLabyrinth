@@ -7,10 +7,12 @@ package com.benpaul.dasverrlabyrinth;
 
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -23,12 +25,57 @@ public class GameController implements Initializable {
 
     @FXML
     private ImageView imgTile1;
+    //Straight
+    Image imageS;
+    //Turn
+    Image imageT;
+    //Alle Images mit Objekten
+    Image imageBat;
+    Image imageDragon;
+    Image imageGhost;
+    Image imageGnome;
+    Image imageMoth;
+    Image imageMouse;
+    Image imageOwl;
+    Image imagePoltergeist;
+    Image imageSalamander;
+    Image imageScarab;
+    Image imageSpider;
+    Image imageWitch;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        File file = new File("src/main/resources/all_tiles/straight.png");
+        imageS = new Image(file.toURI().toString());
+        File fileT = new File("src/main/resources/all_tiles/turn.png");
+        imageT = new Image(fileT.toURI().toString());
+        File file1 = new File("src/main/resources/all_tiles/bat.png");
+        imageBat = new Image(file1.toURI().toString());
+        File file2 = new File("src/main/resources/all_tiles/dragon.png");
+        imageDragon = new Image(file2.toURI().toString());
+        File file3 = new File("src/main/resources/all_tiles/ghost.png");
+        imageGhost = new Image(file3.toURI().toString());
+        File file4 = new File("src/main/resources/all_tiles/gnome.png");
+        imageGnome = new Image(file4.toURI().toString());
+        File file5 = new File("src/main/resources/all_tiles/moth.png");
+        imageMoth = new Image(file5.toURI().toString());
+        File file6 = new File("src/main/resources/all_tiles/mouse.png");
+        imageMouse = new Image(file6.toURI().toString());
+        File file7 = new File("src/main/resources/all_tiles/owl.png");
+        imageOwl = new Image(file7.toURI().toString());
+        File file8 = new File("src/main/resources/all_tiles/poltergeist.png");
+        imagePoltergeist = new Image(file8.toURI().toString());
+        File file9 = new File("src/main/resources/all_tiles/salamander.png");
+        imageSalamander = new Image(file9.toURI().toString());
+        File file0 = new File("src/main/resources/all_tiles/scarab.png");
+        imageScarab = new Image(file0.toURI().toString());
+        File file10 = new File("src/main/resources/all_tiles/spider.png");
+        imageSpider = new Image(file10.toURI().toString());
+        File file11 = new File("src/main/resources/all_tiles/witch.png");
+        imageWitch = new Image(file11.toURI().toString());
     }    
     
     
@@ -120,7 +167,7 @@ public class GameController implements Initializable {
                 switch(imageViewName){
                     //alle ImageViews haben namen wie ihre koordienate 
                     // zb.: 00, 01, 20, 30, 34, ...
-                    case 00: 00.setImage(); break;
+                    //case 00: 00.setImage(); break;
                     case 01: break;
                     case 02: break;
                     case 03: break;
@@ -129,18 +176,13 @@ public class GameController implements Initializable {
                     case 06: break;
                     case 10: break;
                     case 11: break;
-                
-                
-                
                 }
-                
             }
-        
         }
     }
     
     
-    
+    /*
     public void fillView(){
         int x;
         int y;
@@ -201,5 +243,5 @@ public class GameController implements Initializable {
                 }
             }
         }
-    }
+    }*/
 }
