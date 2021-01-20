@@ -10,246 +10,172 @@
         <URL value="@/styles/gameview.css" />
     </stylesheets>
    <children>
-      <ImageView fx:id="i00" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image></ImageView>
-      <ImageView fx:id="i10" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../all_tiles/labyrinth%20field.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="i10" fitHeight="80.0" fitWidth="80.0" layoutX="289.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i20" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i30" fitHeight="80.0" fitWidth="80.0" layoutX="289.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i30" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i50" fitHeight="80.0" fitWidth="80.0" layoutX="289.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i40" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i01" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i50" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i11" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i60" fitHeight="80.0" fitWidth="80.0" layoutX="299.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i21" fitHeight="80.0" fitWidth="80.0" layoutX="372.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i01" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i31" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i11" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i41" fitHeight="80.0" fitWidth="80.0" layoutX="372.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i21" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i51" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i31" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i61" fitHeight="80.0" fitWidth="80.0" layoutX="371.0" layoutY="637.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i41" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i12" fitHeight="80.0" fitWidth="80.0" layoutX="464.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i51" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i32" fitHeight="80.0" fitWidth="80.0" layoutX="462.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i61" fitHeight="80.0" fitWidth="80.0" layoutX="386.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i52" fitHeight="80.0" fitWidth="80.0" layoutX="462.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i02" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i03" fitHeight="80.0" fitWidth="80.0" layoutX="548.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i12" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i13" fitHeight="80.0" fitWidth="80.0" layoutX="548.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i22" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i23" fitHeight="80.0" fitWidth="80.0" layoutX="548.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i32" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i33" fitHeight="80.0" fitWidth="80.0" layoutX="547.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i42" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i43" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i52" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i53" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i62" fitHeight="80.0" fitWidth="80.0" layoutX="473.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i63" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="637.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i03" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i14" fitHeight="80.0" fitWidth="80.0" layoutX="638.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i13" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i34" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i23" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i54" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i33" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i05" fitHeight="80.0" fitWidth="80.0" layoutX="720.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i43" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i15" fitHeight="80.0" fitWidth="80.0" layoutX="720.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i53" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i25" fitHeight="80.0" fitWidth="80.0" layoutX="720.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i63" fitHeight="80.0" fitWidth="80.0" layoutX="560.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i35" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i04" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i45" fitHeight="80.0" fitWidth="80.0" layoutX="719.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i14" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i55" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i24" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i65" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="637.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i34" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i16" fitHeight="80.0" fitWidth="80.0" layoutX="803.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i44" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i36" fitHeight="80.0" fitWidth="80.0" layoutX="803.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i54" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i64" fitHeight="80.0" fitWidth="80.0" layoutX="647.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i05" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i15" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i25" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i35" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i45" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i55" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i65" fitHeight="80.0" fitWidth="80.0" layoutX="734.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i06" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i16" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i26" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i36" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i46" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i56" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/corner.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="i66" fitHeight="80.0" fitWidth="80.0" layoutX="821.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i56" fitHeight="80.0" fitWidth="80.0" layoutX="803.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
