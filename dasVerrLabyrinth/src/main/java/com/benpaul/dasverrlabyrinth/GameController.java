@@ -111,7 +111,33 @@ public class GameController implements Initializable {
         }
     }
     
-    
+    public void makeBoard(){
+        int x, y;
+        for(x = 0; x < 7; x++){
+            //Für jede x-Koordinate wird noch jede Kombination mit y-Koordinaten abgefragt
+            for(y = 0; y < 7; y++){
+                int imageViewName = x + y;
+                switch(imageViewName){
+                    //alle ImageViews haben namen wie ihre koordienate 
+                    // zb.: 00, 01, 20, 30, 34, ...
+                    case 00: 00.setImage(); break;
+                    case 01: break;
+                    case 02: break;
+                    case 03: break;
+                    case 04: break;
+                    case 05: break;
+                    case 06: break;
+                    case 10: break;
+                    case 11: break;
+                
+                
+                
+                }
+                
+            }
+        
+        }
+    }
     
     
     
