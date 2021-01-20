@@ -6,6 +6,7 @@
 package com.benpaul.dasverrlabyrinth;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -36,10 +37,11 @@ public class HomeController implements Initializable {
     }    
 
     @FXML
-    private void btnOof(ActionEvent event) {
-        File file = new File("src/main/resources/all_tiles/corner.png");
+    private void btnOof(ActionEvent event) throws IOException {
+        App.setRoot("gameView");
+        /*File file = new File("src/main/resources/all_tiles/corner.png");
         Image image = new Image(file.toURI().toString());
-        imgViewTest.setImage(image);
+        imgViewTest.setImage(image);*/
     }
     
 }

@@ -19,7 +19,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("homeView"), 640, 480);
+        scene = new Scene(loadFXML("homeView"), 1500, 1000);
         stage.setScene(scene);
         stage.show();
         
@@ -113,81 +113,7 @@ public class App extends Application {
         offBoardTile = getRandomTile();
     }
     
-    public void startMoveRow(int row, int direction){
-        if(row == 1 || row == 3 || row == 5){
-            moveRow(row, direction);
-        }
-        else{
-            System.out.println("err, row cant be moved");
-        }
-    }
     
-    public void moveRow(int row, int direction){
-        //Von rechts schiebend
-        if(direction == 0){
-            tileModel offBoardTemp = offBoardTile;
-            
-            offBoardTile = boardTiles[row][0];
-            boardTiles[row][0] = boardTiles[row][1];
-            boardTiles[row][1] = boardTiles[row][2];
-            boardTiles[row][2] = boardTiles[row][3];
-            boardTiles[row][3] = boardTiles[row][4];
-            boardTiles[row][4] = boardTiles[row][5];
-            boardTiles[row][5] = boardTiles[row][6];
-            boardTiles[row][6] = offBoardTemp;
-        }
-        //von links schiebend
-        else if(direction == 1){
-            tileModel offBoardTemp = offBoardTile;
-            
-            offBoardTile = boardTiles[row][6];
-            boardTiles[row][6] = boardTiles[row][5];
-            boardTiles[row][5] = boardTiles[row][4];
-            boardTiles[row][4] = boardTiles[row][3];
-            boardTiles[row][3] = boardTiles[row][2];
-            boardTiles[row][2] = boardTiles[row][1];
-            boardTiles[row][1] = boardTiles[row][0];
-            boardTiles[row][0] = offBoardTemp;
-        }
-    }
-    
-    public void startMoveColumn(int column, int direction){
-        if(column == 1 || column == 3 || column == 5){
-            moveColumn(column, direction);
-        }
-        else{
-            System.out.println("err, Column cant be moved");
-        }
-    }
-    
-    public void moveColumn(int column, int direction){
-        //Von oben schiebend
-        if(direction == 0){
-            tileModel offBoardTemp = offBoardTile;
-            
-            offBoardTile = boardTiles[0][column];
-            boardTiles[0][column] = boardTiles[1][column];
-            boardTiles[1][column] = boardTiles[2][column];
-            boardTiles[2][column] = boardTiles[3][column];
-            boardTiles[3][column] = boardTiles[4][column];
-            boardTiles[4][column] = boardTiles[5][column];
-            boardTiles[5][column] = boardTiles[6][column];
-            boardTiles[6][column] = offBoardTemp;
-        }
-        //von unten schiebend
-        else if(direction == 1){
-            tileModel offBoardTemp = offBoardTile;
-            
-            offBoardTile = boardTiles[6][column];
-            boardTiles[6][column] = boardTiles[5][column];
-            boardTiles[5][column] = boardTiles[4][column];
-            boardTiles[4][column] = boardTiles[3][column];
-            boardTiles[3][column] = boardTiles[2][column];
-            boardTiles[2][column] = boardTiles[1][column];
-            boardTiles[1][column] = boardTiles[0][column];
-            boardTiles[0][column] = offBoardTemp;
-        }
-    }
     
     
     
@@ -248,7 +174,8 @@ public class App extends Application {
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "gnome", false, "t-crossing"));
     }
     
-    /*public void fillView(){
+    /*
+    public void fillView(){
         int x;
         int y;
         
