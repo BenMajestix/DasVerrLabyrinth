@@ -9,7 +9,9 @@ import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -19,6 +21,8 @@ import javafx.fxml.Initializable;
 public class GameController implements Initializable {
 
 
+    @FXML
+    private ImageView imgTile1;
     /**
      * Initializes the controller class.
      */
@@ -110,7 +114,7 @@ public class GameController implements Initializable {
     
     
     
-    /*
+    
     public void fillView(){
         int x;
         int y;
@@ -171,5 +175,5 @@ public class GameController implements Initializable {
                 }
             }
         }
-    }*/
+    }
 }
