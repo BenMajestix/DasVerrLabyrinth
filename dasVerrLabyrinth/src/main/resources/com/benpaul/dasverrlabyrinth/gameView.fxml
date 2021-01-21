@@ -182,7 +182,7 @@
          </image>
       </ImageView>
       <ImageView fx:id="currTile" fitHeight="99.0" fitWidth="95.0" layoutX="1069.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="1014.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileLeft" text="Button" />
+      <Button layoutX="926.0" layoutY="25.0" mnemonicParsing="false" onAction="#tryAlg" text="Button" />
       <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Button" />
    </children>
 </AnchorPane>

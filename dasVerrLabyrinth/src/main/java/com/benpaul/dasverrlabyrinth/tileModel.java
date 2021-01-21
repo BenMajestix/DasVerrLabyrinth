@@ -54,10 +54,10 @@ public class tileModel {
                 break;
             case "straight": 
                 switch(location.rotation){
-                    case 0: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
-                    case 90: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
-                    case 180: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
-                    case 270: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 0: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 90: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 180: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 270: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
                 }
                 break;    
         }
