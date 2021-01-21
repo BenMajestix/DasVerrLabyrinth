@@ -7,7 +7,6 @@ package com.benpaul.dasverrlabyrinth;
 
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,7 +22,7 @@ import javafx.scene.image.ImageView;
  */
 public class GameController implements Initializable {
 
-
+    boolean objecFound;
     //Straight
     Image imageS;
     //Turn
@@ -321,32 +320,47 @@ public class GameController implements Initializable {
         currTile.setRotate(currTile.getRotate() - 90);
     }
     
+    
+    algoTile[] currObsTile = new algoTile[49];
+    int[] alrObsTiles = new int[49];
+    
     public void startAlg(){
-        tileModel startTile;
-        tileModel endtile;
+        tileModel startTile = App.boardTiles[0][1];
+        tileModel endTile = App.boardTiles[4][5];
         
+        //currently Observed tile
+        currObsTile[0] = new algoTile(4, startTile);
+        //All tiles already looked at.   ()
+        
+        breakWhile:
+        while(!(objecFound)){
+            for(int i = 0; i <= currObsTile.length; i++){
+                if(currObsTile[i].tile == endTile){
+                    objecFound = true;
+                    break breakWhile;
+                }
+            }
+            for(int i = 0; i <= currObsTile.length; i++){
+                startTile(currObsTile[i]);
+            }
+        }
     }
     
-    public boolean startTile(tileModel tile){
-        //Curr Location
-        int x = tile.location.xCoor;
-        int y = tile.location.yCoor;
-        //If 
-        boolean directionWorks = false;
-        boolean[] option = tile.ableToExit; 
+    
+    
+    public algoTile startTile(algoTile tile){
+        boolean[] exit = tile.tile.ableToExit; 
+        exit[tile.fromDir] = false;
         
         for(int i = 0; i < 4; i++){
-            if(option[i]){
-                switch(i){
-                    case 0: startTile(App.boardTiles[x][y]); break;
-                    case 1: startTile(App.boardTiles[x][y]); break;
-                    case 2: startTile(App.boardTiles[x][y]); break;
-                    case 3: startTile(App.boardTiles[x][y]); break;
+            if(exit[i] && checkNextTileInput(tile.tile, i)){
+                if(){
+                    exit[i] = false;
                 }
             }
         }
         
-        return directionWorks;
+        return tile;
     }
     
     private boolean algTileUp(tileModel currTile){
@@ -357,5 +371,35 @@ public class GameController implements Initializable {
         return directionWorks;
     }
     
+    public boolean checkNextTileInput(tileModel currTile, int dir){
+        boolean w = false;
+        
+        switch(dir){
+            case 0: 
+                if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
+            case 1: 
+                if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[2]){w = true;} break;
+            case 2: 
+                if(App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
+            case 3: 
+                if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor - 1].ableToExit[2]){w = true;} break;
+        }
+        return w;
+    }
+
+    public class algoTile{
+        int fromDir;
+        tileModel tile;
+
+        public algoTile(int fromDir, tileModel tile) {
+            this.fromDir = fromDir;
+            this.tile = tile;
+        }
+        
     
+    
+    
+    
+    
+    }
 }
