@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -180,5 +181,8 @@
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="currTile" fitHeight="99.0" fitWidth="95.0" layoutX="1069.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="1014.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileLeft" text="Button" />
+      <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Button" />
    </children>
 </AnchorPane>

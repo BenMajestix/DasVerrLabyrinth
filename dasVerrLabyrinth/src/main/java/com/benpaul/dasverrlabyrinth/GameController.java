@@ -10,6 +10,7 @@ import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -107,42 +108,18 @@ public class GameController implements Initializable {
     private ImageView i36;
     @FXML
     private ImageView i56;
+    @FXML
+    private ImageView currTile;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File file = new File("src/main/resources/all_tiles/straight.png");
-        imageS = new Image(file.toURI().toString());
-        File fileT = new File("src/main/resources/all_tiles/turn.png");
-        imageT = new Image(fileT.toURI().toString());
-        File file1 = new File("src/main/resources/all_tiles/bat.png");
-        imageBat = new Image(file1.toURI().toString());
-        File file2 = new File("src/main/resources/all_tiles/dragon.png");
-        imageDragon = new Image(file2.toURI().toString());
-        File file3 = new File("src/main/resources/all_tiles/ghost.png");
-        imageGhost = new Image(file3.toURI().toString());
-        File file4 = new File("src/main/resources/all_tiles/gnome.png");
-        imageGnome = new Image(file4.toURI().toString());
-        File file5 = new File("src/main/resources/all_tiles/moth.png");
-        imageMoth = new Image(file5.toURI().toString());
-        File file6 = new File("src/main/resources/all_tiles/mouse.png");
-        imageMouse = new Image(file6.toURI().toString());
-        File file7 = new File("src/main/resources/all_tiles/owl.png");
-        imageOwl = new Image(file7.toURI().toString());
-        File file8 = new File("src/main/resources/all_tiles/poltergeist.png");
-        imagePoltergeist = new Image(file8.toURI().toString());
-        File file9 = new File("src/main/resources/all_tiles/salamander.png");
-        imageSalamander = new Image(file9.toURI().toString());
-        File file0 = new File("src/main/resources/all_tiles/scarab.png");
-        imageScarab = new Image(file0.toURI().toString());
-        File file10 = new File("src/main/resources/all_tiles/spider.png");
-        imageSpider = new Image(file10.toURI().toString());
-        File file11 = new File("src/main/resources/all_tiles/witch.png");
-        imageWitch = new Image(file11.toURI().toString());
+        
         
         makeBoard();
+        
     }    
     
     
@@ -226,50 +203,45 @@ public class GameController implements Initializable {
     }
     
     public void makeBoard(){
-        int x, y;
-        for(x = 0; x < 7; x++){
-            for(y = 0; y < 7; y++){
-                String koor = Integer.toString(x)+Integer.toString(y);
-                int imageViewName = Integer.parseInt(koor);
-                switch(imageViewName){
-                    //alle ImageViews haben namen wie ihre koordienate 
-                    // zb.: 00, 01, 20, 30, 34, ...
-                    case 01: i01.setImage(getTileImage(x, y)); break;
-                    case 03: i03.setImage(getTileImage(x, y)); break;
-                    case 05: i05.setImage(getTileImage(x, y)); break;
-                    case 10: i10.setImage(getTileImage(x, y)); break;
-                    case 11: i11.setImage(getTileImage(x, y)); break;
-                    case 12: i12.setImage(getTileImage(x, y)); break;
-                    case 13: i13.setImage(getTileImage(x, y)); break;
-                    case 14: i14.setImage(getTileImage(x, y)); break;
-                    case 15: i15.setImage(getTileImage(x, y)); break;
-                    case 16: i16.setImage(getTileImage(x, y)); break;
-                    case 21: i21.setImage(getTileImage(x, y)); break;
-                    case 23: i23.setImage(getTileImage(x, y)); break;
-                    case 25: i25.setImage(getTileImage(x, y)); break;
-                    case 30: i30.setImage(getTileImage(x, y)); break;
-                    case 31: i31.setImage(getTileImage(x, y)); break;
-                    case 32: i32.setImage(getTileImage(x, y)); break;
-                    case 33: i33.setImage(getTileImage(x, y)); break;
-                    case 34: i34.setImage(getTileImage(x, y)); break;
-                    case 35: i35.setImage(getTileImage(x, y)); break;
-                    case 36: i36.setImage(getTileImage(x, y)); break;
-                    case 41: i41.setImage(getTileImage(x, y)); break;
-                    case 43: i43.setImage(getTileImage(x, y)); break;
-                    case 45: i45.setImage(getTileImage(x, y)); break;
-                    case 50: i50.setImage(getTileImage(x, y)); break;
-                    case 51: i51.setImage(getTileImage(x, y)); break;
-                    case 52: i52.setImage(getTileImage(x, y)); break;
-                    case 53: i53.setImage(getTileImage(x, y)); break;
-                    case 54: i54.setImage(getTileImage(x, y)); break;
-                    case 55: i55.setImage(getTileImage(x, y)); break;
-                    case 56: i56.setImage(getTileImage(x, y)); break;
-                    case 61: i61.setImage(getTileImage(x, y)); break;
-                    case 63: i63.setImage(getTileImage(x, y)); break;
-                    case 65: i65.setImage(getTileImage(x, y)); break;
-                }
-            }
-        }
+        
+        i01.setImage(App.boardTiles[0][1].tileImage);
+        i03.setImage(App.boardTiles[0][3].tileImage);
+        i05.setImage(App.boardTiles[0][5].tileImage);
+        i10.setImage(App.boardTiles[1][0].tileImage);
+        i11.setImage(App.boardTiles[1][1].tileImage);
+        i12.setImage(App.boardTiles[1][2].tileImage);
+        i13.setImage(App.boardTiles[1][3].tileImage);
+        i14.setImage(App.boardTiles[1][4].tileImage);
+        i15.setImage(App.boardTiles[1][5].tileImage);
+        i16.setImage(App.boardTiles[1][6].tileImage);
+        i21.setImage(App.boardTiles[2][1].tileImage);
+        i23.setImage(App.boardTiles[2][3].tileImage);
+        i25.setImage(App.boardTiles[2][5].tileImage);
+        i30.setImage(App.boardTiles[3][0].tileImage);
+        i31.setImage(App.boardTiles[3][1].tileImage);
+        i32.setImage(App.boardTiles[3][2].tileImage);
+        i33.setImage(App.boardTiles[3][3].tileImage);
+        i34.setImage(App.boardTiles[3][4].tileImage);
+        i35.setImage(App.boardTiles[3][5].tileImage);
+        i36.setImage(App.boardTiles[3][6].tileImage);
+        i41.setImage(App.boardTiles[4][1].tileImage);
+        i43.setImage(App.boardTiles[4][3].tileImage);
+        i45.setImage(App.boardTiles[4][5].tileImage);
+        i50.setImage(App.boardTiles[5][0].tileImage);
+        i51.setImage(App.boardTiles[5][1].tileImage);
+        i52.setImage(App.boardTiles[5][2].tileImage);
+        i53.setImage(App.boardTiles[5][3].tileImage);
+        i54.setImage(App.boardTiles[5][4].tileImage);
+        i55.setImage(App.boardTiles[5][5].tileImage);
+        i56.setImage(App.boardTiles[5][6].tileImage);
+        i61.setImage(App.boardTiles[6][1].tileImage);
+        i63.setImage(App.boardTiles[6][3].tileImage);
+        i65.setImage(App.boardTiles[6][5].tileImage);
+        
+        
+        
+        rotateImages();
+        currTile.setImage(App.offBoardTile.tileImage);
     }
     
     public Image getTileImage(int x, int y){
@@ -304,13 +276,49 @@ public class GameController implements Initializable {
     
     
     public void rotateImages(){
-        int x, y;
-        for(x = 0; x < 7; x++){
-            for(y = 0; y < 7; y++){
-            
-            }
-        
-        }
+        i01.setRotate(App.boardTiles[0][1].location.rotation);
+        i03.setRotate(App.boardTiles[0][3].location.rotation);
+        i05.setRotate(App.boardTiles[0][5].location.rotation);
+        i10.setRotate(App.boardTiles[1][0].location.rotation);
+        i11.setRotate(App.boardTiles[1][1].location.rotation);
+        i12.setRotate(App.boardTiles[1][2].location.rotation);
+        i13.setRotate(App.boardTiles[1][3].location.rotation);
+        i14.setRotate(App.boardTiles[1][4].location.rotation);
+        i15.setRotate(App.boardTiles[1][5].location.rotation);
+        i16.setRotate(App.boardTiles[1][6].location.rotation);
+        i21.setRotate(App.boardTiles[2][1].location.rotation);
+        i23.setRotate(App.boardTiles[2][3].location.rotation);
+        i25.setRotate(App.boardTiles[2][5].location.rotation);
+        i30.setRotate(App.boardTiles[3][0].location.rotation);
+        i31.setRotate(App.boardTiles[3][1].location.rotation);
+        i32.setRotate(App.boardTiles[3][2].location.rotation);
+        i33.setRotate(App.boardTiles[3][3].location.rotation);
+        i34.setRotate(App.boardTiles[3][4].location.rotation);
+        i35.setRotate(App.boardTiles[3][5].location.rotation);
+        i36.setRotate(App.boardTiles[3][6].location.rotation);
+        i41.setRotate(App.boardTiles[4][1].location.rotation);
+        i43.setRotate(App.boardTiles[4][3].location.rotation);
+        i45.setRotate(App.boardTiles[4][5].location.rotation);
+        i50.setRotate(App.boardTiles[5][0].location.rotation);
+        i51.setRotate(App.boardTiles[5][1].location.rotation);
+        i52.setRotate(App.boardTiles[5][2].location.rotation);
+        i53.setRotate(App.boardTiles[5][3].location.rotation);
+        i54.setRotate(App.boardTiles[5][4].location.rotation);
+        i55.setRotate(App.boardTiles[5][5].location.rotation);
+        i56.setRotate(App.boardTiles[5][6].location.rotation);
+        i61.setRotate(App.boardTiles[6][1].location.rotation);
+        i63.setRotate(App.boardTiles[6][3].location.rotation);
+        i65.setRotate(App.boardTiles[6][5].location.rotation);
+    }
+
+    @FXML
+    private void currTileLeft(ActionEvent event) {
+        currTile.setRotate(currTile.getRotate() + 90);
+    }
+
+    @FXML
+    private void currTileRight(ActionEvent event) {
+        currTile.setRotate(currTile.getRotate() - 90);
     }
     
     

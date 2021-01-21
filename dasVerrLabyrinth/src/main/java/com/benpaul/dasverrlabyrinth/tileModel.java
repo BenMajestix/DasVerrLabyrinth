@@ -5,6 +5,8 @@
  */
 package com.benpaul.dasverrlabyrinth;
 
+import javafx.scene.image.Image;
+
 /**
  *
  * @author benbartel
@@ -19,13 +21,15 @@ public class tileModel {
     String tileKind;
     //In welche Richtung der Spieler gehen kann
     boolean[] ableToExit = new boolean[4];
+    Image tileImage;
 
-    public tileModel(locationModel location, boolean collectableOnTile, String collectable, boolean playerOnTile, String tileKind) {
+    public tileModel(locationModel location, boolean collectableOnTile, String collectable, boolean playerOnTile, String tileKind, Image tileImage) {
         this.location = location;
         this.collectableOnTile = collectableOnTile;
         this.collectable = collectable;
         this.playerOnTile = playerOnTile;
         this.tileKind = tileKind;
+        this.tileImage = tileImage;
         
         checkExit();
     }
@@ -35,25 +39,25 @@ public class tileModel {
             case "t-crossing": 
                 switch(location.rotation){
                     case 0: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
-                    case 1: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
-                    case 2: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = true; break;
-                    case 3: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
+                    case 90: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 180: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = true; break;
+                    case 270: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
                 }
                 break;
             case "turn": 
                 switch(location.rotation){
                     case 0: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
-                    case 1: ableToExit[0] = false; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
-                    case 2: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = false; ableToExit[3] = true; break;
-                    case 3: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = false; break;
+                    case 90: ableToExit[0] = false; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = true; break;
+                    case 180: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 270: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = false; break;
                 }
                 break;
             case "straight": 
                 switch(location.rotation){
                     case 0: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
-                    case 1: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
-                    case 2: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
-                    case 3: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 90: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
+                    case 180: ableToExit[0] = true; ableToExit[1] = false; ableToExit[2] = true; ableToExit[3] = false; break;
+                    case 270: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
                 }
                 break;    
         }
