@@ -321,7 +321,41 @@ public class GameController implements Initializable {
         currTile.setRotate(currTile.getRotate() - 90);
     }
     
+    public void startAlg(){
+        tileModel startTile;
+        tileModel endtile;
+        
+    }
     
+    public boolean startTile(tileModel tile){
+        //Curr Location
+        int x = tile.location.xCoor;
+        int y = tile.location.yCoor;
+        //If 
+        boolean directionWorks = false;
+        boolean[] option = tile.ableToExit; 
+        
+        for(int i = 0; i < 4; i++){
+            if(option[i]){
+                switch(i){
+                    case 0: startTile(App.boardTiles[x][y]); break;
+                    case 1: startTile(App.boardTiles[x][y]); break;
+                    case 2: startTile(App.boardTiles[x][y]); break;
+                    case 3: startTile(App.boardTiles[x][y]); break;
+                }
+            }
+        }
+        
+        return directionWorks;
+    }
+    
+    private boolean algTileUp(tileModel currTile){
+        boolean directionWorks = false;
+        
+        
+        
+        return directionWorks;
+    }
     
     
 }
