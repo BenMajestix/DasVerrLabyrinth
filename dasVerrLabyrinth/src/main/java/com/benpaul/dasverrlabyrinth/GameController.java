@@ -149,10 +149,20 @@ public class GameController implements Initializable {
         for(int x = 0; x < 7; x++){
             for(int y = 0; y < 7; y++){
                 if(!(App.boardTiles[x][y].collectableOnTile)){
-                    System.out.println("no Piece on: " + x + "|" + y);
+                    System.out.println("No Piece on: " + x + "|" + y);
+                    System.out.println("Exit Oben:" + App.boardTiles[x][y].ableToExit[0]);
+                    System.out.println("Exit Rechts:" + App.boardTiles[x][y].ableToExit[1]);
+                    System.out.println("Exit Unten:" + App.boardTiles[x][y].ableToExit[2]);
+                    System.out.println("Exit Links:" + App.boardTiles[x][y].ableToExit[3]);
+                    System.out.println(" ");
                 }
                 else{
                     System.out.println(App.boardTiles[x][y].collectable + " on: " + x + "|" + y);
+                    System.out.println("Exit Oben:" + App.boardTiles[x][y].ableToExit[0]);
+                    System.out.println("Exit Rechts:" + App.boardTiles[x][y].ableToExit[1]);
+                    System.out.println("Exit Unten:" + App.boardTiles[x][y].ableToExit[2]);
+                    System.out.println("Exit Links:" + App.boardTiles[x][y].ableToExit[3]);
+                    System.out.println(" ");
                 }
             }
         }
@@ -326,36 +336,52 @@ public class GameController implements Initializable {
     public void rotateImages(){
         i01.setRotate(App.boardTiles[0][1].location.rotation);
         App.boardTiles[0][1].getLocation().setRotation((int) i01.getRotate());
+        
         i03.setRotate(App.boardTiles[0][3].location.rotation);
         App.boardTiles[0][3].getLocation().setRotation((int) i03.getRotate());
+        
         i05.setRotate(App.boardTiles[0][5].location.rotation);
         App.boardTiles[0][5].getLocation().setRotation((int) i05.getRotate());
+        
         i10.setRotate(App.boardTiles[1][0].location.rotation);
         App.boardTiles[1][0].getLocation().setRotation((int) i10.getRotate());
+        
         i11.setRotate(App.boardTiles[1][1].location.rotation);
         App.boardTiles[1][1].getLocation().setRotation((int) i11.getRotate());
+        
         i12.setRotate(App.boardTiles[1][2].location.rotation);
         App.boardTiles[1][2].getLocation().setRotation((int) i12.getRotate());
+        
         i13.setRotate(App.boardTiles[1][3].location.rotation);
         App.boardTiles[1][3].getLocation().setRotation((int) i13.getRotate());
+        
         i14.setRotate(App.boardTiles[1][4].location.rotation);
         App.boardTiles[1][4].getLocation().setRotation((int) i14.getRotate());
+        
         i15.setRotate(App.boardTiles[1][5].location.rotation);
         App.boardTiles[1][5].getLocation().setRotation((int) i15.getRotate());
+        
         i16.setRotate(App.boardTiles[1][6].location.rotation);
         App.boardTiles[1][6].getLocation().setRotation((int) i16.getRotate());
+        
         i21.setRotate(App.boardTiles[2][1].location.rotation);
         App.boardTiles[2][1].getLocation().setRotation((int) i21.getRotate());
+        
         i23.setRotate(App.boardTiles[2][3].location.rotation);
         App.boardTiles[2][3].getLocation().setRotation((int) i23.getRotate());
+        
         i25.setRotate(App.boardTiles[2][5].location.rotation);
         App.boardTiles[2][5].getLocation().setRotation((int) i25.getRotate());
+        
         i30.setRotate(App.boardTiles[3][0].location.rotation);
         App.boardTiles[3][0].getLocation().setRotation((int) i30.getRotate());
+        
         i31.setRotate(App.boardTiles[3][1].location.rotation);
         App.boardTiles[3][1].getLocation().setRotation((int) i31.getRotate());
+        
         i32.setRotate(App.boardTiles[3][2].location.rotation);
         App.boardTiles[3][2].getLocation().setRotation((int) i32.getRotate());
+        
         i33.setRotate(App.boardTiles[3][3].location.rotation);
         App.boardTiles[3][3].getLocation().setRotation((int) i33.getRotate());
         i34.setRotate(App.boardTiles[3][4].location.rotation);
@@ -411,10 +437,16 @@ public class GameController implements Initializable {
         
         
         //currObsTile.add(new algoTile(0, startTile));
-        
+        System.out.println("Exits of StartTile :");
+        System.out.println(startTile.ableToExit[0]);
+        System.out.println(startTile.ableToExit[1]);
+        System.out.println(startTile.ableToExit[2]);
+        System.out.println(startTile.ableToExit[3]);
+        System.out.println(" ");
         
         for(int i = 0; i < 4; i++){
             if(startTile.ableToExit[i] && checkNextTileInput(startTile, i)){
+                System.out.println("Hit at Exit Nr.: " + i);
                 int o = 5;
                 switch(i){
                     case 0: o = 2; break;
@@ -492,6 +524,7 @@ public class GameController implements Initializable {
         for(int i = 0; i < 4; i++){
             //Wenn die Seite einen Ausgang hat, und das Angrenzende Tile auch, dann true
             if(tile.tile.ableToExit[i] && checkNextTileInput(tile.tile, i)){
+                System.out.println("Hit at Exit Nr.: " + i);
                 int o = 5;
                 switch(i){
                     case 0: o = 2; break;
@@ -571,10 +604,10 @@ public class GameController implements Initializable {
     @FXML
     private void mouseMoved(MouseEvent event) {
        // if(isInDrag){
-            cursorX = event.getX();
-            cursorY = event.getY();
-            System.out.println(cursorX);
-            System.out.println(cursorY);
+            //cursorX = event.getX();
+            //cursorY = event.getY();
+            //System.out.println(cursorX);
+            //System.out.println(cursorY);
         //}
     }
         
@@ -595,9 +628,10 @@ public class GameController implements Initializable {
     
     private void movingPlayer() throws InterruptedException{
         while(isInDrag){
-                player_red.setX(cursorX);
-                player_red.setY(cursorY);
-            }
+            player_red.setX(cursorX);
+            player_red.setY(cursorY);
+            sleep(100);
+        }
     }
     
     

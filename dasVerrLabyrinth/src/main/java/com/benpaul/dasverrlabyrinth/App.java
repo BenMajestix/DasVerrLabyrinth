@@ -69,12 +69,12 @@ public class App extends Application {
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 4: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, "bible", false, "t-crossing", null); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), false, null, false, "turn", null); break;//oben rechts
+                        case 6: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), false, null, false, "turn", null); break;//Unten links
                     }
                 }
                 if(y == 2){
                     switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, "skull", false, "t-crossing", null); break;
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, "skull", false, "t-crossing", null); break;
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 2: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, "keys", false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
@@ -85,7 +85,7 @@ public class App extends Application {
                 }
                 if(y == 4){
                     switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, "sword", false, "t-crossing", null); break;
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, "sword", false, "t-crossing", null); break;
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 2: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, "emerald", false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
@@ -96,7 +96,7 @@ public class App extends Application {
                 }
                 if(y == 6){
                     switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), false, null, false, "turn", null); break;//unten links
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), false, null, false, "turn", null); break;//Oben rechts
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 2: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "helmet", false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
