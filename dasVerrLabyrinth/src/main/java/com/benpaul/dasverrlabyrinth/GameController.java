@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -111,7 +112,17 @@ public class GameController implements Initializable {
     @FXML
     private ImageView currTile;
     @FXML
+
     private ImageView imgBackgr;
+
+    private ImageView player_red;
+    @FXML
+    private ImageView player_yellow;
+    @FXML
+    private ImageView player_blue;
+    @FXML
+    private ImageView player_green;
+
     
     /**
      * Initializes the controller class.
@@ -533,6 +544,10 @@ public class GameController implements Initializable {
     @FXML
     private void currTileRight(ActionEvent event) {
         System.out.println("right");
+    }
+
+    @FXML
+    private void movePlayer(MouseEvent event) {
     }
 
 

@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 /**
  * JavaFX App
  */
+
 public class App extends Application {
     static ArrayList<tileModel> allTiles;
     static tileModel[][] boardTiles =  new tileModel[7][7];
@@ -114,10 +115,6 @@ public class App extends Application {
         //Das letzte übrige Tile wird auserhalb des Spiels platziert
         offBoardTile = getRandomTile();
     }
-    
-    
-    
-    
     
     
     public static tileModel getRandomTile(){
