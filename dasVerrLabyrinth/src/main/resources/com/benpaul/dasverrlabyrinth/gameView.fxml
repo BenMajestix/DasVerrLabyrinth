@@ -11,7 +11,7 @@
         <URL value="@/styles/gameview.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/labyrinth%20field.png" />
          </image>

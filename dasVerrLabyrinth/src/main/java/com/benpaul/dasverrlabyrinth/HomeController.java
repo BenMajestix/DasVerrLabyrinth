@@ -30,7 +30,7 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        File file = new File("src/main/resources/all_tiles/straight.png");
+        File file = new File("src/main/resources/all_tiles/poltergeist.png");
         Image image = new Image(file.toURI().toString());
         imgViewTest.setImage(image);
         // TODO
@@ -42,6 +42,12 @@ public class HomeController implements Initializable {
         /*File file = new File("src/main/resources/all_tiles/corner.png");
         Image image = new Image(file.toURI().toString());
         imgViewTest.setImage(image);*/
+    }
+
+    @FXML
+    private void testRot(ActionEvent event) {
+        imgViewTest.setRotate(imgViewTest.getRotate() + 90);
+        System.out.println(imgViewTest.getRotate());
     }
     
 }

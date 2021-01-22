@@ -110,6 +110,8 @@ public class GameController implements Initializable {
     private ImageView i56;
     @FXML
     private ImageView currTile;
+    @FXML
+    private ImageView imgBackgr;
     
     /**
      * Initializes the controller class.
@@ -117,9 +119,22 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        
+        imgBackgr.setRotate(270);
         makeBoard();
         
+        
+        for(int x = 0; x < 7; x++){
+            for(int y = 0; y < 7; y++){
+                if(!(App.boardTiles[x][y].collectableOnTile)){
+                    System.out.println("no Piece on: " + x + "|" + y);
+                }
+                else{
+                    System.out.println(App.boardTiles[x][y].collectable + " on: " + x + "|" + y);
+                }
+            }
+        }
+        System.out.println("----------------------------");
+        System.out.println(" ");
     }    
     
     
@@ -270,8 +285,18 @@ public class GameController implements Initializable {
                 case "gnome": image = imageGnome; System.out.println("gnome");break;
             }
         }
-        
         return image;
+    }
+    
+    public void checkExits(){
+        int x, y;
+        for(x = 0; x < 7; x++){
+            for(y = 0; y < 7; y++){
+                App.boardTiles[x][y].getLocation().setxCoor(x);
+                App.boardTiles[x][y].getLocation().setyCoor(y);
+                App.boardTiles[x][y].checkExit();
+            }
+        }
     }
     
     
@@ -312,8 +337,8 @@ public class GameController implements Initializable {
         App.boardTiles[3][3].getLocation().setRotation((int) i33.getRotate());
         i34.setRotate(App.boardTiles[3][4].location.rotation);
         App.boardTiles[3][4].getLocation().setRotation((int) i34.getRotate());
-        i34.setRotate(App.boardTiles[3][5].location.rotation);
-        App.boardTiles[3][5].getLocation().setRotation((int) i34.getRotate());
+        i35.setRotate(App.boardTiles[3][5].location.rotation);
+        App.boardTiles[3][5].getLocation().setRotation((int) i35.getRotate());
         i36.setRotate(App.boardTiles[3][6].location.rotation);
         App.boardTiles[3][6].getLocation().setRotation((int) i36.getRotate());
         i41.setRotate(App.boardTiles[4][1].location.rotation);
@@ -342,6 +367,7 @@ public class GameController implements Initializable {
         App.boardTiles[6][3].getLocation().setRotation((int) i63.getRotate());
         i65.setRotate(App.boardTiles[6][5].location.rotation);
         App.boardTiles[6][5].getLocation().setRotation((int) i65.getRotate());
+        checkExits();
     }
 
 
@@ -361,20 +387,42 @@ public class GameController implements Initializable {
         tileModel endTile = App.boardTiles[4][1];
         
         
-        currObsTile.add(new algoTile(0, startTile));
+        //currObsTile.add(new algoTile(0, startTile));
         
-        if(currObsTile.get(0).equals(App.boardTiles[4][1])){System.out.println("test succeed");}
+        
+        for(int i = 0; i < 4; i++){
+            if(startTile.ableToExit[i] && checkNextTileInput(startTile, i)){
+                int o = 5;
+                switch(i){
+                    case 0: o = 2; break;
+                    case 1: o = 3; break;
+                    case 2: o = 0; break;
+                    case 3: o = 1; break;
+                }
+                switch(i){
+                    case 0: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
+                    case 1: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
+                    case 2: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor + 1][startTile.location.yCoor])); break;
+                    case 3: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor - 1])); break;
+                }
+            }
+        }
+        
+        
+        
+        
         int f = 0;
         //Break Flag für die While Loop
         breakWhile:
         //While das Ziel noch nicht gefunden wurde
         while(!(objecFound)){
-            if(f == 3){break;}
+            if(f == 3){System.out.println("---fbreak"); break;}
             else if(currObsTile.isEmpty()){f++;}
-            //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sindå
+            //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
             for(algoTile currObTile : currObsTile){
-                if(currObTile.tile == endTile){
+                if(compareTiles(currObTile.tile, endTile)){
                     objecFound = true;
+                    System.out.println("found it");
                     //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
                     //Better performance
                     break breakWhile;
@@ -386,16 +434,19 @@ public class GameController implements Initializable {
             for (int i = 0; i < currObsTile.size(); i++){
                 //Wenn dieses Tile schon in der alreadyObservedList ist, dann wird beim nächsten weitergemacht
                 for(int o = 0; o < alrObsTiles.size(); o++) {
-                    if(alrObsTiles.get(o).equals(currObsTile.get(i).tile)){
+                    if(compareTiles(alrObsTiles.get(o), (currObsTile.get(i).tile))){
+                        currObsTile.remove(i);
                         continue breakFor;
                     }
                 }
-                System.out.println("start new tile");
+                System.out.println("Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
+                
+                startTile(currObsTile.get(i), i);/*
                 if (startTile(currObsTile.get(i), i).tile == (endTile)) {
                     System.out.println("found it");
                     objecFound = true;
                     break breakWhile;
-                } else {}
+                } else {}*/
             }
         }
         if(objecFound){System.out.println("found haha");}
@@ -406,26 +457,32 @@ public class GameController implements Initializable {
     
     public algoTile startTile(algoTile tile, int index){
         //Alle Seiten aus denen ein Weg geht
-        boolean[] exit = tile.tile.ableToExit;
-        System.out.println(tile.tile.ableToExit[0]);
-        System.out.println(tile.tile.ableToExit[1]);
-        System.out.println(tile.tile.ableToExit[2]);
-        System.out.println(tile.tile.ableToExit[3]);
+        System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
+        System.out.println("Rechts Ausgang: " + tile.tile.ableToExit[1]);
+        System.out.println("Unten Ausgang: " + tile.tile.ableToExit[2]);
+        System.out.println("Links Ausgang: " + tile.tile.ableToExit[3]);
         //Die Seite aus der der Algorithmus gekommen ist wird als false gesetzt
         //Damit er nicht in eine Loop verfällt
-        tile.tile.ableToExit[tile.fromDir] = false;
+        tile.tile.ableToExit[tile.fromDir] = false; 
+        
         //Geht alle Seiten des Tiles durch
         for(int i = 0; i < 4; i++){
             //Wenn die Seite einen Ausgang hat, und das Angrenzende Tile auch, dann true
             if(tile.tile.ableToExit[i] && checkNextTileInput(tile.tile, i)){
+                int o = 5;
+                switch(i){
+                    case 0: o = 2; break;
+                    case 1: o = 3; break;
+                    case 2: o = 0; break;
+                    case 3: o = 1; break;
+                }
                 switch(i){
                     //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
-                    case 0: currObsTile.add(new algoTile(i , App.boardTiles[tile.tile.location.xCoor - 1][tile.tile.location.yCoor])); System.out.println("up");break;
-                    case 1: currObsTile.add(new algoTile(i , App.boardTiles[tile.tile.location.xCoor][tile.tile.location.yCoor + 1])); System.out.println("right"); break;
-                    case 2: currObsTile.add(new algoTile(i , App.boardTiles[tile.tile.location.xCoor + 1][tile.tile.location.yCoor])); System.out.println("down"); break;
-                    case 3: currObsTile.add(new algoTile(i , App.boardTiles[tile.tile.location.xCoor][tile.tile.location.yCoor - 1])); System.out.println("left"); break;
+                    case 0: currObsTile.add(new algoTile(o , App.boardTiles[tile.tile.location.xCoor - 1][tile.tile.location.yCoor])); System.out.println("up");break;
+                    case 1: currObsTile.add(new algoTile(o , App.boardTiles[tile.tile.location.xCoor][tile.tile.location.yCoor + 1])); System.out.println("right"); break;
+                    case 2: currObsTile.add(new algoTile(o , App.boardTiles[tile.tile.location.xCoor + 1][tile.tile.location.yCoor])); System.out.println("down"); break;
+                    case 3: currObsTile.add(new algoTile(o , App.boardTiles[tile.tile.location.xCoor][tile.tile.location.yCoor - 1])); System.out.println("left"); break;
                 }
-                System.out.println("addtile");
             }
         }
         currObsTile.remove(index);
@@ -433,19 +490,42 @@ public class GameController implements Initializable {
         return tile;
     }
     
+    public boolean compareTiles(tileModel tile1, tileModel tile2){
+        int x1, y1, x2, y2;
+        x1 = tile1.location.xCoor;
+        y1 = tile1.location.yCoor;
+        x2 = tile2.location.xCoor;
+        y2 = tile2.location.yCoor;
+        
+        boolean match = false;
+        
+        if(x1 == x2 && y1 == y2){
+            match = true;
+        }
+        return match;
+    }
+    
     
     public boolean checkNextTileInput(tileModel currTile, int dir){
         boolean w = false;
-        
-        switch(dir){
-            case 0: 
-                if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
-            case 1: 
-                if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[2]){w = true;} break;
-            case 2: 
-                if(App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
-            case 3: 
-                if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[2]){w = true;} break;
+        try{
+            switch(dir){
+                case 0: 
+                    System.out.println("Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
+                case 1: 
+                    System.out.println("Rechtes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[2]){w = true;} break;
+                case 2: 
+                    System.out.println("Unteres Tile: " + App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
+                case 3:
+                    System.out.println("Linkes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[2]){w = true;} break;
+            }
+        }
+        catch(Exception e){
+            w = false;
         }
         return w;
     }
