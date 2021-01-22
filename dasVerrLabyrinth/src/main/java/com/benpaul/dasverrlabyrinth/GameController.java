@@ -471,7 +471,7 @@ public class GameController implements Initializable {
         breakWhile:
         //While das Ziel noch nicht gefunden wurde
         while(!(objecFound)){
-            if(f == 3){System.out.println("---fbreak"); break;}
+            if(f == 10){System.out.println("---fbreak"); break;}
             else if(currObsTile.isEmpty()){f++;}
             //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
             for(algoTile currObTile : currObsTile){
@@ -494,7 +494,8 @@ public class GameController implements Initializable {
                         continue breakFor;
                     }
                 }
-                System.out.println("Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
+                System.out.println("-----------------");
+                System.out.println("   Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
                 
                 startTile(currObsTile.get(i), i);/*
                 if (startTile(currObsTile.get(i), i).tile == (endTile)) {
@@ -567,17 +568,17 @@ public class GameController implements Initializable {
         try{
             switch(dir){
                 case 0: 
-                    System.out.println("Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
+                    System.out.println("-Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
                     if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
                 case 1: 
-                    System.out.println("Rechtes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
-                    if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[2]){w = true;} break;
+                    System.out.println("-Rechtes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[3]){w = true;} break;
                 case 2: 
-                    System.out.println("Unteres Tile: " + App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
-                    if(App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
+                    System.out.println("-Unteres Tile: " + App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[0]){w = true;} break;
                 case 3:
-                    System.out.println("Linkes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
-                    if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[2]){w = true;} break;
+                    System.out.println("-Linkes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
+                    if(App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[1]){w = true;} break;
             }
         }
         catch(Exception e){
