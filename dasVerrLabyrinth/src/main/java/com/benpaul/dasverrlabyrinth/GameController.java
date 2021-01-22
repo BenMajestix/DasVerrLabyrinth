@@ -11,17 +11,16 @@ import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.effect.Light.Point;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Duration;
+import javafx.scene.input.TransferMode;
 
 /**
  * FXML Controller class
@@ -132,6 +131,32 @@ public class GameController implements Initializable {
     private ImageView player_blue;
     @FXML
     private ImageView player_green;
+    private ImageView imgSource;
+    private ImageView imgTarget;
+    @FXML
+    private ImageView dp1;
+    @FXML
+    private ImageView dp2;
+    @FXML
+    private ImageView dp3;
+    @FXML
+    private ImageView dp4;
+    @FXML
+    private ImageView dp5;
+    @FXML
+    private ImageView dp6;
+    @FXML
+    private ImageView dp7;
+    @FXML
+    private ImageView dp8;
+    @FXML
+    private ImageView dp9;
+    @FXML
+    private ImageView dp10;
+    @FXML
+    private ImageView dp11;
+    @FXML
+    private ImageView dp12;
     
     
 
@@ -145,7 +170,7 @@ public class GameController implements Initializable {
         imgBackgr.setRotate(270);
         makeBoard();
         
-        
+        /*
         for(int x = 0; x < 7; x++){
             for(int y = 0; y < 7; y++){
                 if(!(App.boardTiles[x][y].collectableOnTile)){
@@ -168,6 +193,7 @@ public class GameController implements Initializable {
         }
         System.out.println("----------------------------");
         System.out.println(" ");
+        */
     }    
     
     
@@ -210,6 +236,7 @@ public class GameController implements Initializable {
             boardTiles[row][1] = boardTiles[row][0];
             boardTiles[row][0] = offBoardTemp;
         }
+        makeBoard();
     }
     
     public void startMoveColumn(int column, int direction) throws Exception{
@@ -222,7 +249,7 @@ public class GameController implements Initializable {
     }
     
     public void moveColumn(int column, int direction){
-        //Von oben schiebend
+        //Von unten schiebend
         if(direction == 0){
             tileModel offBoardTemp = offBoardTile;
             
@@ -235,7 +262,7 @@ public class GameController implements Initializable {
             boardTiles[5][column] = boardTiles[6][column];
             boardTiles[6][column] = offBoardTemp;
         }
-        //von unten schiebend
+        //von oben schiebend
         else if(direction == 1){
             tileModel offBoardTemp = offBoardTile;
             
@@ -248,10 +275,10 @@ public class GameController implements Initializable {
             boardTiles[1][column] = boardTiles[0][column];
             boardTiles[0][column] = offBoardTemp;
         }
+        makeBoard();
     }
     
     public void makeBoard(){
-        
         i01.setImage(App.boardTiles[0][1].tileImage);
         i03.setImage(App.boardTiles[0][3].tileImage);
         i05.setImage(App.boardTiles[0][5].tileImage);
@@ -421,7 +448,7 @@ public class GameController implements Initializable {
 
 
     @FXML
-    private void tryAlg(ActionEvent event) {
+    private void tryAlg(ActionEvent event){
         startAlg();
     }
     
@@ -432,8 +459,8 @@ public class GameController implements Initializable {
     
     public void startAlg(){
         //Setzt Start und End Tile
-        tileModel startTile = App.boardTiles[2][1];
-        tileModel endTile = App.boardTiles[4][1];
+        tileModel startTile = App.boardTiles[1][1];
+        tileModel endTile = App.boardTiles[5][5];
         
         
         //currObsTile.add(new algoTile(0, startTile));
@@ -477,7 +504,7 @@ public class GameController implements Initializable {
             for(algoTile currObTile : currObsTile){
                 if(compareTiles(currObTile.tile, endTile)){
                     objecFound = true;
-                    System.out.println("found it");
+                    System.out.println("--Found EndTile!");
                     //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
                     //Better performance
                     break breakWhile;
@@ -495,7 +522,7 @@ public class GameController implements Initializable {
                     }
                 }
                 System.out.println("-----------------");
-                System.out.println("   Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
+                System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
                 
                 startTile(currObsTile.get(i), i);/*
                 if (startTile(currObsTile.get(i), i).tile == (endTile)) {
@@ -505,8 +532,8 @@ public class GameController implements Initializable {
                 } else {}*/
             }
         }
-        if(objecFound){System.out.println("found haha");}
-        else{System.out.println("cant find it");}
+        if(objecFound){System.out.println("--Algorithmus erfolgreich!");}
+        else{System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");}
     }
     
     
@@ -587,10 +614,13 @@ public class GameController implements Initializable {
         return w;
     }
 
-    @FXML
-    private void currTileRight(ActionEvent event) {
-        System.out.println("right");
-    }
+    
+
+    
+
+    
+
+    
 
     public class algoTile{
         Integer fromDir;
@@ -601,7 +631,21 @@ public class GameController implements Initializable {
             this.tile = tile;
         }
     }
+    
+    
+    
+    
+    //--------------
+    //Algo Done
         
+    
+    
+    @FXML
+    private void currTileRight(ActionEvent event) {
+        System.out.println("right");
+    }
+    
+    
     @FXML
     private void mouseMoved(MouseEvent event) {
        // if(isInDrag){
@@ -636,8 +680,279 @@ public class GameController implements Initializable {
     }
     
     
+    //BEN Drag
     
-    
-    
+    @FXML
+    private void tileDrag(MouseEvent event) {
+        event.setDragDetect(true);
     }
+
+    @FXML
+    private void tileDragDetec(MouseEvent event) {
+        System.out.println("Source Img drag detected");
+
+            Dragboard db = currTile.startDragAndDrop(TransferMode.ANY);
+            
+            ClipboardContent content = new ClipboardContent();
+            content.putString("ImageView source text");
+            
+            content.putImage(currTile.getImage());
+            db.setContent(content);
+    }
+
+    
+    
+    //TARGET FOR DROPPING
+    
+    @FXML
+    private void dp1DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp1DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 1");
+            moveColumn(1, 1);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void dp2DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp2DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 2");
+            moveColumn(3, 1);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp3DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp3DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 3");
+            moveColumn(5, 1);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp4DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp4DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 4");
+            moveRow(1, 0);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp5DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp5DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 5");
+            moveRow(3, 0);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp6DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp6DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 6");
+            moveRow(5, 0);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp7DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp7DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 7");
+            moveColumn(5, 0);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp8DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp8DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 8");
+            moveColumn(3, 0);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp9DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp9DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 9");
+            moveColumn(1, 0);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp10DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp10DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 10");
+            moveRow(5, 1);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp11DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp11DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 11");
+            moveRow(3, 1);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp12DragOver(DragEvent event) {
+        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void dp12DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 12");
+            moveRow(1, 1);
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+}
 
