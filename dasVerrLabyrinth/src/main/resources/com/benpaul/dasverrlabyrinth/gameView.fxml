@@ -6,12 +6,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
+<AnchorPane id="AnchorPane" onMouseMoved="#mouseMoved" prefHeight="800.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
     <stylesheets>
         <URL value="@/styles/gameview.css" />
     </stylesheets>
    <children>
-      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" onMouseClicked="#goToPoint" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/labyrinth%20field.png" />
          </image>
@@ -184,22 +184,22 @@
       <ImageView fx:id="currTile" fitHeight="99.0" fitWidth="95.0" layoutX="1069.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="926.0" layoutY="25.0" mnemonicParsing="false" onAction="#tryAlg" text="Button" />
       <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Button" />
-      <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="140.0" onDragDetected="#movePlayer" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="140.0" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/red_player.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player_yellow" fitHeight="31.0" fitWidth="31.0" layoutX="830.0" layoutY="140.0" onDragDetected="#movePlayer" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player_yellow" fitHeight="31.0" fitWidth="31.0" layoutX="830.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/yellow_player.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player_blue" fitHeight="31.0" fitWidth="31.0" layoutX="830.0" layoutY="654.0" onDragDetected="#movePlayer" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player_blue" fitHeight="31.0" fitWidth="31.0" layoutX="830.0" layoutY="654.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/blue_player.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player_green" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="655.0" onDragDetected="#movePlayer" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player_green" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="655.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/green_player.png" />
          </image>

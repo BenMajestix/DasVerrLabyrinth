@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 /**
  * JavaFX App
@@ -25,6 +26,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("homeView"), 1500, 1000);
         stage.setScene(scene);
         stage.show();
+        stage.setTitle("Das Verrückte Labyrinth");
         
     }
 
@@ -44,7 +46,6 @@ public class App extends Application {
         
         launch();
     }
-
     
     public static void createBoard(){
         //Erstellt das Board und setzt die Karten auf das Bord.

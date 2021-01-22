@@ -7,15 +7,21 @@ package com.benpaul.dasverrlabyrinth;
 
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
+import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.effect.Light.Point;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -114,7 +120,11 @@ public class GameController implements Initializable {
     @FXML
 
     private ImageView imgBackgr;
+    private boolean isInDrag;
+    private double cursorX;
+    private double cursorY;
 
+    @FXML
     private ImageView player_red;
     @FXML
     private ImageView player_yellow;
@@ -122,6 +132,8 @@ public class GameController implements Initializable {
     private ImageView player_blue;
     @FXML
     private ImageView player_green;
+    
+    
 
     
     /**
@@ -546,11 +558,6 @@ public class GameController implements Initializable {
         System.out.println("right");
     }
 
-    @FXML
-    private void movePlayer(MouseEvent event) {
-    }
-
-
     public class algoTile{
         Integer fromDir;
         tileModel tile;
@@ -559,11 +566,43 @@ public class GameController implements Initializable {
             this.fromDir = fromDir;
             this.tile = tile;
         }
+    }
         
+    @FXML
+    private void mouseMoved(MouseEvent event) {
+       // if(isInDrag){
+            cursorX = event.getX();
+            cursorY = event.getY();
+            System.out.println(cursorX);
+            System.out.println(cursorY);
+        //}
+    }
+        
+    @FXML
+    private void goToPoint(MouseEvent event) {
+    }
+
+    @FXML
+    private void mouseReleased(MouseEvent event) {
+        isInDrag = false;
+    }
+
+    @FXML
+    private void mousePressed(MouseEvent event) throws InterruptedException {
+        isInDrag = true;
+        movingPlayer();
+    }
+    
+    private void movingPlayer() throws InterruptedException{
+        while(isInDrag){
+                player_red.setX(cursorX);
+                player_red.setY(cursorY);
+            }
+    }
     
     
     
     
     
     }
-}
+
