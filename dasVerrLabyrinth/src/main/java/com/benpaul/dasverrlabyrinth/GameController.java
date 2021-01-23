@@ -7,13 +7,13 @@ package com.benpaul.dasverrlabyrinth;
 
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
-import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -131,6 +131,10 @@ public class GameController implements Initializable {
     private ImageView player_blue;
     @FXML
     private ImageView player_green;
+    @FXML
+    private TextField txtAlgoStart;
+    @FXML
+    private TextField txtAlgoEnd;
     
     
     
@@ -143,8 +147,8 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    imgBackgr.setRotate(270);
-    makeBoard();
+        imgBackgr.setRotate(270);
+        makeBoard();
         
     }    
     
@@ -362,7 +366,24 @@ public class GameController implements Initializable {
     
     @FXML
     private void tryAlg(ActionEvent event){
-        startAlg();
+        String[] koorStart = txtAlgoStart.getText().split(" ");
+        String[] koorEnd = txtAlgoEnd.getText().split(" ");
+        int startX = Integer.parseInt(koorStart[0]);
+        int startY = Integer.parseInt(koorStart[1]);
+        int endX = Integer.parseInt(koorEnd[0]);
+        int endY = Integer.parseInt(koorEnd[1]);
+        
+        System.out.println(startX);
+        System.out.println(startY);
+        System.out.println(endX);
+        System.out.println(endY);
+        
+        tileModel startTile = App.boardTiles[startX][startY];
+        tileModel endTile = App.boardTiles[endX][endY];
+        currObsTile.clear();
+        alrObsTiles.clear();
+        objecFound = false;
+        startAlg(startTile, endTile);
     }
     
     //Tiles which are connected to the startTile, but not yet looked at.
@@ -370,10 +391,10 @@ public class GameController implements Initializable {
     //All tiles already looked at.
     ArrayList<tileModel> alrObsTiles = new ArrayList();
     
-    public void startAlg(){
+    public void startAlg(tileModel startTile, tileModel endTile){
         //Setzt Start und End Tile
-        tileModel startTile = App.boardTiles[1][1];
-        tileModel endTile = App.boardTiles[5][5];
+        //tileModel startTile = App.boardTiles[1][1];
+        //tileModel endTile = App.boardTiles[5][5];
         
         
         //currObsTile.add(new algoTile(0, startTile));
@@ -402,8 +423,6 @@ public class GameController implements Initializable {
                 }
             }
         }
-        
-        
         
         
         int f = 0;
@@ -436,13 +455,17 @@ public class GameController implements Initializable {
                 }
                 System.out.println("-----------------");
                 System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
-                
-                startTile(currObsTile.get(i), i);/*
-                if (startTile(currObsTile.get(i), i).tile == (endTile)) {
-                    System.out.println("found it");
+                if(compareTiles(currObsTile.get(i).tile, endTile)){
                     objecFound = true;
+                    System.out.println("--Found EndTile!");
+                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
+                    //Better performance
                     break breakWhile;
-                } else {}*/
+                }
+                else{
+                    startTile(currObsTile.get(i), i);
+                }
+                    
             }
         }
         if(objecFound){System.out.println("--Algorithmus erfolgreich!");}

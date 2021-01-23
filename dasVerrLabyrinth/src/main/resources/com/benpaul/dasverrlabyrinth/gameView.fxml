@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -216,5 +217,7 @@
       <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="566.0" onDragDropped="#dp10DragDrop" onDragOver="#dp10DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
       <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="392.0" onDragDropped="#dp11DragDrop" onDragOver="#dp11DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
       <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="224.0" onDragDropped="#dp12DragDrop" onDragOver="#dp12DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <TextField fx:id="txtAlgoStart" layoutX="411.0" layoutY="14.0" promptText="Start Tile" />
+      <TextField fx:id="txtAlgoEnd" layoutX="585.0" layoutY="14.0" promptText="End Tile" />
    </children>
 </AnchorPane>
