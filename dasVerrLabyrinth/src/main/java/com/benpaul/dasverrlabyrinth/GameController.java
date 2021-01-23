@@ -254,6 +254,7 @@ public class GameController implements Initializable {
             tileModel offBoardTemp = offBoardTile;
             
             offBoardTile = boardTiles[0][column];
+            
             boardTiles[0][column] = boardTiles[1][column];
             boardTiles[1][column] = boardTiles[2][column];
             boardTiles[2][column] = boardTiles[3][column];
@@ -314,9 +315,9 @@ public class GameController implements Initializable {
         i65.setImage(App.boardTiles[6][5].tileImage);
         
         
+        currTile.setImage(App.offBoardTile.tileImage);
         
         rotateImages();
-        currTile.setImage(App.offBoardTile.tileImage);
     }
     
     public Image getTileImage(int x, int y){
@@ -363,52 +364,36 @@ public class GameController implements Initializable {
     public void rotateImages(){
         i01.setRotate(App.boardTiles[0][1].location.rotation);
         App.boardTiles[0][1].getLocation().setRotation((int) i01.getRotate());
-        
         i03.setRotate(App.boardTiles[0][3].location.rotation);
         App.boardTiles[0][3].getLocation().setRotation((int) i03.getRotate());
-        
         i05.setRotate(App.boardTiles[0][5].location.rotation);
         App.boardTiles[0][5].getLocation().setRotation((int) i05.getRotate());
-        
         i10.setRotate(App.boardTiles[1][0].location.rotation);
         App.boardTiles[1][0].getLocation().setRotation((int) i10.getRotate());
-        
         i11.setRotate(App.boardTiles[1][1].location.rotation);
         App.boardTiles[1][1].getLocation().setRotation((int) i11.getRotate());
-        
         i12.setRotate(App.boardTiles[1][2].location.rotation);
         App.boardTiles[1][2].getLocation().setRotation((int) i12.getRotate());
-        
         i13.setRotate(App.boardTiles[1][3].location.rotation);
         App.boardTiles[1][3].getLocation().setRotation((int) i13.getRotate());
-        
         i14.setRotate(App.boardTiles[1][4].location.rotation);
         App.boardTiles[1][4].getLocation().setRotation((int) i14.getRotate());
-        
         i15.setRotate(App.boardTiles[1][5].location.rotation);
         App.boardTiles[1][5].getLocation().setRotation((int) i15.getRotate());
-        
         i16.setRotate(App.boardTiles[1][6].location.rotation);
         App.boardTiles[1][6].getLocation().setRotation((int) i16.getRotate());
-        
         i21.setRotate(App.boardTiles[2][1].location.rotation);
         App.boardTiles[2][1].getLocation().setRotation((int) i21.getRotate());
-        
         i23.setRotate(App.boardTiles[2][3].location.rotation);
         App.boardTiles[2][3].getLocation().setRotation((int) i23.getRotate());
-        
         i25.setRotate(App.boardTiles[2][5].location.rotation);
         App.boardTiles[2][5].getLocation().setRotation((int) i25.getRotate());
-        
         i30.setRotate(App.boardTiles[3][0].location.rotation);
         App.boardTiles[3][0].getLocation().setRotation((int) i30.getRotate());
-        
         i31.setRotate(App.boardTiles[3][1].location.rotation);
         App.boardTiles[3][1].getLocation().setRotation((int) i31.getRotate());
-        
         i32.setRotate(App.boardTiles[3][2].location.rotation);
         App.boardTiles[3][2].getLocation().setRotation((int) i32.getRotate());
-        
         i33.setRotate(App.boardTiles[3][3].location.rotation);
         App.boardTiles[3][3].getLocation().setRotation((int) i33.getRotate());
         i34.setRotate(App.boardTiles[3][4].location.rotation);
@@ -443,10 +428,17 @@ public class GameController implements Initializable {
         App.boardTiles[6][3].getLocation().setRotation((int) i63.getRotate());
         i65.setRotate(App.boardTiles[6][5].location.rotation);
         App.boardTiles[6][5].getLocation().setRotation((int) i65.getRotate());
+        
+        currTile.setRotate(App.offBoardTile.location.rotation);
+        
         checkExits();
     }
 
 
+    
+    //ALGORITHM
+    
+    
     @FXML
     private void tryAlg(ActionEvent event){
         startAlg();

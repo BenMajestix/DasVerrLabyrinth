@@ -181,9 +181,9 @@
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="currTile" fitHeight="99.0" fitWidth="95.0" layoutX="1069.0" layoutY="117.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="1069.0" layoutY="117.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="926.0" layoutY="25.0" mnemonicParsing="false" onAction="#tryAlg" text="Button" />
-      <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Button" />
+      <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
       <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="140.0" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/red_player.png" />
