@@ -6,12 +6,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" onMouseMoved="#mouseMoved" prefHeight="800.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
     <stylesheets>
         <URL value="@/styles/gameview.css" />
     </stylesheets>
    <children>
-      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" onMouseClicked="#goToPoint" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/labyrinth%20field.png" />
          </image>
@@ -184,7 +184,7 @@
       <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="1069.0" layoutY="117.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="926.0" layoutY="25.0" mnemonicParsing="false" onAction="#tryAlg" text="Button" />
       <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
-      <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="140.0" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/red_player.png" />
          </image>
@@ -204,17 +204,17 @@
             <Image url="@../../../all_tiles/green_player.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dp1" fitHeight="42.0" fitWidth="80.0" layoutX="371.0" layoutY="67.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp2" fitHeight="42.0" fitWidth="80.0" layoutX="545.0" layoutY="67.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp3" fitHeight="42.0" fitWidth="80.0" layoutX="720.0" layoutY="67.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp4" fitHeight="42.0" fitWidth="80.0" layoutX="880.0" layoutY="224.0" onDragDropped="#dp4DragDrop" onDragOver="#dp4DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fx:id="dp5" fitHeight="42.0" fitWidth="80.0" layoutX="880.0" layoutY="392.0" onDragDropped="#dp5DragDrop" onDragOver="#dp5DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fx:id="dp6" fitHeight="42.0" fitWidth="80.0" layoutX="880.0" layoutY="566.0" onDragDropped="#dp6DragDrop" onDragOver="#dp6DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fx:id="dp7" fitHeight="42.0" fitWidth="80.0" layoutX="720.0" layoutY="717.0" onDragDropped="#dp7DragDrop" onDragOver="#dp7DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp8" fitHeight="42.0" fitWidth="80.0" layoutX="547.0" layoutY="719.0" onDragDropped="#dp8DragDrop" onDragOver="#dp8DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp9" fitHeight="42.0" fitWidth="80.0" layoutX="371.0" layoutY="719.0" onDragDropped="#dp9DragDrop" onDragOver="#dp9DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp10" fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="566.0" onDragDropped="#dp10DragDrop" onDragOver="#dp10DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fx:id="dp11" fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="392.0" onDragDropped="#dp11DragDrop" onDragOver="#dp11DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fx:id="dp12" fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="224.0" onDragDropped="#dp12DragDrop" onDragOver="#dp12DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="371.0" layoutY="67.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="545.0" layoutY="67.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="720.0" layoutY="67.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="880.0" layoutY="224.0" onDragDropped="#dp4DragDrop" onDragOver="#dp4DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="880.0" layoutY="392.0" onDragDropped="#dp5DragDrop" onDragOver="#dp5DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="880.0" layoutY="566.0" onDragDropped="#dp6DragDrop" onDragOver="#dp6DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="720.0" layoutY="717.0" onDragDropped="#dp7DragDrop" onDragOver="#dp7DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="547.0" layoutY="719.0" onDragDropped="#dp8DragDrop" onDragOver="#dp8DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="371.0" layoutY="719.0" onDragDropped="#dp9DragDrop" onDragOver="#dp9DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="566.0" onDragDropped="#dp10DragDrop" onDragOver="#dp10DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="392.0" onDragDropped="#dp11DragDrop" onDragOver="#dp11DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="42.0" fitWidth="80.0" layoutX="213.0" layoutY="224.0" onDragDropped="#dp12DragDrop" onDragOver="#dp12DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
    </children>
 </AnchorPane>

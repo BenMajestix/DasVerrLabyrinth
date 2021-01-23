@@ -131,32 +131,8 @@ public class GameController implements Initializable {
     private ImageView player_blue;
     @FXML
     private ImageView player_green;
-    private ImageView imgSource;
-    private ImageView imgTarget;
-    @FXML
-    private ImageView dp1;
-    @FXML
-    private ImageView dp2;
-    @FXML
-    private ImageView dp3;
-    @FXML
-    private ImageView dp4;
-    @FXML
-    private ImageView dp5;
-    @FXML
-    private ImageView dp6;
-    @FXML
-    private ImageView dp7;
-    @FXML
-    private ImageView dp8;
-    @FXML
-    private ImageView dp9;
-    @FXML
-    private ImageView dp10;
-    @FXML
-    private ImageView dp11;
-    @FXML
-    private ImageView dp12;
+    
+    
     
     
 
@@ -167,35 +143,10 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        imgBackgr.setRotate(270);
-        makeBoard();
+    imgBackgr.setRotate(270);
+    makeBoard();
         
-        /*
-        for(int x = 0; x < 7; x++){
-            for(int y = 0; y < 7; y++){
-                if(!(App.boardTiles[x][y].collectableOnTile)){
-                    System.out.println("No Piece on: " + x + "|" + y);
-                    System.out.println("Exit Oben:" + App.boardTiles[x][y].ableToExit[0]);
-                    System.out.println("Exit Rechts:" + App.boardTiles[x][y].ableToExit[1]);
-                    System.out.println("Exit Unten:" + App.boardTiles[x][y].ableToExit[2]);
-                    System.out.println("Exit Links:" + App.boardTiles[x][y].ableToExit[3]);
-                    System.out.println(" ");
-                }
-                else{
-                    System.out.println(App.boardTiles[x][y].collectable + " on: " + x + "|" + y);
-                    System.out.println("Exit Oben:" + App.boardTiles[x][y].ableToExit[0]);
-                    System.out.println("Exit Rechts:" + App.boardTiles[x][y].ableToExit[1]);
-                    System.out.println("Exit Unten:" + App.boardTiles[x][y].ableToExit[2]);
-                    System.out.println("Exit Links:" + App.boardTiles[x][y].ableToExit[3]);
-                    System.out.println(" ");
-                }
-            }
-        }
-        System.out.println("----------------------------");
-        System.out.println(" ");
-        */
     }    
-    
     
     
     
@@ -320,35 +271,6 @@ public class GameController implements Initializable {
         rotateImages();
     }
     
-    public Image getTileImage(int x, int y){
-        Image image = null;
-        if(App.boardTiles[x][y].tileKind.equals("straight")){
-            System.out.println("straight");
-            image = imageS;
-        }
-        else if(App.boardTiles[x][y].tileKind.equals("turn") && !(App.boardTiles[x][y].collectableOnTile)){
-            System.out.println("turn");
-            image = imageT;
-        }
-        else if(App.boardTiles[x][y].collectableOnTile){
-            switch(App.boardTiles[x][y].collectable){
-                case "owl": image = imageOwl; System.out.println("owl");break;
-                case "moth": image = imageMoth; System.out.println("moth");break;
-                case "mouse": image = imageMouse; System.out.println("mouse");break;
-                case "spider": image = imageSpider; System.out.println("spider");break;
-                case "scarab": image = imageScarab; System.out.println("scarab");break;
-                case "salamander": image = imageSalamander; System.out.println("salamander");break;
-                case "witch": image = imageWitch; System.out.println("witch");break;
-                case "dragon": image = imageDragon; System.out.println("dragon");break;
-                case "poltergeist": image = imagePoltergeist; System.out.println("poltergeist");break;
-                case "ghost": image = imageGhost; System.out.println("ghost");break;
-                case "bat": image = imageBat; System.out.println("bat");break;
-                case "gnome": image = imageGnome; System.out.println("gnome");break;
-            }
-        }
-        return image;
-    }
-    
     public void checkExits(){
         int x, y;
         for(x = 0; x < 7; x++){
@@ -359,7 +281,6 @@ public class GameController implements Initializable {
             }
         }
     }
-    
     
     public void rotateImages(){
         i01.setRotate(App.boardTiles[0][1].location.rotation);
@@ -528,8 +449,6 @@ public class GameController implements Initializable {
         else{System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");}
     }
     
-    
-    
     public algoTile startTile(algoTile tile, int index){
         //Alle Seiten aus denen ein Weg geht
         System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
@@ -581,7 +500,6 @@ public class GameController implements Initializable {
         return match;
     }
     
-    
     public boolean checkNextTileInput(tileModel currTile, int dir){
         boolean w = false;
         try{
@@ -606,14 +524,6 @@ public class GameController implements Initializable {
         return w;
     }
 
-    
-
-    
-
-    
-
-    
-
     public class algoTile{
         Integer fromDir;
         tileModel tile;
@@ -626,53 +536,31 @@ public class GameController implements Initializable {
     
     
     
-    
     //--------------
-    //Algo Done
+    //Algorithm Done
         
     
     
+    //Rotates the Off-Board Tile
     @FXML
     private void currTileRight(ActionEvent event) {
-        System.out.println("right");
-    }
-    
-    
-    @FXML
-    private void mouseMoved(MouseEvent event) {
-       // if(isInDrag){
-            //cursorX = event.getX();
-            //cursorY = event.getY();
-            //System.out.println(cursorX);
-            //System.out.println(cursorY);
-        //}
-    }
         
-    @FXML
-    private void goToPoint(MouseEvent event) {
-    }
-
-    @FXML
-    private void mouseReleased(MouseEvent event) {
-        isInDrag = false;
-    }
-
-    @FXML
-    private void mousePressed(MouseEvent event) throws InterruptedException {
-        isInDrag = true;
-        movingPlayer();
-    }
-    
-    private void movingPlayer() throws InterruptedException{
-        while(isInDrag){
-            player_red.setX(cursorX);
-            player_red.setY(cursorY);
-            sleep(100);
+        if(currTile.getRotate() == 270){
+            currTile.setRotate(0);
+            App.offBoardTile.location.setRotation(0);
         }
+        else{
+            currTile.setRotate(currTile.getRotate() + 90);   
+            App.offBoardTile.location.setRotation(App.offBoardTile.location.rotation + 90);
+        }
+        System.out.println("Rotate OffBoard Tile to: " + currTile.getRotate());
     }
     
     
-    //BEN Drag
+    
+    //-------------------------------
+    //Drag 'n Drop --> OffBoard Tile
+    
     
     @FXML
     private void tileDrag(MouseEvent event) {
@@ -688,17 +576,19 @@ public class GameController implements Initializable {
             ClipboardContent content = new ClipboardContent();
             content.putString("ImageView source text");
             
-            content.putImage(currTile.getImage());
+            Image temp = currTile.snapshot(null, null);
+            
+            content.putImage(temp);
             db.setContent(content);
     }
 
     
     
-    //TARGET FOR DROPPING
+    //TARGETs FOR DROPPING
     
     @FXML
     private void dp1DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -718,7 +608,7 @@ public class GameController implements Initializable {
     }
     @FXML
     private void dp2DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -739,7 +629,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp3DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -760,7 +650,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp4DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -781,7 +671,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp5DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -802,7 +692,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp6DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -823,7 +713,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp7DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -844,7 +734,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp8DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -865,7 +755,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp9DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -886,7 +776,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp10DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -907,7 +797,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp11DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -928,7 +818,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp12DragOver(DragEvent event) {
-        if (event.getGestureSource() != imgTarget && event.getDragboard().hasString()) {
+        if (event.getDragboard().hasString()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
