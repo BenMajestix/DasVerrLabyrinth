@@ -138,6 +138,8 @@ public class GameController implements Initializable {
     //The second Phase of a move, where the Player is moving his piece
     boolean movingPhaseOver = false;
     
+    private String objMoved;
+    
     
 
     
@@ -617,6 +619,78 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
+    @FXML
+    private void redPlayerDrag(MouseEvent event) {
+        event.setDragDetect(true);
+    }
+
+    @FXML
+    private void redPlayerDragDetec(MouseEvent event) {
+        System.out.println("Source Img drag detected");
+
+            Dragboard db = player_red.startDragAndDrop(TransferMode.ANY);
+            
+            ClipboardContent content = new ClipboardContent();
+            content.putString("player");
+            Image temp = player_red.snapshot(null, null);
+            
+            content.putImage(temp);
+            db.setContent(content);
+    }
+    @FXML
+    private void yellowPlayerDrag(MouseEvent event) {
+        event.setDragDetect(true);
+    }
+
+    @FXML
+    private void yellowPlayerDragDetec(MouseEvent event) {
+        System.out.println("Source Img drag detected");
+
+            Dragboard db = player_yellow.startDragAndDrop(TransferMode.ANY);
+            
+            ClipboardContent content = new ClipboardContent();
+            content.putString("player");
+            Image temp = player_yellow.snapshot(null, null);
+            
+            content.putImage(temp);
+            db.setContent(content);
+    }
+    @FXML
+    private void bluePlayerDrag(MouseEvent event) {
+        event.setDragDetect(true);
+    }
+
+    @FXML
+    private void bluePlayerDragDetec(MouseEvent event) {
+        System.out.println("Source Img drag detected");
+
+            Dragboard db = player_blue.startDragAndDrop(TransferMode.ANY);
+            
+            ClipboardContent content = new ClipboardContent();
+            content.putString("player");
+            Image temp = player_blue.snapshot(null, null);
+            
+            content.putImage(temp);
+            db.setContent(content);
+    }
+    @FXML
+    private void greenPlayerDrag(MouseEvent event) {
+        event.setDragDetect(true);
+    }
+
+    @FXML
+    private void greenPlayerDragDetec(MouseEvent event) {
+        System.out.println("Source Img drag detected");
+
+            Dragboard db = player_green.startDragAndDrop(TransferMode.ANY);
+            
+            ClipboardContent content = new ClipboardContent();
+            content.putString("player");
+            Image temp = player_green.snapshot(null, null);
+            
+            content.putImage(temp);
+            db.setContent(content);
+    }
 
     
     
@@ -624,7 +698,7 @@ public class GameController implements Initializable {
     
     @FXML
     private void dp1DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -645,7 +719,7 @@ public class GameController implements Initializable {
     }
     @FXML
     private void dp2DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -667,7 +741,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp3DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -689,7 +763,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp4DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -711,7 +785,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp5DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -733,7 +807,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp6DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -755,7 +829,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp7DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -777,7 +851,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp8DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -799,7 +873,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp9DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -821,7 +895,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp10DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -843,7 +917,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp11DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -865,7 +939,7 @@ public class GameController implements Initializable {
 
     @FXML
     private void dp12DragOver(DragEvent event) {
-        if (event.getDragboard().hasString()) {
+        if (event.getDragboard().getString().equals("ImageView source text")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
         event.consume();
@@ -884,5 +958,1041 @@ public class GameController implements Initializable {
         }
         event.consume();
     }
+    
+    private void movePlayer(){
+        
+    }
+    
+    @FXML
+    private void Ti00DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti00DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            
+            System.out.println("Dropped at DropPoint 00");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti01DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti01DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 01");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti02DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti02DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 02");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti03DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti03DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 03");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti04DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti04DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 04");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti05DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti05DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 05");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti06DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti06DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 06");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti10DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti10DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 10");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti11DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti11DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 11");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti12DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti12DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 12");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti13DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti13DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 13");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti14DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti14DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 14");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti15DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti15DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 15");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti16DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti16DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 16");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti20DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti20DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 20");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti21DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti21DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 21");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti22DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti22DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 22");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti23DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti23DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 23");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti24DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti24DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 24");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti25DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti25DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 25");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti26DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti26DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 26");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti30DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti30DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 30");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti31DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti31DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 31");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti32DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti32DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 32");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti33DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti33DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 33");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti34DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti34DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 34");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti35DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti35DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 35");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti36DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti36DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 36");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti40DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti40DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 40");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti41DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti41DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 41");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti42DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti42DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 42");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti43DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti43DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 43");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti44DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti44DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 44");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti45DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti45DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 45");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti46DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti46DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 46");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti50DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti50DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 50");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti51DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti51DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 51");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti52DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti52DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 52");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti53DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti53DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 53");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti54DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti54DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 54");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti55DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti55DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 55");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti56DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti56DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 56");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti60DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti60DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 60");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti61DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti61DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 61");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti62DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti62DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 62");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti63DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti63DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 63");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti64DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti64DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 64");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti65DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti65DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 65");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    @FXML
+    private void Ti66DragOver(DragEvent event) {
+        if (event.getDragboard().getString().equals("player")) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        event.consume();
+    }
+
+    @FXML
+    private void Ti66DragDrop(DragEvent event) {
+        Dragboard db = event.getDragboard();
+        if (db.hasString()) {
+            System.out.println("Dropped at DropPoint 66");
+            tilePhaseOver = true;
+            movePlayer();
+            event.setDropCompleted(true);
+        } else {
+            event.setDropCompleted(false);
+        }
+        event.consume();
+    }
+    
 }
 
