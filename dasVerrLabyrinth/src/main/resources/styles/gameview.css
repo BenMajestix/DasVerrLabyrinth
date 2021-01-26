@@ -3,5 +3,9 @@
  */
 
 .mainFxmlClass {
-
+    
+    fx-background-image: url("src/main/resources/img/bckgr.png");
+    fx-background-repeat: no-repeat;
+    fx-background-position: center center;
+    
 }

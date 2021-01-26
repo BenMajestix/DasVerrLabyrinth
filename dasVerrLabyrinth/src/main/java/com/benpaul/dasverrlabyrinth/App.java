@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 
 /**
  * JavaFX App
@@ -19,7 +18,12 @@ public class App extends Application {
     static ArrayList<tileModel> allTiles;
     static tileModel[][] boardTiles =  new tileModel[7][7];
     static tileModel offBoardTile;
+    private static playerModel[] players;
+    private static ArrayList<itemModel> allItems;
+    
     private static Scene scene;
+    
+    
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -40,9 +44,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        players = new playerModel[4];
         
-        createTiles();
-        createBoard();
+        createGame();
         
         launch();
     }
@@ -116,7 +120,6 @@ public class App extends Application {
         //Das letzte übrige Tile wird auserhalb des Spiels platziert
         offBoardTile = getRandomTile();
     }
-    
     
     public static tileModel getRandomTile(){
         int i = (int) (Math.random() * allTiles.size());
@@ -201,8 +204,24 @@ public class App extends Application {
     }
     
     
+    public void resetGame(){
+        for(int i = 0; i < 4; i++){
+            players[i] = null;
+        }
+        for(int i = 0; i < 7; i++){
+            for(int o = 0; o < 7; o++){
+                boardTiles[i][o] = null;
+            }
+        }
+        offBoardTile = null;
+        
+        createGame();
+    }
     
-    
+    public static void createGame(){
+        createTiles();
+        createBoard();
+    }
     
     public tileModel[][] getBoardTiles() {
         return boardTiles;

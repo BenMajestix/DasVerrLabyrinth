@@ -117,11 +117,7 @@ public class GameController implements Initializable {
     @FXML
     private ImageView currTile;
     @FXML
-
     private ImageView imgBackgr;
-    private boolean isInDrag;
-    private double cursorX;
-    private double cursorY;
 
     @FXML
     private ImageView player_red;
@@ -131,12 +127,16 @@ public class GameController implements Initializable {
     private ImageView player_blue;
     @FXML
     private ImageView player_green;
+    //For testing, for removal later
     @FXML
     private TextField txtAlgoStart;
     @FXML
     private TextField txtAlgoEnd;
     
-    
+    //The first Phase of a move, where the Player is putting a tile onto the Board
+    boolean tilePhaseOver = false;
+    //The second Phase of a move, where the Player is moving his piece
+    boolean movingPhaseOver = false;
     
     
 
@@ -152,7 +152,21 @@ public class GameController implements Initializable {
         
     }    
     
-    
+    //GAME
+    //--------------
+    //startPlayerRound
+    public void startPlRound(playerModel player){
+        
+        
+        while(!(tilePhaseOver)){
+            
+        }
+        tilePhaseOver = false;
+        while(!(movingPhaseOver)){
+            
+        }
+        movingPhaseOver = false;
+    }
     
     
     public void startMoveRow(int row, int direction) throws Exception{
@@ -584,7 +598,6 @@ public class GameController implements Initializable {
     //-------------------------------
     //Drag 'n Drop --> OffBoard Tile
     
-    
     @FXML
     private void tileDrag(MouseEvent event) {
         event.setDragDetect(true);
@@ -598,7 +611,6 @@ public class GameController implements Initializable {
             
             ClipboardContent content = new ClipboardContent();
             content.putString("ImageView source text");
-            
             Image temp = currTile.snapshot(null, null);
             
             content.putImage(temp);
@@ -622,6 +634,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 1");
+            tilePhaseOver = true;
             moveColumn(1, 1);
             event.setDropCompleted(true);
         } else {
@@ -642,6 +655,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 2");
+            tilePhaseOver = true;
             moveColumn(3, 1);
             event.setDropCompleted(true);
         } else {
@@ -663,6 +677,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 3");
+            tilePhaseOver = true;
             moveColumn(5, 1);
             event.setDropCompleted(true);
         } else {
@@ -684,6 +699,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 4");
+            tilePhaseOver = true;
             moveRow(1, 0);
             event.setDropCompleted(true);
         } else {
@@ -705,6 +721,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 5");
+            tilePhaseOver = true;
             moveRow(3, 0);
             event.setDropCompleted(true);
         } else {
@@ -726,6 +743,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 6");
+            tilePhaseOver = true;
             moveRow(5, 0);
             event.setDropCompleted(true);
         } else {
@@ -747,6 +765,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 7");
+            tilePhaseOver = true;
             moveColumn(5, 0);
             event.setDropCompleted(true);
         } else {
@@ -768,6 +787,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 8");
+            tilePhaseOver = true;
             moveColumn(3, 0);
             event.setDropCompleted(true);
         } else {
@@ -789,6 +809,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 9");
+            tilePhaseOver = true;
             moveColumn(1, 0);
             event.setDropCompleted(true);
         } else {
@@ -810,6 +831,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 10");
+            tilePhaseOver = true;
             moveRow(5, 1);
             event.setDropCompleted(true);
         } else {
@@ -831,6 +853,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 11");
+            tilePhaseOver = true;
             moveRow(3, 1);
             event.setDropCompleted(true);
         } else {
@@ -852,6 +875,7 @@ public class GameController implements Initializable {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 12");
+            tilePhaseOver = true;
             moveRow(1, 1);
             event.setDropCompleted(true);
         } else {
