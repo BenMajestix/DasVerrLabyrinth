@@ -166,6 +166,7 @@ public class GameController implements Initializable {
             
         }
         movingPhaseOver = false;
+        
     }
     
     
