@@ -45,7 +45,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         players = new playerModel[4];
-        
+        allItems = new ArrayList();
         
         
         createCards();

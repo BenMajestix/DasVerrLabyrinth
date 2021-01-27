@@ -139,21 +139,39 @@ public class GameController implements Initializable {
     //The second Phase of a move, where the Player is moving his piece
     boolean movingPhaseOver = false;
     
+    private int playerTurn;
+    
     private String objMoved;
     
     private double mouseX;
     private double mouseY;
     
+    private int[] oldRedPlayerTilePos = new int[2];
+    private int[] oldBluePlayerTilePos = new int[2];
+    private int[] oldYellowPlayerTilePos = new int[2];
+    private int[] oldGreenPlayerTilePos = new int[2];
+    private int[] mouseTilePos = new int[2];
     
     
     /**
      * Initializes the controller class.
      */
-     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        player_red.setX(310);
-        player_red.setY(140);
+        playerTurn = 0;
+        player_red.toFront();
+        player_blue.toBack();
+        player_yellow.toBack();
+        player_green.toBack();
+        
+        player_red.setX(315);
+        player_red.setY(662);
+        player_yellow.setX(313);
+        player_yellow.setY(141);
+        player_blue.setX(828);
+        player_blue.setY(143);
+        player_green.setX(830);
+        player_green.setY(660);
         imgBackgr.setRotate(270);
         makeBoard();
         
@@ -414,7 +432,8 @@ public class GameController implements Initializable {
     //All tiles already looked at.
     ArrayList<tileModel> alrObsTiles = new ArrayList();
     
-    public void startAlg(int startX, int startY, int endX, int endY) throws Exception{
+    public boolean startAlg(int startX, int startY, int endX, int endY) throws Exception{
+        boolean erfolgreich = false;
         //Clearing everything and resetting it.
         currObsTile.clear();
         alrObsTiles.clear();
@@ -506,8 +525,9 @@ public class GameController implements Initializable {
                     
             }
         }
-        if(objecFound){System.out.println("--Algorithmus erfolgreich!");}
+        if(objecFound){System.out.println("--Algorithmus erfolgreich!");erfolgreich = true;}
         else{System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");}
+        return erfolgreich;
     }
     
     public algoTile startTile(algoTile tile, int index){
@@ -642,6 +662,43 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
+    
+    
+    @FXML
+    private void btnTurnSwap(ActionEvent event) {
+        switch(playerTurn){
+            case 0: 
+                playerTurn = playerTurn + 1;
+                player_blue.toFront();
+                player_red.toBack();
+                player_yellow.toBack();
+                player_green.toBack();
+            break;
+            case 1: 
+                playerTurn = playerTurn + 1;
+                player_yellow.toFront();
+                player_red.toBack();
+                player_blue.toBack();
+                player_green.toBack();
+            break;
+            case 2: 
+                playerTurn = playerTurn + 1;
+                player_green.toFront();
+                player_red.toBack();
+                player_blue.toBack();
+                player_yellow.toBack();
+                
+            break;
+            case 3: 
+                playerTurn = 0;
+                player_red.toFront();
+                player_blue.toBack();
+                player_yellow.toBack();
+                player_green.toBack();
+            break;
+        }
+    }
+
     @FXML
     private void redPlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
@@ -660,10 +717,12 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
+    @FXML
     private void yellowPlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
     }
 
+    @FXML
     private void yellowPlayerDragDetec(MouseEvent event) {
         System.out.println("Source Img drag detected");
 
@@ -676,10 +735,12 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
+    @FXML
     private void bluePlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
     }
 
+    @FXML
     private void bluePlayerDragDetec(MouseEvent event) {
         System.out.println("Source Img drag detected");
 
@@ -692,10 +753,12 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
+    @FXML
     private void greenPlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
     }
 
+    @FXML
     private void greenPlayerDragDetec(MouseEvent event) {
         System.out.println("Source Img drag detected");
 
@@ -976,10 +1039,75 @@ public class GameController implements Initializable {
         event.consume();
     }
     
-    private void movePlayer(){
+    private void movePlayer() throws Exception{
         
-        player_red.setX(mouseX);
-        player_red.setY(mouseY);
+        switch(playerTurn){
+            case 0:
+                oldRedPlayerTilePos = App.players[0].pos;
+                System.out.println("Alte Spielerposition: " + oldRedPlayerTilePos[0] + " " + oldRedPlayerTilePos[1]);
+                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
+                if(startAlg(oldRedPlayerTilePos[0], oldRedPlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                    player_red.setX(mouseX);
+                    player_red.setY(mouseY);
+                    App.players[0].pos[0] = mouseTilePos[0];
+                    App.players[0].pos[1] = mouseTilePos[1];
+                    System.out.println( "Spielerposition (red): " + App.players[0].pos[0] + " " + App.players[0].pos[1]);
+                }
+                else{
+                    throw new Exception("Der Weg des Spielers ist versperrt");
+                }
+            break;
+            
+            case 1: 
+                oldBluePlayerTilePos = App.players[1].pos;
+                System.out.println("Alte Spielerposition: " + oldBluePlayerTilePos[0] + " " + oldBluePlayerTilePos[1]);
+                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
+                if(startAlg(oldBluePlayerTilePos[0], oldBluePlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                    player_blue.setX(mouseX);
+                    player_blue.setY(mouseY);
+                    App.players[1].pos[0] = mouseTilePos[0];
+                    App.players[1].pos[1] = mouseTilePos[1];
+                    System.out.println( "Spielerposition (blue): " + App.players[1].pos[0] + " " + App.players[1].pos[1]);
+                }
+                else{
+                    throw new Exception("Der Weg des Spielers ist versperrt");
+                }
+            break;
+            
+            case 2:
+                oldYellowPlayerTilePos = App.players[2].pos;
+                System.out.println("Alte Spielerposition: " + oldYellowPlayerTilePos[0] + " " + oldYellowPlayerTilePos[1]);
+                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
+                if(startAlg(oldYellowPlayerTilePos[0], oldYellowPlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                    player_yellow.setX(mouseX);
+                    player_yellow.setY(mouseY);
+                    App.players[2].pos[0] = mouseTilePos[0];
+                    App.players[2].pos[1] = mouseTilePos[1];
+                    System.out.println( "Spielerposition (yellow): " + App.players[2].pos[0] + " " + App.players[2].pos[1]);
+                }
+                else{
+                    throw new Exception("Der Weg des Spielers ist versperrt");
+                }
+            break;
+            
+            case 3:
+                oldGreenPlayerTilePos = App.players[3].pos;
+                System.out.println("Alte Spielerposition: " + oldGreenPlayerTilePos[0] + " " + oldGreenPlayerTilePos[1]);
+                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
+                if(startAlg(oldGreenPlayerTilePos[0], oldGreenPlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                    player_green.setX(mouseX);
+                    player_green.setY(mouseY);
+                    App.players[3].pos[0] = mouseTilePos[0];
+                    App.players[3].pos[1] = mouseTilePos[1];
+                    System.out.println( "Spielerposition (green): " + App.players[3].pos[0] + " " + App.players[3].pos[1]);
+                }
+                else{
+                    throw new Exception("Der Weg des Spielers ist versperrt");
+                }
+            break;
+        }
+        
+        //App.players[0].setPos(mouseX mouseY);
     }
     @FXML
     private void mouseReleased(MouseEvent event) {
@@ -994,12 +1122,16 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti00DragDrop(DragEvent event) {
+    private void Ti00DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             
             System.out.println("Dropped at DropPoint 00");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1016,11 +1148,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti01DragDrop(DragEvent event) {
+    private void Ti01DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 01");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1037,11 +1173,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti02DragDrop(DragEvent event) {
+    private void Ti02DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 02");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1058,11 +1198,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti03DragDrop(DragEvent event) {
+    private void Ti03DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 03");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1079,11 +1223,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti04DragDrop(DragEvent event) {
+    private void Ti04DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 04");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1100,11 +1248,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti05DragDrop(DragEvent event) {
+    private void Ti05DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 05");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1121,11 +1273,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti06DragDrop(DragEvent event) {
+    private void Ti06DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 06");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 0;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1142,11 +1298,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti10DragDrop(DragEvent event) {
+    private void Ti10DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 10");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1163,11 +1323,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti11DragDrop(DragEvent event) {
+    private void Ti11DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 11");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1184,11 +1348,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti12DragDrop(DragEvent event) {
+    private void Ti12DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 12");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1205,11 +1373,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti13DragDrop(DragEvent event) {
+    private void Ti13DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 13");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1226,11 +1398,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti14DragDrop(DragEvent event) {
+    private void Ti14DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 14");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 4;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1247,11 +1423,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti15DragDrop(DragEvent event) {
+    private void Ti15DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 15");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1268,11 +1448,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti16DragDrop(DragEvent event) {
+    private void Ti16DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 16");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 1;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1289,11 +1473,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti20DragDrop(DragEvent event) {
+    private void Ti20DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 20");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1310,11 +1498,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti21DragDrop(DragEvent event) {
+    private void Ti21DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 21");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1331,11 +1523,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti22DragDrop(DragEvent event) {
+    private void Ti22DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 22");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1352,11 +1548,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti23DragDrop(DragEvent event) {
+    private void Ti23DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 23");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1373,11 +1573,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti24DragDrop(DragEvent event) {
+    private void Ti24DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 24");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 4;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1394,11 +1598,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti25DragDrop(DragEvent event) {
+    private void Ti25DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 25");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1407,7 +1615,7 @@ public class GameController implements Initializable {
         event.consume();
     }
     @FXML
-    private void Ti26DragOver(DragEvent event) {
+    private void Ti26DragOver(DragEvent event) throws Exception {
         if (event.getDragboard().getString().equals("player")) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
@@ -1415,11 +1623,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti26DragDrop(DragEvent event) {
+    private void Ti26DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 26");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 2;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1436,11 +1648,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti30DragDrop(DragEvent event) {
+    private void Ti30DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 30");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1457,11 +1673,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti31DragDrop(DragEvent event) {
+    private void Ti31DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 31");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1478,11 +1698,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti32DragDrop(DragEvent event) {
+    private void Ti32DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 32");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1499,11 +1723,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti33DragDrop(DragEvent event) {
+    private void Ti33DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 33");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1520,11 +1748,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti34DragDrop(DragEvent event) {
+    private void Ti34DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 34");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 4;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1541,11 +1773,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti35DragDrop(DragEvent event) {
+    private void Ti35DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 35");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1562,11 +1798,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti36DragDrop(DragEvent event) {
+    private void Ti36DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 36");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 3;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1583,11 +1823,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti40DragDrop(DragEvent event) {
+    private void Ti40DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 40");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1604,11 +1848,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti41DragDrop(DragEvent event) {
+    private void Ti41DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 41");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1625,11 +1873,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti42DragDrop(DragEvent event) {
+    private void Ti42DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 42");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1646,13 +1898,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti43DragDrop(DragEvent event) {
+    private void Ti43DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 43");
             tilePhaseOver = true;
-            mouseX = event.getX();
-            mouseY = event.getY();
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1669,15 +1923,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti44DragDrop(DragEvent event) {
+    private void Ti44DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 44");
             tilePhaseOver = true;
             mouseX = event.getSceneX() - 15;
             mouseY = event.getSceneY() - 15;
-            System.out.println(mouseX);
-            System.out.println(mouseY);
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 4;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1694,11 +1948,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti45DragDrop(DragEvent event) {
+    private void Ti45DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 45");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1715,11 +1973,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti46DragDrop(DragEvent event) {
+    private void Ti46DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 46");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 4;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1736,11 +1998,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti50DragDrop(DragEvent event) {
+    private void Ti50DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 50");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1757,11 +2023,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti51DragDrop(DragEvent event) {
+    private void Ti51DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 51");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1778,11 +2048,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti52DragDrop(DragEvent event) {
+    private void Ti52DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 52");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1799,11 +2073,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti53DragDrop(DragEvent event) {
+    private void Ti53DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 53");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1820,11 +2098,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti54DragDrop(DragEvent event) {
+    private void Ti54DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 54");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 4;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1841,11 +2123,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti55DragDrop(DragEvent event) {
+    private void Ti55DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 55");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1862,11 +2148,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti56DragDrop(DragEvent event) {
+    private void Ti56DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 56");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 5;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1883,11 +2173,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti60DragDrop(DragEvent event) {
+    private void Ti60DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 60");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 0;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1904,11 +2198,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti61DragDrop(DragEvent event) {
+    private void Ti61DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 61");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 1;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1925,11 +2223,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti62DragDrop(DragEvent event) {
+    private void Ti62DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 62");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 2;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1946,11 +2248,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti63DragDrop(DragEvent event) {
+    private void Ti63DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 63");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 3;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1967,11 +2273,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti64DragDrop(DragEvent event) {
+    private void Ti64DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 64");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 4;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1988,11 +2298,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti65DragDrop(DragEvent event) {
+    private void Ti65DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 65");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 5;
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -2009,11 +2323,15 @@ public class GameController implements Initializable {
     }
 
     @FXML
-    private void Ti66DragDrop(DragEvent event) {
+    private void Ti66DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 66");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            mouseTilePos[0] = 6;
+            mouseTilePos[1] = 6;
             movePlayer();
             event.setDropCompleted(true);
         } else {
