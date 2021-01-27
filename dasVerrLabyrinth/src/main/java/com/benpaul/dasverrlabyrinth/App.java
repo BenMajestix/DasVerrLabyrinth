@@ -18,7 +18,7 @@ public class App extends Application {
     static ArrayList<tileModel> allTiles;
     static tileModel[][] boardTiles =  new tileModel[7][7];
     static tileModel offBoardTile;
-    private static playerModel[] players;
+    public static playerModel[] players;
     private static ArrayList<itemModel> allItems;
     
     private static Scene scene;
@@ -45,6 +45,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
         players = new playerModel[4];
+        
+        
+        
         createCards();
         createGame();
         

@@ -145,7 +145,6 @@ public class GameController implements Initializable {
     private double mouseY;
     
     
-
     
     /**
      * Initializes the controller class.
@@ -163,7 +162,11 @@ public class GameController implements Initializable {
         playerModel playerYellow = new playerModel("Yellow");
         playerModel playerGreen = new playerModel("Green");
         
-        
+        App.players[0] = playerRed;
+        App.players[1] = playerBlue;
+        App.players[2] = playerYellow;
+        App.players[3] = playerGreen;
+         
     }
     
     //GAME
@@ -180,10 +183,6 @@ public class GameController implements Initializable {
             
         }
         movingPhaseOver = false;
-        
-    }
-    
-    private void movePlayer(){
         
     }
     
