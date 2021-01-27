@@ -30,7 +30,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("homeView"), 1500, 1000);
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Das Verrückte Labyrinth");
+        stage.setTitle("--Das Verrückte Labyrinth--");
         
     }
 
@@ -45,7 +45,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         players = new playerModel[4];
-        
+        createCards();
         createGame();
         
         launch();
@@ -203,6 +203,89 @@ public class App extends Application {
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "gnome", false, "t-crossing", new Image(file4.toURI().toString())));
     }
     
+    public static itemModel getRndmItem(){
+        int rndm = (int) (Math.random() * allItems.size());
+        itemModel item = allItems.get(rndm);
+        return item;
+    }
+    
+    public static void createCards(){
+        File batFile = new File("src/main/resources/img/batCard.png");
+        File candleHolderFile = new File("src/main/resources/img/candleHolderCard.png");
+        File bibleFile = new File("src/main/resources/img/bibleCard.png");
+        File chestFile = new File("src/main/resources/img/chestCard.png");
+        File coinsFile = new File("src/main/resources/img/coinsCard.png");
+        File crownFile = new File("src/main/resources/img/crownCard.png");
+        File dragonFile = new File("src/main/resources/img/dragonCard.png");
+        File emeraldFile = new File("src/main/resources/img/emeraldCard.png");
+        File ghostFile = new File("src/main/resources/img/ghostCard.png");
+        File gnomeFile = new File("src/main/resources/img/gnomeCard.png");
+        File helmetFile = new File("src/main/resources/img/helmetCard.png");
+        File keysFile = new File("src/main/resources/img/keysCard.png");
+        File mapFile = new File("src/main/resources/img/mapCard.png");
+        File mothFile = new File("src/main/resources/img/mothCard.png");
+        File mouseFile = new File("src/main/resources/img/mouseCard.png");
+        File owlFile = new File("src/main/resources/img/owlCard.png");
+        File poltergeistFile = new File("src/main/resources/img/poltergeistCard.png");
+        File ringFile = new File("src/main/resources/img/ringCard.png");
+        File salamanderFile = new File("src/main/resources/img/salamanderCard.png");
+        File scarabFile = new File("src/main/resources/img/scarabCard.png");
+        File skullFile = new File("src/main/resources/img/skullCard.png");
+        File spiderFile = new File("src/main/resources/img/spiderCard.png");
+        File swordFile = new File("src/main/resources/img/swordCard.png");
+        File witchFile = new File("src/main/resources/img/witchCard.png");
+        
+        itemModel batItem = new itemModel("Bat", new Image(batFile.toURI().toString()));
+        itemModel candleHolderItem = new itemModel("CandleHolder", new Image(candleHolderFile.toURI().toString()));
+        itemModel bibleItem = new itemModel("Bible", new Image(bibleFile.toURI().toString()));
+        itemModel chestItem = new itemModel("Chest", new Image(chestFile.toURI().toString()));
+        itemModel coinsItem = new itemModel("Coins", new Image(coinsFile.toURI().toString()));
+        itemModel crownItem = new itemModel("Crown", new Image(crownFile.toURI().toString()));
+        itemModel dragonItem = new itemModel("Dragon", new Image(dragonFile.toURI().toString()));
+        itemModel emeraldItem = new itemModel("Emerald", new Image(emeraldFile.toURI().toString()));
+        itemModel ghostItem = new itemModel("Ghost", new Image(ghostFile.toURI().toString()));
+        itemModel gnomeItem = new itemModel("Gnome", new Image(gnomeFile.toURI().toString()));
+        itemModel helmetItem = new itemModel("Helmet", new Image(helmetFile.toURI().toString()));
+        itemModel keysItem = new itemModel("Keys", new Image(keysFile.toURI().toString()));
+        itemModel mapItem = new itemModel("Map", new Image(mapFile.toURI().toString()));
+        itemModel mothItem = new itemModel("Moth", new Image(mothFile.toURI().toString()));
+        itemModel mouseItem = new itemModel("Mouse", new Image(mouseFile.toURI().toString()));
+        itemModel owlItem = new itemModel("Owl", new Image(owlFile.toURI().toString()));
+        itemModel poltergeistItem = new itemModel("Poltergeist", new Image(poltergeistFile.toURI().toString()));
+        itemModel ringItem = new itemModel("Ring", new Image(ringFile.toURI().toString()));
+        itemModel salamanderItem = new itemModel("Salamander", new Image(salamanderFile.toURI().toString()));
+        itemModel scarabItem = new itemModel("Scarab", new Image(scarabFile.toURI().toString()));
+        itemModel skullItem = new itemModel("Skull", new Image(skullFile.toURI().toString()));
+        itemModel spiderItem = new itemModel("Spider", new Image(spiderFile.toURI().toString()));
+        itemModel swordItem = new itemModel("Sword", new Image(swordFile.toURI().toString()));
+        itemModel witchItem = new itemModel("Witch", new Image(witchFile.toURI().toString()));
+        
+        allItems.add(batItem);
+        allItems.add(candleHolderItem);
+        allItems.add(bibleItem);
+        allItems.add(chestItem);
+        allItems.add(coinsItem);
+        allItems.add(crownItem);
+        allItems.add(dragonItem);
+        allItems.add(emeraldItem);
+        allItems.add(ghostItem);
+        allItems.add(gnomeItem);
+        allItems.add(helmetItem);
+        allItems.add(keysItem);
+        allItems.add(mapItem);
+        allItems.add(mothItem);
+        allItems.add(mouseItem);
+        allItems.add(owlItem);
+        allItems.add(poltergeistItem);
+        allItems.add(ringItem);
+        allItems.add(salamanderItem);
+        allItems.add(scarabItem);
+        allItems.add(skullItem);
+        allItems.add(spiderItem);
+        allItems.add(swordItem);
+        allItems.add(witchItem);
+        
+    }
     
     public void resetGame(){
         for(int i = 0; i < 4; i++){

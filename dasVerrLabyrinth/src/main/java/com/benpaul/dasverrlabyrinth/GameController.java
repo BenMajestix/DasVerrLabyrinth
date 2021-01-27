@@ -158,7 +158,13 @@ public class GameController implements Initializable {
         imgBackgr.setRotate(270);
         makeBoard();
         
-    }    
+        playerModel playerRed = new playerModel("Red");
+        playerModel playerBlue = new playerModel("Blue");
+        playerModel playerYellow = new playerModel("Yellow");
+        playerModel playerGreen = new playerModel("Green");
+        
+        
+    }
     
     //GAME
     //--------------
@@ -176,6 +182,11 @@ public class GameController implements Initializable {
         movingPhaseOver = false;
         
     }
+    
+    private void movePlayer(){
+        
+    }
+    
     
     
     public void startMoveRow(int row, int direction) throws Exception{
@@ -385,10 +396,10 @@ public class GameController implements Initializable {
 
     
     //ALGORITHM
-    
+    //---------------
     
     @FXML
-    private void tryAlg(ActionEvent event){
+    private void tryAlg(ActionEvent event) throws Exception{
         String[] koorStart = txtAlgoStart.getText().split(" ");
         String[] koorEnd = txtAlgoEnd.getText().split(" ");
         int startX = Integer.parseInt(koorStart[0]);
@@ -396,17 +407,7 @@ public class GameController implements Initializable {
         int endX = Integer.parseInt(koorEnd[0]);
         int endY = Integer.parseInt(koorEnd[1]);
         
-        System.out.println(startX);
-        System.out.println(startY);
-        System.out.println(endX);
-        System.out.println(endY);
-        
-        tileModel startTile = App.boardTiles[startX][startY];
-        tileModel endTile = App.boardTiles[endX][endY];
-        currObsTile.clear();
-        alrObsTiles.clear();
-        objecFound = false;
-        startAlg(startTile, endTile);
+        startAlg(startX, startY, endX, endY);
     }
     
     //Tiles which are connected to the startTile, but not yet looked at.
@@ -414,10 +415,25 @@ public class GameController implements Initializable {
     //All tiles already looked at.
     ArrayList<tileModel> alrObsTiles = new ArrayList();
     
-    public void startAlg(tileModel startTile, tileModel endTile){
-        //Setzt Start und End Tile
-        //tileModel startTile = App.boardTiles[1][1];
-        //tileModel endTile = App.boardTiles[5][5];
+    public void startAlg(int startX, int startY, int endX, int endY) throws Exception{
+        //Clearing everything and resetting it.
+        currObsTile.clear();
+        alrObsTiles.clear();
+        objecFound = false;
+        
+        tileModel startTile;
+        tileModel endTile;
+        
+        //Die Koordinaten müssen sich im Spielbaren Feld befinden
+        if(startX < 0 || startX > 6 || startY < 0 || startY > 6 || endX < 0 || endX > 6 || endY < 0 || endY > 6){
+            throw new Exception("Die Koordinaten sind ungültig.");
+        }
+        else{
+            //Setzt Start und End Tile
+            startTile = App.boardTiles[startX][startY];
+            endTile = App.boardTiles[endX][endY];
+        }
+            
         
         
         //currObsTile.add(new algoTile(0, startTile));
