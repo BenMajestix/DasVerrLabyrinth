@@ -180,11 +180,24 @@ public class GameController implements Initializable {
         playerModel playerYellow = new playerModel("Yellow");
         playerModel playerGreen = new playerModel("Green");
         
+        playerYellow.pos[0] = 0;
+        playerYellow.pos[1] = 0;
+        
+        playerBlue.pos[0] = 0;
+        playerBlue.pos[1] = 6;
+        
+        playerRed.pos[0] = 6;
+        playerRed.pos[1] = 0;
+        
+        playerGreen.pos[0] = 6;
+        playerGreen.pos[1] = 6;
+        
         App.players[0] = playerRed;
         App.players[1] = playerBlue;
         App.players[2] = playerYellow;
         App.players[3] = playerGreen;
-         
+        
+        
     }
     
     //GAME
