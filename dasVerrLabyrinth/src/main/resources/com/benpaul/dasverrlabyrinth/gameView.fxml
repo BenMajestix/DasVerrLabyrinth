@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
+<AnchorPane id="AnchorPane" onMouseReleased="#mouseReleased" prefHeight="800.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
     <stylesheets>
         <URL value="@/styles/gameview.css" />
     </stylesheets>
@@ -185,7 +185,37 @@
       <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="1069.0" layoutY="117.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="926.0" layoutY="25.0" mnemonicParsing="false" onAction="#tryAlg" text="Button" />
       <Button layoutX="1089.0" layoutY="82.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
-      <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="310.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="548.0" layoutY="53.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="886.0" layoutY="217.0" onDragDropped="#dp4DragDrop" onDragOver="#dp4DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="886.0" layoutY="388.0" onDragDropped="#dp5DragDrop" onDragOver="#dp5DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="886.0" layoutY="562.0" onDragDropped="#dp6DragDrop" onDragOver="#dp6DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="719.0" layoutY="730.0" onDragDropped="#dp7DragDrop" onDragOver="#dp7DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="547.0" layoutY="730.0" onDragDropped="#dp8DragDrop" onDragOver="#dp8DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="730.0" onDragDropped="#dp9DragDrop" onDragOver="#dp9DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="206.0" layoutY="562.0" onDragDropped="#dp10DragDrop" onDragOver="#dp10DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="206.0" layoutY="394.0" onDragDropped="#dp11DragDrop" onDragOver="#dp11DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="206.0" layoutY="217.0" onDragDropped="#dp12DragDrop" onDragOver="#dp12DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+      <TextField fx:id="txtAlgoStart" layoutX="411.0" layoutY="14.0" promptText="Start Tile" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="284.0" layoutY="115.0" onDragDropped="#Ti00DragDrop" onDragOver="#Ti00DragOver" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="txtAlgoEnd" layoutX="585.0" layoutY="14.0" promptText="End Tile" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="456.0" layoutY="115.0" onDragDropped="#Ti02DragDrop" onDragOver="#Ti02DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="629.0" layoutY="117.0" onDragDropped="#Ti04DragDrop" onDragOver="#Ti04DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="117.0" onDragDropped="#Ti06DragDrop" onDragOver="#Ti06DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="288.0" onDragDropped="#Ti26DragDrop" onDragOver="#Ti26DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="629.0" layoutY="288.0" onDragDropped="#Ti24DragDrop" onDragOver="#Ti24DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="456.0" layoutY="287.0" onDragDropped="#Ti22DragDrop" onDragOver="#Ti22DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="284.0" layoutY="287.0" onDragDropped="#Ti20DragDrop" onDragOver="#Ti20DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="282.0" layoutY="459.0" onDragDropped="#Ti40DragDrop" onDragOver="#Ti40DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="281.0" layoutY="631.0" onDragDropped="#Ti60DragDrop" onDragOver="#Ti60DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="453.0" layoutY="459.0" onDragDropped="#Ti42DragDrop" onDragOver="#Ti42DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="453.0" layoutY="631.0" onDragDropped="#Ti62DragDrop" onDragOver="#Ti62DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="629.0" layoutY="631.0" onDragDropped="#Ti64DragDrop" onDragOver="#Ti64DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="628.0" layoutY="459.0" onDragDropped="#Ti44DragDrop" onDragOver="#Ti44DragOver" onMouseReleased="#mouseReleased" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="460.0" onDragDropped="#Ti46DragDrop" onDragOver="#Ti46DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="799.0" layoutY="632.0" onDragDropped="#Ti66DragDrop" onDragOver="#Ti66DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="player_red" fitHeight="31.0" fitWidth="31.0" layoutX="0" layoutY="0" onDragDetected="#redPlayerDragDetec" onMouseDragged="#redPlayerDrag" onMouseReleased="#mouseReleased" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/red_player.png" />
          </image>
@@ -205,35 +235,5 @@
             <Image url="@../../../all_tiles/green_player.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="548.0" layoutY="53.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="886.0" layoutY="217.0" onDragDropped="#dp4DragDrop" onDragOver="#dp4DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="886.0" layoutY="388.0" onDragDropped="#dp5DragDrop" onDragOver="#dp5DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="886.0" layoutY="562.0" onDragDropped="#dp6DragDrop" onDragOver="#dp6DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="719.0" layoutY="730.0" onDragDropped="#dp7DragDrop" onDragOver="#dp7DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="547.0" layoutY="730.0" onDragDropped="#dp8DragDrop" onDragOver="#dp8DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="730.0" onDragDropped="#dp9DragDrop" onDragOver="#dp9DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="206.0" layoutY="562.0" onDragDropped="#dp10DragDrop" onDragOver="#dp10DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="206.0" layoutY="394.0" onDragDropped="#dp11DragDrop" onDragOver="#dp11DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="206.0" layoutY="217.0" onDragDropped="#dp12DragDrop" onDragOver="#dp12DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-      <TextField fx:id="txtAlgoStart" layoutX="411.0" layoutY="14.0" promptText="Start Tile" />
-      <TextField fx:id="txtAlgoEnd" layoutX="585.0" layoutY="14.0" promptText="End Tile" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="284.0" layoutY="115.0" onDragDropped="#Ti00DragDrop" onDragOver="#Ti00DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="456.0" layoutY="115.0" onDragDropped="#Ti02DragDrop" onDragOver="#Ti02DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="629.0" layoutY="117.0" onDragDropped="#Ti04DragDrop" onDragOver="#Ti04DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="117.0" onDragDropped="#Ti06DragDrop" onDragOver="#Ti06DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="288.0" onDragDropped="#Ti26DragDrop" onDragOver="#Ti26DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="629.0" layoutY="288.0" onDragDropped="#Ti24DragDrop" onDragOver="#Ti24DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="456.0" layoutY="287.0" onDragDropped="#Ti22DragDrop" onDragOver="#Ti22DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="284.0" layoutY="287.0" onDragDropped="#Ti20DragDrop" onDragOver="#Ti20DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="282.0" layoutY="459.0" onDragDropped="#Ti40DragDrop" onDragOver="#Ti40DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="281.0" layoutY="631.0" onDragDropped="#Ti60DragDrop" onDragOver="#Ti60DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="453.0" layoutY="459.0" onDragDropped="#Ti42DragDrop" onDragOver="#Ti42DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="453.0" layoutY="631.0" onDragDropped="#Ti62DragDrop" onDragOver="#Ti62DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="629.0" layoutY="631.0" onDragDropped="#Ti64DragDrop" onDragOver="#Ti64DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="628.0" layoutY="459.0" onDragDropped="#Ti44DragDrop" onDragOver="#Ti44DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="460.0" onDragDropped="#Ti46DragDrop" onDragOver="#Ti46DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="799.0" layoutY="632.0" onDragDropped="#Ti66DragDrop" onDragOver="#Ti66DragOver" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

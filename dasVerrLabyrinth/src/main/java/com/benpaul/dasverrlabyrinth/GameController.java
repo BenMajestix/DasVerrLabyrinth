@@ -22,6 +22,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
+
 /**
  * FXML Controller class
  *
@@ -140,15 +141,20 @@ public class GameController implements Initializable {
     
     private String objMoved;
     
+    private double mouseX;
+    private double mouseY;
+    
     
 
     
     /**
      * Initializes the controller class.
      */
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        player_red.setX(310);
+        player_red.setY(140);
         imgBackgr.setRotate(270);
         makeBoard();
         
@@ -564,6 +570,8 @@ public class GameController implements Initializable {
         return w;
     }
 
+    
+
     public class algoTile{
         Integer fromDir;
         tileModel tile;
@@ -637,12 +645,10 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
-    @FXML
     private void yellowPlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
     }
 
-    @FXML
     private void yellowPlayerDragDetec(MouseEvent event) {
         System.out.println("Source Img drag detected");
 
@@ -655,12 +661,10 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
-    @FXML
     private void bluePlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
     }
 
-    @FXML
     private void bluePlayerDragDetec(MouseEvent event) {
         System.out.println("Source Img drag detected");
 
@@ -673,12 +677,10 @@ public class GameController implements Initializable {
             content.putImage(temp);
             db.setContent(content);
     }
-    @FXML
     private void greenPlayerDrag(MouseEvent event) {
         event.setDragDetect(true);
     }
 
-    @FXML
     private void greenPlayerDragDetec(MouseEvent event) {
         System.out.println("Source Img drag detected");
 
@@ -961,6 +963,11 @@ public class GameController implements Initializable {
     
     private void movePlayer(){
         
+        player_red.setX(mouseX);
+        player_red.setY(mouseY);
+    }
+    @FXML
+    private void mouseReleased(MouseEvent event) {
     }
     
     @FXML
@@ -1629,6 +1636,8 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 43");
             tilePhaseOver = true;
+            mouseX = event.getX();
+            mouseY = event.getY();
             movePlayer();
             event.setDropCompleted(true);
         } else {
@@ -1650,6 +1659,10 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 44");
             tilePhaseOver = true;
+            mouseX = event.getSceneX() - 15;
+            mouseY = event.getSceneY() - 15;
+            System.out.println(mouseX);
+            System.out.println(mouseY);
             movePlayer();
             event.setDropCompleted(true);
         } else {
