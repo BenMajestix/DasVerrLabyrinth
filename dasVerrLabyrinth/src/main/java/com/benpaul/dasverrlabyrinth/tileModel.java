@@ -31,7 +31,7 @@ public class tileModel {
         this.tileKind = tileKind;
         this.tileImage = tileImage;
         
-        checkExit();
+        //checkExit();
     }
 
     public void checkExit(){

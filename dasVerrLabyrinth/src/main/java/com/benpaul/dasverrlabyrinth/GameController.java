@@ -298,6 +298,19 @@ public class GameController implements Initializable {
         makeBoard();
     }
     
+    public void updateTileLoc(){
+        int x, y;
+        for(x = 0; x < 7; x++){
+            for(y = 0; y < 7; y++){
+                App.boardTiles[x][y].location.setxCoor(x);
+                App.boardTiles[x][y].location.setyCoor(y);
+            }
+        }
+    }
+    
+    
+    
+    
     public void makeBoard(){
         i01.setImage(App.boardTiles[0][1].tileImage);
         i03.setImage(App.boardTiles[0][3].tileImage);
@@ -337,6 +350,7 @@ public class GameController implements Initializable {
         currTile.setImage(App.offBoardTile.tileImage);
         
         rotateImages();
+        updateTileLoc();
     }
     
     public void checkExits(){
@@ -348,6 +362,7 @@ public class GameController implements Initializable {
                 App.boardTiles[x][y].checkExit();
             }
         }
+        App.offBoardTile.checkExit();
     }
     
     public void rotateImages(){
@@ -419,6 +434,7 @@ public class GameController implements Initializable {
         App.boardTiles[6][5].getLocation().setRotation((int) i65.getRotate());
         
         currTile.setRotate(App.offBoardTile.location.rotation);
+        App.offBoardTile.location.setRotation((int) (currTile.getRotate()));
         
         checkExits();
     }
@@ -448,6 +464,19 @@ public class GameController implements Initializable {
     public boolean startAlg(int startX, int startY, int endX, int endY) throws Exception{
         boolean erfolgreich = false;
         //Clearing everything and resetting it.
+        
+        for(int x = 0; x < 7; x++){
+            for(int y = 0; y < 7; y++){
+                App.boardTiles[x][y].ableToExit[0] = false;
+                App.boardTiles[x][y].ableToExit[1] = false;
+                App.boardTiles[x][y].ableToExit[2] = false;
+                App.boardTiles[x][y].ableToExit[3] = false;
+            }
+        }
+        
+        checkExits();
+        
+        
         currObsTile.clear();
         alrObsTiles.clear();
         objecFound = false;
@@ -465,7 +494,8 @@ public class GameController implements Initializable {
             endTile = App.boardTiles[endX][endY];
         }
             
-        
+        System.out.println("EndX: " + endTile.location.xCoor);
+        System.out.println("EndY: " + endTile.location.yCoor);
         
         //currObsTile.add(new algoTile(0, startTile));
         System.out.println("Exits of StartTile :");
@@ -495,13 +525,14 @@ public class GameController implements Initializable {
         }
         
         
-        int f = 0;
+        int fCount = 0;
         //Break Flag für die While Loop
         breakWhile:
-        //While das Ziel noch nicht gefunden wurde
+        //wird ausgeführt während das Ziel noch nicht gefunden wurde
         while(!(objecFound)){
-            if(f == 10){System.out.println("---fbreak"); break;}
-            else if(currObsTile.isEmpty()){f++;}
+            if(fCount == 10){System.out.println("---fbreak"); break;}
+            else if(currObsTile.isEmpty()){fCount++;
+                System.out.println("F: " + fCount);}
             //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
             for(algoTile currObTile : currObsTile){
                 if(compareTiles(currObTile.tile, endTile)){
@@ -525,6 +556,7 @@ public class GameController implements Initializable {
                 }
                 System.out.println("-----------------");
                 System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
+                System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
                 if(compareTiles(currObsTile.get(i).tile, endTile)){
                     objecFound = true;
                     System.out.println("--Found EndTile!");
@@ -551,7 +583,7 @@ public class GameController implements Initializable {
         System.out.println("Links Ausgang: " + tile.tile.ableToExit[3]);
         //Die Seite aus der der Algorithmus gekommen ist wird als false gesetzt
         //Damit er nicht in eine Loop verfällt
-        tile.tile.ableToExit[tile.fromDir] = false; 
+        tile.tile.ableToExit[tile.fromDir] = false;
         
         //Geht alle Seiten des Tiles durch
         for(int i = 0; i < 4; i++){
@@ -1052,18 +1084,35 @@ public class GameController implements Initializable {
         event.consume();
     }
     
-    private void movePlayer() throws Exception{
+    private void movePlayer(double mouseX, double mouseY, int x, int y) throws Exception{
+        
+        int[] oldRedTilePos = new int[2];
+        int[] oldBlueTilePos = new int[2];
+        int[] oldYellowTilePos = new int[2];
+        int[] oldGreenTilePos = new int[2];
+        
+        oldRedTilePos[0] = App.players[0].pos[0];
+        oldRedTilePos[1] = App.players[0].pos[1];
+        
+        oldBlueTilePos[0] = App.players[1].pos[0];
+        oldBlueTilePos[1] = App.players[1].pos[1];
+        
+        oldYellowTilePos[0] = App.players[2].pos[0];
+        oldYellowTilePos[1] = App.players[2].pos[1];
+        
+        oldGreenTilePos[0] = App.players[3].pos[0];
+        oldGreenTilePos[1] = App.players[3].pos[1];
+        
         
         switch(playerTurn){
             case 0:
-                oldRedPlayerTilePos = App.players[0].pos;
-                System.out.println("Alte Spielerposition: " + oldRedPlayerTilePos[0] + " " + oldRedPlayerTilePos[1]);
-                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
-                if(startAlg(oldRedPlayerTilePos[0], oldRedPlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                System.out.println("Alte Spielerposition: " + oldRedTilePos[0] + " " + oldRedTilePos[1]);
+                System.out.println("Mausposition: " +  x + " " + y);
+                if(startAlg(oldRedTilePos[0], oldRedTilePos[1], x, y)){
                     player_red.setX(mouseX);
                     player_red.setY(mouseY);
-                    App.players[0].pos[0] = mouseTilePos[0];
-                    App.players[0].pos[1] = mouseTilePos[1];
+                    App.players[0].pos[0] = x;
+                    App.players[0].pos[1] = y;
                     System.out.println( "Spielerposition (red): " + App.players[0].pos[0] + " " + App.players[0].pos[1]);
                 }
                 else{
@@ -1071,15 +1120,14 @@ public class GameController implements Initializable {
                 }
             break;
             
-            case 1: 
-                oldBluePlayerTilePos = App.players[1].pos;
-                System.out.println("Alte Spielerposition: " + oldBluePlayerTilePos[0] + " " + oldBluePlayerTilePos[1]);
-                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
-                if(startAlg(oldBluePlayerTilePos[0], oldBluePlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+            case 1:
+                System.out.println("Alte Spielerposition: " + oldBlueTilePos[0] + " " + oldBlueTilePos[1]);
+                System.out.println("Mausposition: " +  x + " " + y);
+                if(startAlg(oldBlueTilePos[0], oldBlueTilePos[1], x, y)){
                     player_blue.setX(mouseX);
                     player_blue.setY(mouseY);
-                    App.players[1].pos[0] = mouseTilePos[0];
-                    App.players[1].pos[1] = mouseTilePos[1];
+                    App.players[1].pos[0] = x;
+                    App.players[1].pos[1] = y;
                     System.out.println( "Spielerposition (blue): " + App.players[1].pos[0] + " " + App.players[1].pos[1]);
                 }
                 else{
@@ -1088,14 +1136,13 @@ public class GameController implements Initializable {
             break;
             
             case 2:
-                oldYellowPlayerTilePos = App.players[2].pos;
-                System.out.println("Alte Spielerposition: " + oldYellowPlayerTilePos[0] + " " + oldYellowPlayerTilePos[1]);
-                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
-                if(startAlg(oldYellowPlayerTilePos[0], oldYellowPlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                System.out.println("Alte Spielerposition: " + oldYellowTilePos[0] + " " + oldYellowTilePos[1]);
+                System.out.println("Mausposition: " +  x + " " + y);
+                if(startAlg(oldYellowTilePos[0], oldYellowTilePos[1], x, y)){
                     player_yellow.setX(mouseX);
                     player_yellow.setY(mouseY);
-                    App.players[2].pos[0] = mouseTilePos[0];
-                    App.players[2].pos[1] = mouseTilePos[1];
+                    App.players[2].pos[0] = x;
+                    App.players[2].pos[1] = y;
                     System.out.println( "Spielerposition (yellow): " + App.players[2].pos[0] + " " + App.players[2].pos[1]);
                 }
                 else{
@@ -1104,14 +1151,13 @@ public class GameController implements Initializable {
             break;
             
             case 3:
-                oldGreenPlayerTilePos = App.players[3].pos;
-                System.out.println("Alte Spielerposition: " + oldGreenPlayerTilePos[0] + " " + oldGreenPlayerTilePos[1]);
-                System.out.println("Mausposition: " +  mouseTilePos[0] + " " + mouseTilePos[1]);
-                if(startAlg(oldGreenPlayerTilePos[0], oldGreenPlayerTilePos[1], mouseTilePos[0], mouseTilePos[1])){
+                System.out.println("Alte Spielerposition: " + oldGreenTilePos[0] + " " + oldGreenTilePos[1]);
+                System.out.println("Mausposition: " +  x + " " + y);
+                if(startAlg(oldGreenTilePos[0], oldGreenTilePos[1], x, y)){
                     player_green.setX(mouseX);
                     player_green.setY(mouseY);
-                    App.players[3].pos[0] = mouseTilePos[0];
-                    App.players[3].pos[1] = mouseTilePos[1];
+                    App.players[3].pos[0] = x;
+                    App.players[3].pos[1] = y;
                     System.out.println( "Spielerposition (green): " + App.players[3].pos[0] + " " + App.players[3].pos[1]);
                 }
                 else{
@@ -1141,11 +1187,9 @@ public class GameController implements Initializable {
             
             System.out.println("Dropped at DropPoint 00");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1166,11 +1210,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 01");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1191,11 +1233,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 02");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1216,11 +1256,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 03");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1241,11 +1279,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 04");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1266,11 +1302,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 05");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1291,11 +1325,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 06");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 0;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 0, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1316,11 +1348,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 10");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1341,11 +1371,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 11");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1366,11 +1394,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 12");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1391,11 +1417,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 13");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1416,11 +1440,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 14");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 4;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1441,11 +1463,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 15");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1466,11 +1486,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 16");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 1;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 1, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1491,11 +1509,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 20");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1516,11 +1532,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 21");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1541,11 +1555,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 22");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1566,11 +1578,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 23");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1591,11 +1601,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 24");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 4;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1616,11 +1624,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 25");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1641,11 +1647,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 26");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 2;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 2, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1666,11 +1670,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 30");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1691,11 +1693,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 31");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1716,11 +1716,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 32");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1741,11 +1739,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 33");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1766,11 +1762,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 34");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 4;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1791,11 +1785,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 35");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1816,11 +1808,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 36");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 3;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 3, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1841,11 +1831,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 40");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1866,11 +1854,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 41");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1891,11 +1877,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 42");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1916,11 +1900,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 43");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1941,11 +1923,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 44");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 4;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1966,11 +1946,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 45");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -1991,11 +1969,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 46");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 4;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 4, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2016,11 +1992,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 50");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2041,11 +2015,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 51");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2066,11 +2038,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 52");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2091,11 +2061,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 53");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2116,11 +2084,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 54");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 4;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2141,11 +2107,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 55");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2166,11 +2130,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 56");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 5;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 5, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2191,11 +2153,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 60");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 0;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 0);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2216,11 +2176,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 61");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 1;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 1);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2241,11 +2199,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 62");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 2;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 2);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2266,11 +2222,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 63");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 3;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 3);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2291,11 +2245,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 64");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 4;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 4);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2316,11 +2268,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 65");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 5;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 5);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
@@ -2341,11 +2291,9 @@ public class GameController implements Initializable {
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 66");
             tilePhaseOver = true;
-            mouseX = event.getSceneX() - 15;
-            mouseY = event.getSceneY() - 15;
-            mouseTilePos[0] = 6;
-            mouseTilePos[1] = 6;
-            movePlayer();
+            double mouseX = event.getSceneX() - 15;
+            double mouseY = event.getSceneY() - 15;
+            movePlayer(mouseX, mouseY, 6, 6);
             event.setDropCompleted(true);
         } else {
             event.setDropCompleted(false);
