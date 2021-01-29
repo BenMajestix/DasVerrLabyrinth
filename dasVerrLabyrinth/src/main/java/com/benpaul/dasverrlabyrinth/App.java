@@ -27,7 +27,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("homeView"), 1200, 800);
+        scene = new Scene(loadFXML("homeView"), 1500, 1000);
         stage.setScene(scene);
         stage.show();
         stage.setTitle("--Das Verrückte Labyrinth--");
