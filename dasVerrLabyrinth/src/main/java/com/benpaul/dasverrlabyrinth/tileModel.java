@@ -15,7 +15,7 @@ public class tileModel {
     locationModel location;
     //Ob und welche Treasure auf dem Tile ist
     boolean collectableOnTile;
-    String collectable;
+    itemModel collectable;
     boolean playerOnTile;
     //Ob Kurve, Gerade...
     String tileKind;
@@ -23,7 +23,7 @@ public class tileModel {
     boolean[] ableToExit = new boolean[4];
     Image tileImage;
 
-    public tileModel(locationModel location, boolean collectableOnTile, String collectable, boolean playerOnTile, String tileKind, Image tileImage) {
+    public tileModel(locationModel location, boolean collectableOnTile, itemModel collectable, boolean playerOnTile, String tileKind, Image tileImage) {
         this.location = location;
         this.collectableOnTile = collectableOnTile;
         this.collectable = collectable;
@@ -74,11 +74,11 @@ public class tileModel {
         checkExit();
     }
 
-    public String getCollectable() {
+    public itemModel getCollectable() {
         return collectable;
     }
 
-    public void setCollectable(String collectable) {
+    public void setCollectable(itemModel collectable) {
         this.collectable = collectable;
     }
 

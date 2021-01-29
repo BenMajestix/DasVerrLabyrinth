@@ -149,20 +149,20 @@ public class GameController implements Initializable {
     boolean gameOver;
     @FXML
     private Label lblInstr;
+    @FXML
+    private ImageView imgObj1;
+    @FXML
+    private ImageView imgObj2;
+    @FXML
+    private ImageView imgObj3;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        //player_red.toFront();
-        //player_blue.toBack();
-        //player_yellow.toBack();
-        //player_green.toBack();
         playerTurn = 0;
-        //enableTilePhase();
-        //enableMovingPhase();
+        
         player_red.setX(315);
         player_red.setY(662);
         player_yellow.setX(313);
@@ -172,6 +172,7 @@ public class GameController implements Initializable {
         player_green.setX(830);
         player_green.setY(660);
         imgBackgr.setRotate(270);
+        
         makeBoard();
         
         playerModel playerRed = new playerModel("Red");
@@ -183,6 +184,16 @@ public class GameController implements Initializable {
         App.players[1] = playerBlue;
         App.players[2] = playerYellow;
         App.players[3] = playerGreen;
+        
+        for(int i = 0; i < 4; i++){
+            App.players[i].items[0] = App.getRndmItem();
+            App.players[i].items[1] = App.getRndmItem();
+            App.players[i].items[2] = App.getRndmItem();
+            
+            System.out.println("player " + i + " " + App.players[i].items[0].item);
+            System.out.println("player " + i + " " + App.players[i].items[1].item);
+            System.out.println("player " + i + " " + App.players[i].items[2].item);
+        }
         
         playerYellow.pos[0] = 0;
         playerYellow.pos[1] = 0;
@@ -220,9 +231,11 @@ public class GameController implements Initializable {
     //--------------
     
     public void runGame(){
-        
-        
         if(playerTurn == 4){playerTurn = 0;}
+        
+        imgObj1.setImage(App.players[playerTurn].items[0].img);
+        imgObj2.setImage(App.players[playerTurn].items[1].img);
+        imgObj3.setImage(App.players[playerTurn].items[2].img);
         
         if(!(tilePhaseOver)){
             enableTilePhase();
@@ -231,12 +244,30 @@ public class GameController implements Initializable {
             enableMovingPhase();
         }
         else if(tilePhaseOver && movingPhaseOver){
+            for(int i = 0; i < 3; i++){
+                if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
+                    System.out.println("Tile youre looking for found.");
+                    App.players[playerTurn].items[i] = App.getRndmItem();
+                }
+            }
             playerTurn++;
             movingPhaseOver = false;
             tilePhaseOver = false;
             runGame();
         }
     }
+    
+    public void checkItemFound(){
+        for(int o = 0; o < 4; o++){
+            for(int i = 0; i < 3; i++){
+                if(App.players[o].items[i].equals(App.boardTiles[App.players[o].pos[0]][App.players[o].pos[1]].collectable)){
+                    System.out.println("Tile youre looking for found. Player: " + o);
+                    App.players[o].items[i] = App.getRndmItem();
+                }
+            }
+        }
+    }
+        
     
     public void enableTilePhase(){
         updateLabel();
@@ -303,32 +334,6 @@ public class GameController implements Initializable {
         lblInstr.setText("Der Spieler " + player + "ist am Zug und muss " + instr);
     }
     
-    
-    
-    
-    
-    
-    
-    
-    //startPlayerRound
-    public void startPlRound(playerModel player){
-        
-        
-        
-        
-        
-        
-        
-        while(!(tilePhaseOver)){
-            
-        }
-        tilePhaseOver = false;
-        while(!(movingPhaseOver)){
-            
-        }
-        movingPhaseOver = false;
-        
-    }
     
     
     
@@ -428,6 +433,7 @@ public class GameController implements Initializable {
             boardTiles[row][0] = offBoardTemp;
         }
         makeBoard();
+        checkItemFound();
     }
     
     public void startMoveColumn(int column, int direction) throws Exception{
@@ -524,6 +530,7 @@ public class GameController implements Initializable {
             boardTiles[0][column] = offBoardTemp;
         }
         makeBoard();
+        checkItemFound();
     }
     
     public void updateTileLoc(){
@@ -944,7 +951,6 @@ public class GameController implements Initializable {
     }
     
     
-    @FXML
     private void btnTurnSwap(ActionEvent event) {
         switch(playerTurn){
             case 0:

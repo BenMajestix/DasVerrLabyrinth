@@ -238,5 +238,8 @@
          </image>
       </ImageView>
       <Label fx:id="lblInstr" layoutX="281.0" layoutY="54.0" prefHeight="17.0" prefWidth="606.0" text="Label" />
+      <ImageView fx:id="imgObj1" fitHeight="247.0" fitWidth="152.0" layoutX="989.0" layoutY="644.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgObj2" fitHeight="247.0" fitWidth="152.0" layoutX="1144.0" layoutY="641.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgObj3" fitHeight="247.0" fitWidth="152.0" layoutX="1324.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

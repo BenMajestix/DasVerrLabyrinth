@@ -72,42 +72,42 @@ public class App extends Application {
                         //Wenn es ein Feld für eine Random Karte befüllt wird wird die getRandomTile Funktion aufgerufen
                         //Diese Funktion gibt ein Tile zurück, welches noch nicht benutzt ist.
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, "coins", false, "t-crossing", null); break;
+                        case 2: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, allItems.get(4), false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, "bible", false, "t-crossing", null); break;
+                        case 4: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, allItems.get(2), false, "t-crossing", null); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 6: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), false, null, false, "turn", null); break;//Unten links
                     }
                 }
                 if(y == 2){
                     switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, "skull", false, "t-crossing", null); break;
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, allItems.get(20), false, "t-crossing", null); break;
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, "keys", false, "t-crossing", null); break;
+                        case 2: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), true, allItems.get(11), false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "crown", false, "t-crossing", null); break;
+                        case 4: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, allItems.get(5), false, "t-crossing", null); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "map", false, "t-crossing", null); break;
+                        case 6: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, allItems.get(12), false, "t-crossing", null); break;
                     }
                 }
                 if(y == 4){
                     switch(x){
-                        case 0: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, "sword", false, "t-crossing", null); break;
+                        case 0: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, allItems.get(22), false, "t-crossing", null); break;
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, "emerald", false, "t-crossing", null); break;
+                        case 2: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), true, allItems.get(7), false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, "chest", false, "t-crossing", null); break;
+                        case 4: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, allItems.get(3), false, "t-crossing", null); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 6: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, "ring", false, "t-crossing", null); break;
+                        case 6: boardTiles[x][y] = new tileModel(new locationModel(0, x, y, false), true, allItems.get(17), false, "t-crossing", null); break;
                     }
                 }
                 if(y == 6){
                     switch(x){
                         case 0: boardTiles[x][y] = new tileModel(new locationModel(90, x, y, false), false, null, false, "turn", null); break;//Oben rechts
                         case 1: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 2: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, "helmet", false, "t-crossing", null); break;
+                        case 2: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, allItems.get(10), false, "t-crossing", null); break;
                         case 3: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
-                        case 4: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, "candleHolder", false, "t-crossing", null); break;
+                        case 4: boardTiles[x][y] = new tileModel(new locationModel(270, x, y, false), true, allItems.get(1), false, "t-crossing", null); break;
                         case 5: boardTiles[x][y] = getRandomTile(); boardTiles[x][y].location.xCoor = x; boardTiles[x][y].location.yCoor = y; break;
                         case 6: boardTiles[x][y] = new tileModel(new locationModel(180, x, y, false), false, null, false, "turn", null); break;//unten rechts
                     }
@@ -176,12 +176,12 @@ public class App extends Application {
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn", new Image(fileT.toURI().toString())));
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn", new Image(fileT.toURI().toString())));
         //turns with tiles
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "owl", false, "turn", new Image(file7.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "moth", false, "turn", new Image(file5.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "mouse", false, "turn", new Image(file6.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "spider", false, "turn", new Image(file10.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "scarab", false, "turn", new Image(file0.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "salamander", false, "turn", new Image(file9.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(15), false, "turn", new Image(file7.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(13), false, "turn", new Image(file5.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(14), false, "turn", new Image(file6.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(21), false, "turn", new Image(file10.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(19), false, "turn", new Image(file0.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(18), false, "turn", new Image(file9.toURI().toString())));
         
         //STRAIGHTS
         //all empty
@@ -198,17 +198,18 @@ public class App extends Application {
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "straight", new Image(file.toURI().toString())));
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "straight", new Image(file.toURI().toString())));
         
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "witch", false, "t-crossing", new Image(file11.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "dragon", false, "t-crossing", new Image(file2.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "poltergeist", false, "t-crossing", new Image(file8.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "ghost", false, "t-crossing", new Image(file3.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "bat", false, "t-crossing", new Image(file1.toURI().toString())));
-        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, "gnome", false, "t-crossing", new Image(file4.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(23), false, "t-crossing", new Image(file11.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(6), false, "t-crossing", new Image(file2.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(16), false, "t-crossing", new Image(file8.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(8), false, "t-crossing", new Image(file3.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(0), false, "t-crossing", new Image(file1.toURI().toString())));
+        allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), true, allItems.get(9), false, "t-crossing", new Image(file4.toURI().toString())));
     }
     
     public static itemModel getRndmItem(){
         int rndm = (int) (Math.random() * allItems.size());
         itemModel item = allItems.get(rndm);
+        allItems.remove(rndm);
         return item;
     }
     
@@ -268,26 +269,25 @@ public class App extends Application {
         allItems.add(bibleItem);
         allItems.add(chestItem);
         allItems.add(coinsItem);
-        allItems.add(crownItem);
+        allItems.add(crownItem);//5
         allItems.add(dragonItem);
         allItems.add(emeraldItem);
         allItems.add(ghostItem);
         allItems.add(gnomeItem);
-        allItems.add(helmetItem);
+        allItems.add(helmetItem);//10
         allItems.add(keysItem);
         allItems.add(mapItem);
         allItems.add(mothItem);
         allItems.add(mouseItem);
-        allItems.add(owlItem);
+        allItems.add(owlItem);//15
         allItems.add(poltergeistItem);
         allItems.add(ringItem);
         allItems.add(salamanderItem);
         allItems.add(scarabItem);
-        allItems.add(skullItem);
+        allItems.add(skullItem);//20
         allItems.add(spiderItem);
         allItems.add(swordItem);
         allItems.add(witchItem);
-        
     }
     
     public void resetGame(){
