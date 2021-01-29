@@ -2,11 +2,12 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" onMouseReleased="#mouseReleased" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
+<AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.GameController">
     <stylesheets>
         <URL value="@/styles/gameview.css" />
     </stylesheets>
@@ -216,7 +217,6 @@
       <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="628.0" layoutY="459.0" onDragDropped="#Ti44DragDrop" onDragOver="#Ti44DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="802.0" layoutY="460.0" onDragDropped="#Ti46DragDrop" onDragOver="#Ti46DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="87.0" fitWidth="88.0" layoutX="799.0" layoutY="632.0" onDragDropped="#Ti66DragDrop" onDragOver="#Ti66DragOver" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="1010.0" layoutY="364.0" mnemonicParsing="false" onAction="#btnTurnSwap" text="TURN ON" />
       <ImageView fx:id="player_blue" fitHeight="55.0" fitWidth="55.0" layoutX="0" layoutY="0" onDragDetected="#bluePlayerDragDetec" onMouseDragged="#bluePlayerDrag" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/blue_player.png" />
@@ -232,10 +232,11 @@
             <Image url="@../../../all_tiles/yellow_player.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="player_red" fitHeight="55.0" fitWidth="55.0" layoutX="0" layoutY="0" onDragDetected="#redPlayerDragDetec" onMouseDragged="#redPlayerDrag" onMouseReleased="#mouseReleased" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="player_red" fitHeight="55.0" fitWidth="55.0" layoutX="0" layoutY="0" onDragDetected="#redPlayerDragDetec" onMouseDragged="#redPlayerDrag" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/red_player.png" />
          </image>
       </ImageView>
+      <Label fx:id="lblInstr" layoutX="281.0" layoutY="54.0" prefHeight="17.0" prefWidth="606.0" text="Label" />
    </children>
 </AnchorPane>
