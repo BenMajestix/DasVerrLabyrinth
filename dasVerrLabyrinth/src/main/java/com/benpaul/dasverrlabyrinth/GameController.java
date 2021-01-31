@@ -11,20 +11,19 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 
 /**
@@ -32,132 +31,13 @@ import javafx.scene.paint.Color;
  *
  * @author benbartel
  */
-public class GameController implements Initializable {
+public class GameController extends GameControllerVar implements Initializable {
 
-    boolean objecFound;
-    //Straight
-    Image imageS;
-    //Turn
-    Image imageT;
-    //Alle Images mit Objekten
-    Image imageBat;
-    Image imageDragon;
-    Image imageGhost;
-    Image imageGnome;
-    Image imageMoth;
-    Image imageMouse;
-    Image imageOwl;
-    Image imagePoltergeist;
-    Image imageSalamander;
-    Image imageScarab;
-    Image imageSpider;
-    Image imageWitch;
-    
-    @FXML
-    private ImageView i10;
-    @FXML
-    private ImageView i30;
-    @FXML
-    private ImageView i50;
-    @FXML
-    private ImageView i01;
-    @FXML
-    private ImageView i11;
-    @FXML
-    private ImageView i21;
-    @FXML
-    private ImageView i31;
-    @FXML
-    private ImageView i41;
-    @FXML
-    private ImageView i51;
-    @FXML
-    private ImageView i61;
-    @FXML
-    private ImageView i12;
-    @FXML
-    private ImageView i32;
-    @FXML
-    private ImageView i52;
-    @FXML
-    private ImageView i03;
-    @FXML
-    private ImageView i13;
-    @FXML
-    private ImageView i23;
-    @FXML
-    private ImageView i33;
-    @FXML
-    private ImageView i43;
-    @FXML
-    private ImageView i53;
-    @FXML
-    private ImageView i63;
-    @FXML
-    private ImageView i14;
-    @FXML
-    private ImageView i34;
-    @FXML
-    private ImageView i54;
-    @FXML
-    private ImageView i05;
-    @FXML
-    private ImageView i15;
-    @FXML
-    private ImageView i25;
-    @FXML
-    private ImageView i35;
-    @FXML
-    private ImageView i45;
-    @FXML
-    private ImageView i55;
-    @FXML
-    private ImageView i65;
-    @FXML
-    private ImageView i16;
-    @FXML
-    private ImageView i36;
-    @FXML
-    private ImageView i56;
-    @FXML
-    private ImageView currTile;
-    @FXML
-    private ImageView imgBackgr;
-
-    @FXML
-    private ImageView player_red;
-    @FXML
-    private ImageView player_yellow;
-    @FXML
-    private ImageView player_blue;
-    @FXML
-    private ImageView player_green;
-    //For testing, for removal later
-    private TextField txtAlgoStart;
-    private TextField txtAlgoEnd;
-    
-    //The first Phase of a move, where the Player is putting a tile onto the Board
-    boolean tilePhaseOver = false;
-    //The second Phase of a move, where the Player is moving his piece
-    boolean movingPhaseOver = false;
-    
-    private int playerTurn;
-    
-    private final int[] tileXCoor = new int[7];
-    private final int[] tileYCoor = new int[7];
-    
-    boolean gameOver;
-    @FXML
-    private Label lblInstr;
-    @FXML
-    private ImageView imgObj1;
-    @FXML
-    private ImageView imgObj2;
-    @FXML
-    private ImageView imgObj3;
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -334,7 +214,21 @@ public class GameController implements Initializable {
         lblInstr.setText("Der Spieler " + player + "ist am Zug und muss " + instr);
     }
     
-    
+    @FXML
+    private void tryAnimat(ActionEvent event) {
+        
+        
+        
+        /*TranslateTransition newTranslate = new TranslateTransition();
+        newTranslate.setDuration(Duration.millis(2000));
+        newTranslate.setNode(currTile);
+        newTranslate.setByX(500);
+        newTranslate.setByY(400);
+        newTranslate.setCycleCount(1);
+        newTranslate.setAutoReverse(false);
+        //newTranslate.
+        newTranslate.play();*/
+    }
     
     
     public void startMoveRow(int row, int direction) throws Exception{
@@ -544,8 +438,6 @@ public class GameController implements Initializable {
     }
     
     
-    
-    
     public void makeBoard(){
         i01.setImage(App.boardTiles[0][1].tileImage);
         i03.setImage(App.boardTiles[0][3].tileImage);
@@ -678,17 +570,6 @@ public class GameController implements Initializable {
     
     //ALGORITHM
     //---------------
-    
-    private void tryAlg(ActionEvent event) throws Exception{
-        String[] koorStart = txtAlgoStart.getText().split(" ");
-        String[] koorEnd = txtAlgoEnd.getText().split(" ");
-        int startX = Integer.parseInt(koorStart[0]);
-        int startY = Integer.parseInt(koorStart[1]);
-        int endX = Integer.parseInt(koorEnd[0]);
-        int endY = Integer.parseInt(koorEnd[1]);
-        
-        startAlg(startX, startY, endX, endY);
-    }
     
     //Tiles which are connected to the startTile, but not yet looked at.
     ArrayList<algoTile> currObsTile = new ArrayList();
@@ -890,8 +771,6 @@ public class GameController implements Initializable {
         return w;
     }
 
-    
-
     public class algoTile{
         Integer fromDir;
         tileModel tile;
@@ -902,26 +781,56 @@ public class GameController implements Initializable {
         }
     }
     
-    
-    
     //--------------
     //Algorithm Done
-        
+    
+    
+    /*
+    public void startCompTurn(){
+        for(int i = 1; i <= 12; i++){
+            int row, column, dir;
+            if(i <= 3){column = 1; dir = 1;}
+            else if(i >= 4 && i <= 6){}
+            else if(i >= 7 && i <= 9){}
+            else if(i >= 10 && i <= 12){}
+            for(int o = 0; o < 4; o++){
+                tileModel[][] tempBoard = new tileModel[7][7];
+                tempBoard = App.boardTiles;
+                
+            }
+        }
+    }
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     //Rotates the Off-Board Tile
     @FXML
     private void currTileRight(ActionEvent event) {
         
-        if(currTile.getRotate() == 270){
-            currTile.setRotate(0);
+        RotateTransition newTrans = new RotateTransition();
+        newTrans.setDuration(Duration.millis(200));
+        newTrans.setNode(currTile);
+        newTrans.setByAngle(90);
+        newTrans.setCycleCount(1);
+        newTrans.setAutoReverse(false);
+        newTrans.play();
+        
+        if(App.offBoardTile.location.rotation == 270){
             App.offBoardTile.location.setRotation(0);
         }
-        else{
-            currTile.setRotate(currTile.getRotate() + 90);   
+        else{  
             App.offBoardTile.location.setRotation(App.offBoardTile.location.rotation + 90);
         }
-        System.out.println("Rotate OffBoard Tile to: " + currTile.getRotate());
+        System.out.println("Rotate OffBoard Tile to: " + App.offBoardTile.location.rotation);
     }
     
     
