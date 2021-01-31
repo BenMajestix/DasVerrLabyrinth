@@ -116,6 +116,7 @@ public class GameControllerVar {
     public ImageView player_green;
     //For testing, for removal later
     public TextField txtAlgoStart;
+    
     public TextField txtAlgoEnd;
     
     //The first Phase of a move, where the Player is putting a tile onto the Board

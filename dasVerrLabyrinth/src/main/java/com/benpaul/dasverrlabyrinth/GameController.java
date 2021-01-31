@@ -11,8 +11,11 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
@@ -241,7 +244,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
     
     
-    public void moveRow(int row, int direction){
+    public void moveRow(int row, int direction) throws InterruptedException{
         //Von rechts schiebend
         if(direction == 0){
             //Es werden alle Vier Spieler durchgegangen
@@ -272,7 +275,6 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
             }
-            
             tileModel offBoardTemp = offBoardTile;
             
             offBoardTile = boardTiles[row][0];
@@ -283,6 +285,219 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[row][4] = boardTiles[row][5];
             boardTiles[row][5] = boardTiles[row][6];
             boardTiles[row][6] = offBoardTemp;
+            
+            TranslateTransition rowTranslate1 = new TranslateTransition();
+            TranslateTransition rowTranslate2 = new TranslateTransition();
+            TranslateTransition rowTranslate3 = new TranslateTransition();
+            TranslateTransition rowTranslate4 = new TranslateTransition();
+            TranslateTransition rowTranslate5 = new TranslateTransition();
+            TranslateTransition rowTranslate6 = new TranslateTransition();
+            TranslateTransition rowTranslate7 = new TranslateTransition();
+            
+            switch(row){
+                case 1: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i16);
+                    rowTranslate1.setByX(-84);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i15);
+                    rowTranslate2.setByX(-87);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i14);
+                    rowTranslate3.setByX(-83);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i13);
+                    rowTranslate4.setByX(-89);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i12);
+                    rowTranslate5.setByX(-83);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i11);
+                    rowTranslate6.setByX(-89);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i10);
+                    rowTranslate7.setByX(782);
+                    rowTranslate7.setByY(-105);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            i16.setX(i16.getX() + 84);
+                            i15.setX(i15.getX() + 87);
+                            i14.setX(i14.getX() + 83);
+                            i13.setX(i13.getX() + 89);
+                            i12.setX(i12.getX() + 83);
+                            i11.setX(i11.getX() + 89);
+                            i10.setX(i10.getX() - 782);
+                            i10.setY(i10.getY() + 105);
+                            makeBoard();
+                        }
+                    });
+                    break;
+                case 3: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i36);
+                    rowTranslate1.setByX(-84);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i35);
+                    rowTranslate2.setByX(-87);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i34);
+                    rowTranslate3.setByX(-83);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i33);
+                    rowTranslate4.setByX(-89);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i32);
+                    rowTranslate5.setByX(-83);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i31);
+                    rowTranslate6.setByX(-89);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i30);
+                    rowTranslate7.setByX(782);
+                    rowTranslate7.setByY(-188);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            i36.setX(i36.getX() + 84);
+                            i35.setX(i35.getX() + 87);
+                            i34.setX(i34.getX() + 83);
+                            i33.setX(i33.getX() + 89);
+                            i32.setX(i32.getX() + 83);
+                            i31.setX(i31.getX() + 89);
+                            i30.setX(i30.getX() - 782);
+                            i30.setY(i30.getY() + 188);
+                            makeBoard();
+                        }
+                    });
+                    break;
+                case 5: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i56);
+                    rowTranslate1.setByX(-84);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i55);
+                    rowTranslate2.setByX(-87);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i54);
+                    rowTranslate3.setByX(-83);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i53);
+                    rowTranslate4.setByX(-89);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i52);
+                    rowTranslate5.setByX(-83);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i51);
+                    rowTranslate6.setByX(-89);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i50);
+                    rowTranslate7.setByX(782);
+                    rowTranslate7.setByY(-276);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            i56.setX(i56.getX() + 84);
+                            i55.setX(i55.getX() + 87);
+                            i54.setX(i54.getX() + 83);
+                            i53.setX(i53.getX() + 89);
+                            i52.setX(i52.getX() + 83);
+                            i51.setX(i51.getX() + 89);
+                            i50.setX(i50.getX() - 782);
+                            i50.setY(i50.getY() + 276);
+                            makeBoard();
+                        }
+                    });
+                    break;
+                
+            }
+            
+            
+            
         }
         //von links schiebend
         else if(direction == 1){
@@ -314,7 +529,6 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
             }
-            
             tileModel offBoardTemp = offBoardTile;
             
             offBoardTile = boardTiles[row][6];
@@ -325,8 +539,218 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[row][2] = boardTiles[row][1];
             boardTiles[row][1] = boardTiles[row][0];
             boardTiles[row][0] = offBoardTemp;
+            
+            TranslateTransition rowTranslate1 = new TranslateTransition();
+            TranslateTransition rowTranslate2 = new TranslateTransition();
+            TranslateTransition rowTranslate3 = new TranslateTransition();
+            TranslateTransition rowTranslate4 = new TranslateTransition();
+            TranslateTransition rowTranslate5 = new TranslateTransition();
+            TranslateTransition rowTranslate6 = new TranslateTransition();
+            TranslateTransition rowTranslate7 = new TranslateTransition();
+            
+            switch(row){
+                case 1: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i16);
+                    rowTranslate1.setByX(+267);
+                    rowTranslate1.setByY(-105);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i15);
+                    rowTranslate2.setByX(84);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i14);
+                    rowTranslate3.setByX(87);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i13);
+                    rowTranslate4.setByX(83);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i12);
+                    rowTranslate5.setByX(89);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i11);
+                    rowTranslate6.setByX(83);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i10);
+                    rowTranslate7.setByX(89);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            i16.setX(i16.getX() - 267);
+                            i16.setY(i16.getY() + 105);
+                            i15.setX(i15.getX() - 84);
+                            i14.setX(i14.getX() - 87);
+                            i13.setX(i13.getX() - 83);
+                            i12.setX(i12.getX() - 89);
+                            i11.setX(i11.getX() - 83);
+                            i10.setX(i10.getX() - 89);
+                            makeBoard();
+                        }
+                    });
+                    break;
+                case 3: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i36);
+                    rowTranslate1.setByX(+267);
+                    rowTranslate1.setByY(-276);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i35);
+                    rowTranslate2.setByX(84);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i34);
+                    rowTranslate3.setByX(87);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i33);
+                    rowTranslate4.setByX(83);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i32);
+                    rowTranslate5.setByX(89);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i31);
+                    rowTranslate6.setByX(83);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i30);
+                    rowTranslate7.setByX(89);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            i36.setX(i36.getX() - 267);
+                            i36.setY(i36.getY() + 276);
+                            i35.setX(i35.getX() - 84);
+                            i34.setX(i34.getX() - 87);
+                            i33.setX(i33.getX() - 83);
+                            i32.setX(i32.getX() - 89);
+                            i31.setX(i31.getX() - 83);
+                            i30.setX(i30.getX() - 89);
+                            makeBoard();
+                        }
+                    });
+                    break;
+                case 5: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i56);
+                    rowTranslate1.setByX(+267);
+                    rowTranslate1.setByY(-450);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i55);
+                    rowTranslate2.setByX(84);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i54);
+                    rowTranslate3.setByX(87);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i53);
+                    rowTranslate4.setByX(83);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i52);
+                    rowTranslate5.setByX(89);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i51);
+                    rowTranslate6.setByX(83);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i50);
+                    rowTranslate7.setByX(89);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            i56.setX(i56.getX() - 267);
+                            i56.setY(i56.getY() + 450);
+                            i55.setX(i55.getX() - 84);
+                            i54.setX(i54.getX() - 87);
+                            i53.setX(i53.getX() - 83);
+                            i52.setX(i52.getX() - 89);
+                            i51.setX(i51.getX() - 83);
+                            i50.setX(i50.getX() - 89);
+                            makeBoard();
+                        }
+                    });
+                    break;
+                
+            }
         }
-        makeBoard();
+        //makeBoard();
         checkItemFound();
     }
     
@@ -381,6 +805,210 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[4][column] = boardTiles[5][column];
             boardTiles[5][column] = boardTiles[6][column];
             boardTiles[6][column] = offBoardTemp;
+            
+            TranslateTransition rowTranslate1 = new TranslateTransition();
+            TranslateTransition rowTranslate2 = new TranslateTransition();
+            TranslateTransition rowTranslate3 = new TranslateTransition();
+            TranslateTransition rowTranslate4 = new TranslateTransition();
+            TranslateTransition rowTranslate5 = new TranslateTransition();
+            TranslateTransition rowTranslate6 = new TranslateTransition();
+            TranslateTransition rowTranslate7 = new TranslateTransition();
+            
+            switch(column){
+                case 1: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i01);
+                    rowTranslate1.setByX(+693);
+                    rowTranslate1.setByY(-16);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i11);
+                    rowTranslate2.setByY(-89);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i21);
+                    rowTranslate3.setByY(-83);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i31);
+                    rowTranslate4.setByY(-88);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i41);
+                    rowTranslate5.setByY(-83);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i51);
+                    rowTranslate6.setByY(-91);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i61);
+                    rowTranslate7.setByY(-81);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished((ActionEvent event) -> {
+                        i01.setY(i01.getY() + 16);
+                        i01.setX(i01.getX() - 693);
+                        
+                        i61.setY(i61.getY() + 81);
+                        i51.setY(i51.getY() + 91);
+                        i41.setY(i41.getY() + 83);
+                        i31.setY(i31.getY() + 88);
+                        i21.setY(i21.getY() + 83);
+                        i11.setY(i11.getY() + 89);
+                        makeBoard();
+                    });
+                    break;
+                case 3: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i03);
+                    rowTranslate1.setByX(+521);
+                    rowTranslate1.setByY(-16);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i13);
+                    rowTranslate2.setByY(-89);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i23);
+                    rowTranslate3.setByY(-83);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i33);
+                    rowTranslate4.setByY(-88);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i43);
+                    rowTranslate5.setByY(-83);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i53);
+                    rowTranslate6.setByY(-91);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i63);
+                    rowTranslate7.setByY(-81);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished((ActionEvent event) -> {
+                        i03.setY(i03.getY() + 16);
+                        i03.setX(i03.getX() - 521);
+                        
+                        i63.setY(i63.getY() + 81);
+                        i53.setY(i53.getY() + 91);
+                        i43.setY(i43.getY() + 83);
+                        i33.setY(i33.getY() + 88);
+                        i23.setY(i23.getY() + 83);
+                        i13.setY(i13.getY() + 89);
+                        makeBoard();
+                    });
+                    break;
+                case 5: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i05);
+                    rowTranslate1.setByX(+351);
+                    rowTranslate1.setByY(-16);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i15);
+                    rowTranslate2.setByY(-89);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i25);
+                    rowTranslate3.setByY(-83);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i35);
+                    rowTranslate4.setByY(-88);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i45);
+                    rowTranslate5.setByY(-83);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i55);
+                    rowTranslate6.setByY(-91);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i65);
+                    rowTranslate7.setByY(-81);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished((ActionEvent event) -> {
+                        i05.setY(i05.getY() + 16);
+                        i05.setX(i05.getX() - 351);
+                        
+                        i65.setY(i65.getY() + 81);
+                        i55.setY(i55.getY() + 91);
+                        i45.setY(i45.getY() + 83);
+                        i35.setY(i35.getY() + 88);
+                        i25.setY(i25.getY() + 83);
+                        i15.setY(i15.getY() + 89);
+                        makeBoard();
+                    });
+                    break;
+                
+            }
         }
         //von oben schiebend
         else if(direction == 1){
@@ -422,8 +1050,208 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[2][column] = boardTiles[1][column];
             boardTiles[1][column] = boardTiles[0][column];
             boardTiles[0][column] = offBoardTemp;
+            
+            TranslateTransition rowTranslate1 = new TranslateTransition();
+            TranslateTransition rowTranslate2 = new TranslateTransition();
+            TranslateTransition rowTranslate3 = new TranslateTransition();
+            TranslateTransition rowTranslate4 = new TranslateTransition();
+            TranslateTransition rowTranslate5 = new TranslateTransition();
+            TranslateTransition rowTranslate6 = new TranslateTransition();
+            TranslateTransition rowTranslate7 = new TranslateTransition();
+            
+            switch(column){
+                case 1: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i01);
+                    rowTranslate1.setByY(89);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i11);
+                    rowTranslate2.setByY(83);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i21);
+                    rowTranslate3.setByY(88);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i31);
+                    rowTranslate4.setByY(83);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i41);
+                    rowTranslate5.setByY(91);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i51);
+                    rowTranslate6.setByY(81);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i61);
+                    rowTranslate7.setByY(-531);
+                    rowTranslate7.setByX(+693);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished((ActionEvent event) -> {
+                        i61.setY(i61.getY() + 531);
+                        i61.setX(i61.getX() - 693);
+                        i51.setY(i51.getY() - 81);
+                        i41.setY(i41.getY() - 91);
+                        i31.setY(i31.getY() - 83);
+                        i21.setY(i21.getY() - 88);
+                        i11.setY(i11.getY() - 83);
+                        i01.setY(i01.getY() - 89);
+                        makeBoard();
+                    });
+                    break;
+                case 3: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i03);
+                    rowTranslate1.setByY(89);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i13);
+                    rowTranslate2.setByY(83);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i23);
+                    rowTranslate3.setByY(88);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i33);
+                    rowTranslate4.setByY(83);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i43);
+                    rowTranslate5.setByY(91);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i53);
+                    rowTranslate6.setByY(81);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i63);
+                    rowTranslate7.setByY(-531);
+                    rowTranslate7.setByX(+521);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished((ActionEvent event) -> {
+                        i63.setY(i63.getY() + 531);
+                        i63.setX(i63.getX() - 521);
+                        i53.setY(i53.getY() - 81);
+                        i43.setY(i43.getY() - 91);
+                        i33.setY(i33.getY() - 83);
+                        i23.setY(i23.getY() - 88);
+                        i13.setY(i13.getY() - 83);
+                        i03.setY(i03.getY() - 89);
+                        makeBoard();
+                    });
+                    break;
+                case 5: 
+                    rowTranslate1.setDuration(Duration.millis(500));
+                    rowTranslate1.setCycleCount(1);
+                    rowTranslate1.setAutoReverse(false);
+                    rowTranslate1.setNode(i05);
+                    rowTranslate1.setByY(89);
+                    rowTranslate1.play();
+                    
+                    rowTranslate2.setDuration(Duration.millis(500));
+                    rowTranslate2.setCycleCount(1);
+                    rowTranslate2.setAutoReverse(false);
+                    rowTranslate2.setNode(i15);
+                    rowTranslate2.setByY(83);
+                    rowTranslate2.play();
+                    
+                    rowTranslate3.setDuration(Duration.millis(500));
+                    rowTranslate3.setCycleCount(1);
+                    rowTranslate3.setAutoReverse(false);
+                    rowTranslate3.setNode(i25);
+                    rowTranslate3.setByY(88);
+                    rowTranslate3.play();
+                    
+                    rowTranslate4.setDuration(Duration.millis(500));
+                    rowTranslate4.setCycleCount(1);
+                    rowTranslate4.setAutoReverse(false);
+                    rowTranslate4.setNode(i35);
+                    rowTranslate4.setByY(83);
+                    rowTranslate4.play();
+                    
+                    rowTranslate5.setDuration(Duration.millis(500));
+                    rowTranslate5.setCycleCount(1);
+                    rowTranslate5.setAutoReverse(false);
+                    rowTranslate5.setNode(i45);
+                    rowTranslate5.setByY(91);
+                    rowTranslate5.play();
+                    
+                    rowTranslate6.setDuration(Duration.millis(500));
+                    rowTranslate6.setCycleCount(1);
+                    rowTranslate6.setAutoReverse(false);
+                    rowTranslate6.setNode(i55);
+                    rowTranslate6.setByY(81);
+                    rowTranslate6.play();
+                    
+                    rowTranslate7.setDuration(Duration.millis(500));
+                    rowTranslate7.setCycleCount(1);
+                    rowTranslate7.setAutoReverse(false);
+                    rowTranslate7.setNode(i65);
+                    rowTranslate7.setByY(-531);
+                    rowTranslate7.setByX(+351);
+                    rowTranslate7.play();
+                    
+                    rowTranslate7.setOnFinished((ActionEvent event) -> {
+                        i65.setY(i65.getY() + 531);
+                        i65.setX(i65.getX() - 351);
+                        i55.setY(i55.getY() - 81);
+                        i45.setY(i45.getY() - 91);
+                        i35.setY(i35.getY() - 83);
+                        i25.setY(i25.getY() - 88);
+                        i15.setY(i15.getY() - 83);
+                        i05.setY(i05.getY() - 89);
+                        makeBoard();
+                    });
+                break;
+            }
         }
-        makeBoard();
+        //makeBoard();
         checkItemFound();
     }
     
@@ -1077,7 +1905,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp4DragDrop(DragEvent event) {
+    private void dp4DragDrop(DragEvent event) throws InterruptedException {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 4");
@@ -1100,7 +1928,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp5DragDrop(DragEvent event) {
+    private void dp5DragDrop(DragEvent event) throws InterruptedException {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 5");
@@ -1123,7 +1951,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp6DragDrop(DragEvent event) {
+    private void dp6DragDrop(DragEvent event) throws InterruptedException {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 6");
@@ -1215,7 +2043,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp10DragDrop(DragEvent event) {
+    private void dp10DragDrop(DragEvent event) throws InterruptedException {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 10");
@@ -1238,7 +2066,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp11DragDrop(DragEvent event) {
+    private void dp11DragDrop(DragEvent event) throws InterruptedException {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 11");
@@ -1261,7 +2089,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp12DragDrop(DragEvent event) {
+    private void dp12DragDrop(DragEvent event) throws InterruptedException {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 12");
