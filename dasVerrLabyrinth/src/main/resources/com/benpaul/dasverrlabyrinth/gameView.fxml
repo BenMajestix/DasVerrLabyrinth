@@ -187,8 +187,8 @@
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="1069.0" layoutY="100.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="1085.0" layoutY="69.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
+      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="178.0" layoutY="795.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="191.0" layoutY="764.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
       <ImageView fx:id="dp01" fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dp02" fitHeight="56.0" fitWidth="80.0" layoutX="548.0" layoutY="53.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dp03" fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
@@ -238,9 +238,38 @@
          </image>
       </ImageView>
       <Label fx:id="lblInstr" layoutX="281.0" layoutY="54.0" prefHeight="17.0" prefWidth="606.0" text="Label" />
-      <ImageView fx:id="imgObj1" fitHeight="247.0" fitWidth="152.0" layoutX="989.0" layoutY="644.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgObj2" fitHeight="247.0" fitWidth="152.0" layoutX="1144.0" layoutY="641.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgObj3" fitHeight="247.0" fitWidth="152.0" layoutX="1324.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="758.0" layoutY="14.0" mnemonicParsing="false" onAction="#tryAnimat" text="Button" />
+      <ImageView fitHeight="118.0" fitWidth="500.0" layoutX="1000.0" layoutY="111.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../Colors/ROT.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="118.0" fitWidth="500.0" layoutX="1000.0" layoutY="333.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../Colors/BLAU.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="118.0" fitWidth="500.0" layoutX="1000.0" layoutY="553.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../Colors/GELB.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="118.0" fitWidth="500.0" layoutX="1000.0" layoutY="776.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../Colors/GRÜN.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgObjRed2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="70.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjRed1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="70.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjRed3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="70.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjBlue2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="291.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjBlue1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="291.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjBlue3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="291.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjYellow2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="512.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjYellow1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="512.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjYellow3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="512.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjGreen2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="735.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjGreen1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="735.0" pickOnBounds="true" />
+      <ImageView fx:id="imgObjGreen3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="735.0" pickOnBounds="true" />
    </children>
 </AnchorPane>

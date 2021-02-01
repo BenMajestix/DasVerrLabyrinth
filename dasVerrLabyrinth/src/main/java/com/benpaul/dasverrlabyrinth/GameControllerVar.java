@@ -133,11 +133,29 @@ public class GameControllerVar {
     @FXML
     public Label lblInstr;
     @FXML
-    public ImageView imgObj1;
+    public ImageView imgObjRed1;
     @FXML
-    public ImageView imgObj2;
+    public ImageView imgObjRed2;
     @FXML
-    public ImageView imgObj3;
+    public ImageView imgObjRed3;
+    @FXML
+    public ImageView imgObjBlue1;
+    @FXML
+    public ImageView imgObjBlue2;
+    @FXML
+    public ImageView imgObjBlue3;
+    @FXML
+    public ImageView imgObjYellow1;
+    @FXML
+    public ImageView imgObjYellow2;
+    @FXML
+    public ImageView imgObjYellow3;
+    @FXML
+    public ImageView imgObjGreen1;
+    @FXML
+    public ImageView imgObjGreen2;
+    @FXML
+    public ImageView imgObjGreen3;
     
     
     @FXML

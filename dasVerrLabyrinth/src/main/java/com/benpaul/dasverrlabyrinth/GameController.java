@@ -115,10 +115,81 @@ public class GameController extends GameControllerVar implements Initializable {
     
     public void runGame(){
         if(playerTurn == 4){playerTurn = 0;}
+            Image cardbackRed;
+            File cardbackRedFile = new File("src/main/resources/img/cardbackRed.png");
+            cardbackRed = new Image(cardbackRedFile.toURI().toString());
+            Image cardbackBlue;
+            File cardbackBlueFile = new File("src/main/resources/img/cardbackBlue.png");
+            cardbackBlue = new Image(cardbackBlueFile.toURI().toString());
+            Image cardbackYellow;
+            File cardbackYellowFile = new File("src/main/resources/img/cardbackYellow.png");
+            cardbackYellow = new Image(cardbackYellowFile.toURI().toString());
+            Image cardbackGreen;
+            File cardbackGreenFile = new File("src/main/resources/img/cardbackGreen.png");
+            cardbackGreen = new Image(cardbackGreenFile.toURI().toString());
         
-        imgObj1.setImage(App.players[playerTurn].items[0].img);
-        imgObj2.setImage(App.players[playerTurn].items[1].img);
-        imgObj3.setImage(App.players[playerTurn].items[2].img);
+            switch(playerTurn){
+                case 0:
+                    imgObjRed1.setImage(App.players[0].items[0].img);
+                    imgObjRed2.setImage(App.players[0].items[1].img);
+                    imgObjRed3.setImage(App.players[0].items[2].img);
+                    imgObjBlue1.setImage(cardbackBlue);
+                    imgObjBlue2.setImage(cardbackBlue);
+                    imgObjBlue3.setImage(cardbackBlue);
+                    imgObjYellow1.setImage(cardbackYellow);
+                    imgObjYellow2.setImage(cardbackYellow);
+                    imgObjYellow3.setImage(cardbackYellow);
+                    imgObjGreen1.setImage(cardbackGreen);
+                    imgObjGreen2.setImage(cardbackGreen);
+                    imgObjGreen3.setImage(cardbackGreen);
+                break;
+                
+                case 1:
+                    imgObjRed1.setImage(cardbackRed);
+                    imgObjRed2.setImage(cardbackRed);
+                    imgObjRed3.setImage(cardbackRed);
+                    imgObjBlue1.setImage(App.players[1].items[0].img);
+                    imgObjBlue2.setImage(App.players[1].items[1].img);
+                    imgObjBlue3.setImage(App.players[1].items[2].img);
+                    imgObjYellow1.setImage(cardbackYellow);
+                    imgObjYellow2.setImage(cardbackYellow);
+                    imgObjYellow3.setImage(cardbackYellow);
+                    imgObjGreen1.setImage(cardbackGreen);
+                    imgObjGreen2.setImage(cardbackGreen);
+                    imgObjGreen3.setImage(cardbackGreen);
+                break;
+                
+                case 2:
+                    imgObjRed1.setImage(cardbackRed);
+                    imgObjRed2.setImage(cardbackRed);
+                    imgObjRed3.setImage(cardbackRed);
+                    imgObjBlue1.setImage(cardbackBlue);
+                    imgObjBlue2.setImage(cardbackBlue);
+                    imgObjBlue3.setImage(cardbackBlue);
+                    imgObjYellow1.setImage(App.players[2].items[0].img);
+                    imgObjYellow2.setImage(App.players[2].items[1].img);
+                    imgObjYellow3.setImage(App.players[2].items[2].img);
+                    imgObjGreen1.setImage(cardbackGreen);
+                    imgObjGreen2.setImage(cardbackGreen);
+                    imgObjGreen3.setImage(cardbackGreen);
+                break;
+                
+                case 3:
+                    imgObjRed1.setImage(cardbackRed);
+                    imgObjRed2.setImage(cardbackRed);
+                    imgObjRed3.setImage(cardbackRed);
+                    imgObjBlue1.setImage(cardbackBlue);
+                    imgObjBlue2.setImage(cardbackBlue);
+                    imgObjBlue3.setImage(cardbackBlue);
+                    imgObjYellow1.setImage(cardbackYellow);
+                    imgObjYellow2.setImage(cardbackYellow);
+                    imgObjYellow3.setImage(cardbackYellow);
+                    imgObjGreen1.setImage(App.players[3].items[0].img);
+                    imgObjGreen2.setImage(App.players[3].items[1].img);
+                    imgObjGreen3.setImage(App.players[3].items[2].img);
+                break;
+            }
+                
         
         if(!(tilePhaseOver)){
             enableTilePhase();
