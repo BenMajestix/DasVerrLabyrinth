@@ -5,9 +5,14 @@
  */
 package com.benpaul.dasverrlabyrinth;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -16,12 +21,25 @@ import javafx.fxml.Initializable;
  */
 public class FinishController implements Initializable {
 
+    @FXML
+    private ImageView firstPlace;
+    @FXML
+    private ImageView secondPlace;
+    @FXML
+    private ImageView thirdPlace;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Image firstPlaceImg;
+        File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
+        firstPlaceImg = new Image(firstPlaceFile.toURI().toString());
     }    
+
+    @FXML
+    private void btnRestart(ActionEvent event) {
+    }
     
 }

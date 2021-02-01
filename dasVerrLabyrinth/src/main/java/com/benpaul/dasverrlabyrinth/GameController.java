@@ -89,6 +89,14 @@ public class GameController extends GameControllerVar implements Initializable {
         playerGreen.pos[0] = 6;
         playerGreen.pos[1] = 6;
         
+        playerRed.score = 0;
+        
+        playerBlue.score = 0;
+        
+        playerYellow.score = 0;
+        
+        playerGreen.score = 0;
+        
         tileXCoor[0] = 116;
         tileXCoor[1] = 205;
         tileXCoor[2] = 288;
@@ -205,6 +213,7 @@ public class GameController extends GameControllerVar implements Initializable {
         else if(tilePhaseOver && movingPhaseOver){
             for(int i = 0; i < 3; i++){
                 if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
+                    App.players[playerTurn].score = App.players[playerTurn].score + 1;
                     System.out.println("Tile youre looking for found.");
                     try{
                         App.players[playerTurn].items[i] = App.getRndmItem();
