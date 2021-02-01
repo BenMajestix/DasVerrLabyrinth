@@ -131,7 +131,7 @@ public class GameController extends GameControllerVar implements Initializable {
             Image cardbackGreen;
             File cardbackGreenFile = new File("src/main/resources/img/cardbackGreen.png");
             cardbackGreen = new Image(cardbackGreenFile.toURI().toString());
-        
+            
             switch(playerTurn){
                 case 0:
                     imgObjRed1.setImage(App.players[0].items[0].img);
@@ -205,7 +205,12 @@ public class GameController extends GameControllerVar implements Initializable {
             for(int i = 0; i < 3; i++){
                 if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
                     System.out.println("Tile youre looking for found.");
-                    App.players[playerTurn].items[i] = App.getRndmItem();
+                    try{
+                        App.players[playerTurn].items[i] = App.getRndmItem();
+                    }
+                    catch(NullPointerException NoCardsLeft){
+                        
+                    }
                 }
             }
             playerTurn++;
