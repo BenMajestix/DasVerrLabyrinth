@@ -8,12 +8,9 @@ package com.benpaul.dasverrlabyrinth;
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -197,7 +194,7 @@ public class GameController extends GameControllerVar implements Initializable {
                     imgObjGreen3.setImage(App.players[3].items[2].img);
                 break;
             }
-                
+        
         
         if(!(tilePhaseOver)){
             enableTilePhase();
@@ -214,7 +211,6 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                     catch(Exception e){
                         App.setRoot("finishView");
-                        
                     }
                 }
             }
@@ -426,8 +422,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setCycleCount(1);
                     rowTranslate7.setAutoReverse(false);
                     rowTranslate7.setNode(i10);
-                    rowTranslate7.setByX(782);
-                    rowTranslate7.setByY(-105);
+                    rowTranslate7.setByX(-217);
+                    rowTranslate7.setByY(273);
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
@@ -439,8 +435,8 @@ public class GameController extends GameControllerVar implements Initializable {
                             i13.setX(i13.getX() + 89);
                             i12.setX(i12.getX() + 83);
                             i11.setX(i11.getX() + 89);
-                            i10.setX(i10.getX() - 782);
-                            i10.setY(i10.getY() + 105);
+                            i10.setX(i10.getX() + 217);
+                            i10.setY(i10.getY() - 273);
                             makeBoard();
                         }
                     });
@@ -492,8 +488,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setCycleCount(1);
                     rowTranslate7.setAutoReverse(false);
                     rowTranslate7.setNode(i30);
-                    rowTranslate7.setByX(782);
-                    rowTranslate7.setByY(-188);
+                    rowTranslate7.setByX(-217);
+                    rowTranslate7.setByY(102);
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
@@ -505,8 +501,8 @@ public class GameController extends GameControllerVar implements Initializable {
                             i33.setX(i33.getX() + 89);
                             i32.setX(i32.getX() + 83);
                             i31.setX(i31.getX() + 89);
-                            i30.setX(i30.getX() - 782);
-                            i30.setY(i30.getY() + 188);
+                            i30.setX(i30.getX() + 217);
+                            i30.setY(i30.getY() - 102);
                             makeBoard();
                         }
                     });
@@ -558,8 +554,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setCycleCount(1);
                     rowTranslate7.setAutoReverse(false);
                     rowTranslate7.setNode(i50);
-                    rowTranslate7.setByX(782);
-                    rowTranslate7.setByY(-276);
+                    rowTranslate7.setByX(-217);
+                    rowTranslate7.setByY(-72);
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
@@ -571,8 +567,8 @@ public class GameController extends GameControllerVar implements Initializable {
                             i53.setX(i53.getX() + 89);
                             i52.setX(i52.getX() + 83);
                             i51.setX(i51.getX() + 89);
-                            i50.setX(i50.getX() - 782);
-                            i50.setY(i50.getY() + 276);
+                            i50.setX(i50.getX() + 217);
+                            i50.setY(i50.getY() + 72);
                             makeBoard();
                         }
                     });
@@ -638,8 +634,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
                     rowTranslate1.setNode(i16);
-                    rowTranslate1.setByX(+267);
-                    rowTranslate1.setByY(-105);
+                    rowTranslate1.setByX(- 732);
+                    rowTranslate1.setByY(+ 273);
                     rowTranslate1.play();
                     
                     rowTranslate2.setDuration(Duration.millis(500));
@@ -687,8 +683,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            i16.setX(i16.getX() - 267);
-                            i16.setY(i16.getY() + 105);
+                            i16.setX(i16.getX() + 732);
+                            i16.setY(i16.getY() - 273);
                             i15.setX(i15.getX() - 84);
                             i14.setX(i14.getX() - 87);
                             i13.setX(i13.getX() - 83);
@@ -704,8 +700,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
                     rowTranslate1.setNode(i36);
-                    rowTranslate1.setByX(+267);
-                    rowTranslate1.setByY(-276);
+                    rowTranslate1.setByX(-732);
+                    rowTranslate1.setByY(+102);
                     rowTranslate1.play();
                     
                     rowTranslate2.setDuration(Duration.millis(500));
@@ -753,8 +749,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            i36.setX(i36.getX() - 267);
-                            i36.setY(i36.getY() + 276);
+                            i36.setX(i36.getX() + 732);
+                            i36.setY(i36.getY() - 102);
                             i35.setX(i35.getX() - 84);
                             i34.setX(i34.getX() - 87);
                             i33.setX(i33.getX() - 83);
@@ -770,8 +766,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
                     rowTranslate1.setNode(i56);
-                    rowTranslate1.setByX(+267);
-                    rowTranslate1.setByY(-450);
+                    rowTranslate1.setByX(-732);
+                    rowTranslate1.setByY(-72);
                     rowTranslate1.play();
                     
                     rowTranslate2.setDuration(Duration.millis(500));
@@ -819,8 +815,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            i56.setX(i56.getX() - 267);
-                            i56.setY(i56.getY() + 450);
+                            i56.setX(i56.getX() + 732);
+                            i56.setY(i56.getY() + 72);
                             i55.setX(i55.getX() - 84);
                             i54.setX(i54.getX() - 87);
                             i53.setX(i53.getX() - 83);
@@ -831,7 +827,6 @@ public class GameController extends GameControllerVar implements Initializable {
                         }
                     });
                     break;
-                
             }
         }
         //makeBoard();
@@ -904,8 +899,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
                     rowTranslate1.setNode(i01);
-                    rowTranslate1.setByX(+693);
-                    rowTranslate1.setByY(-16);
+                    rowTranslate1.setByX(-306);
+                    rowTranslate1.setByY(+362);
                     rowTranslate1.play();
                     
                     rowTranslate2.setDuration(Duration.millis(500));
@@ -951,8 +946,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i01.setY(i01.getY() + 16);
-                        i01.setX(i01.getX() - 693);
+                        i01.setY(i01.getY() - 362);
+                        i01.setX(i01.getX() + 306);
                         
                         i61.setY(i61.getY() + 81);
                         i51.setY(i51.getY() + 91);
@@ -968,8 +963,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
                     rowTranslate1.setNode(i03);
-                    rowTranslate1.setByX(+521);
-                    rowTranslate1.setByY(-16);
+                    rowTranslate1.setByX(-478);
+                    rowTranslate1.setByY(+362);
                     rowTranslate1.play();
                     
                     rowTranslate2.setDuration(Duration.millis(500));
@@ -1015,8 +1010,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i03.setY(i03.getY() + 16);
-                        i03.setX(i03.getX() - 521);
+                        i03.setY(i03.getY() - 362);
+                        i03.setX(i03.getX() + 478);
                         
                         i63.setY(i63.getY() + 81);
                         i53.setY(i53.getY() + 91);
@@ -1032,8 +1027,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
                     rowTranslate1.setNode(i05);
-                    rowTranslate1.setByX(+351);
-                    rowTranslate1.setByY(-16);
+                    rowTranslate1.setByX(-648);
+                    rowTranslate1.setByY(+362);
                     rowTranslate1.play();
                     
                     rowTranslate2.setDuration(Duration.millis(500));
@@ -1079,8 +1074,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i05.setY(i05.getY() + 16);
-                        i05.setX(i05.getX() - 351);
+                        i05.setY(i05.getY() - 362);
+                        i05.setX(i05.getX() + 648);
                         
                         i65.setY(i65.getY() + 81);
                         i55.setY(i55.getY() + 91);
@@ -1190,13 +1185,13 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setCycleCount(1);
                     rowTranslate7.setAutoReverse(false);
                     rowTranslate7.setNode(i61);
-                    rowTranslate7.setByY(-531);
-                    rowTranslate7.setByX(+693);
+                    rowTranslate7.setByY(-153);
+                    rowTranslate7.setByX(-306);
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i61.setY(i61.getY() + 531);
-                        i61.setX(i61.getX() - 693);
+                        i61.setY(i61.getY() + 153);
+                        i61.setX(i61.getX() + 306);
                         i51.setY(i51.getY() - 81);
                         i41.setY(i41.getY() - 91);
                         i31.setY(i31.getY() - 83);
@@ -1253,13 +1248,13 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setCycleCount(1);
                     rowTranslate7.setAutoReverse(false);
                     rowTranslate7.setNode(i63);
-                    rowTranslate7.setByY(-531);
-                    rowTranslate7.setByX(+521);
+                    rowTranslate7.setByY(-153);
+                    rowTranslate7.setByX(-478);
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i63.setY(i63.getY() + 531);
-                        i63.setX(i63.getX() - 521);
+                        i63.setY(i63.getY() + 153);
+                        i63.setX(i63.getX() + 478);
                         i53.setY(i53.getY() - 81);
                         i43.setY(i43.getY() - 91);
                         i33.setY(i33.getY() - 83);
@@ -1316,13 +1311,13 @@ public class GameController extends GameControllerVar implements Initializable {
                     rowTranslate7.setCycleCount(1);
                     rowTranslate7.setAutoReverse(false);
                     rowTranslate7.setNode(i65);
-                    rowTranslate7.setByY(-531);
-                    rowTranslate7.setByX(+351);
+                    rowTranslate7.setByY(-153);
+                    rowTranslate7.setByX(-648);
                     rowTranslate7.play();
                     
                     rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i65.setY(i65.getY() + 531);
-                        i65.setX(i65.getX() - 351);
+                        i65.setY(i65.getY() + 153);
+                        i65.setX(i65.getX() + 648);
                         i55.setY(i55.getY() - 81);
                         i45.setY(i45.getY() - 91);
                         i35.setY(i35.getY() - 83);

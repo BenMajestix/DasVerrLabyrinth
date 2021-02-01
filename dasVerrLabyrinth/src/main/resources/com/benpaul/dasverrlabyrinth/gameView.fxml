@@ -187,8 +187,8 @@
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="178.0" layoutY="795.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="191.0" layoutY="764.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
+      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="70.0" layoutY="478.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="81.0" layoutY="443.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
       <ImageView fx:id="dp01" fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dp02" fitHeight="56.0" fitWidth="80.0" layoutX="548.0" layoutY="53.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dp03" fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
