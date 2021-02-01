@@ -319,7 +319,6 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
     
-    
     public void moveRow(int row, int direction) throws InterruptedException{
         //Von rechts schiebend
         if(direction == 0){
@@ -1083,7 +1082,6 @@ public class GameController extends GameControllerVar implements Initializable {
                         makeBoard();
                     });
                     break;
-                
             }
         }
         //von oben schiebend
