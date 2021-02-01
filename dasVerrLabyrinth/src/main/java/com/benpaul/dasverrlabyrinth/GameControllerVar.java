@@ -156,6 +156,10 @@ public class GameControllerVar {
     public ImageView imgObjGreen2;
     @FXML
     public ImageView imgObjGreen3;
+    @FXML
+    public Label labelCardsLeft;
+    @FXML
+    public ImageView cardStack;
     
     
     @FXML

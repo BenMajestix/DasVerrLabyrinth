@@ -114,6 +114,11 @@ public class GameController extends GameControllerVar implements Initializable {
     //--------------
     
     public void runGame(){
+        labelCardsLeft.setText(App.allItems.size() + "");
+        Image cardbackGeneral;
+        File cardbackGeneralFile = new File("src/main/resources/img/cardbackGeneral.png");
+        cardbackGeneral = new Image(cardbackGeneralFile.toURI().toString());
+        
         if(playerTurn == 4){playerTurn = 0;}
             Image cardbackRed;
             File cardbackRedFile = new File("src/main/resources/img/cardbackRed.png");

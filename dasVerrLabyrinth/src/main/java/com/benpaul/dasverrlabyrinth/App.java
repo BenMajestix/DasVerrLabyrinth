@@ -19,7 +19,7 @@ public class App extends Application {
     static tileModel[][] boardTiles =  new tileModel[7][7];
     static tileModel offBoardTile;
     public static playerModel[] players;
-    private static ArrayList<itemModel> allItems;
+    public static ArrayList<itemModel> allItems;
     
     private static Scene scene;
     

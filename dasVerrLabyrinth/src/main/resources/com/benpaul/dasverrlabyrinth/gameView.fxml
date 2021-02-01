@@ -271,5 +271,11 @@
       <ImageView fx:id="imgObjGreen2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="735.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjGreen1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="735.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjGreen3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="735.0" pickOnBounds="true" />
+      <ImageView fx:id="cardStack" fitHeight="206.0" fitWidth="148.0" layoutX="516.0" layoutY="732.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+         <image>
+            <Image url="@../../../img/cardbackGeneral.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelCardsLeft" layoutX="571.0" layoutY="827.0" text="Label" />
    </children>
 </AnchorPane>
