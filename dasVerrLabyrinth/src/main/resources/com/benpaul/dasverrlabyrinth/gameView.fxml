@@ -276,6 +276,6 @@
             <Image url="@../../../img/cardbackGeneral.png" />
          </image>
       </ImageView>
-      <Label fx:id="labelCardsLeft" layoutX="571.0" layoutY="827.0" text="Label" />
+      <Label fx:id="labelCardsLeft" layoutX="576.0" layoutY="827.0" text="Label" />
    </children>
 </AnchorPane>

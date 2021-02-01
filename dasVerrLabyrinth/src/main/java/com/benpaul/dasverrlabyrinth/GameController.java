@@ -8,9 +8,12 @@ package com.benpaul.dasverrlabyrinth;
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
 import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -106,17 +109,18 @@ public class GameController extends GameControllerVar implements Initializable {
         tileYCoor[6] = 802;
         
         
-        runGame();
+        try {
+            runGame();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     //GAME
     //--------------
     
-    public void runGame(){
+    public void runGame() throws Exception{
         labelCardsLeft.setText(App.allItems.size() + "");
-        Image cardbackGeneral;
-        File cardbackGeneralFile = new File("src/main/resources/img/cardbackGeneral.png");
-        cardbackGeneral = new Image(cardbackGeneralFile.toURI().toString());
         
         if(playerTurn == 4){playerTurn = 0;}
             Image cardbackRed;
@@ -208,7 +212,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     try{
                         App.players[playerTurn].items[i] = App.getRndmItem();
                     }
-                    catch(NullPointerException NoCardsLeft){
+                    catch(Exception e){
+                        App.setRoot("finishView");
                         
                     }
                 }
@@ -1915,7 +1920,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp1DragDrop(DragEvent event) {
+    private void dp1DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 1");
@@ -1937,7 +1942,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp2DragDrop(DragEvent event) {
+    private void dp2DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 2");
@@ -1960,7 +1965,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp3DragDrop(DragEvent event) {
+    private void dp3DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 3");
@@ -1983,7 +1988,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp4DragDrop(DragEvent event) throws InterruptedException {
+    private void dp4DragDrop(DragEvent event) throws InterruptedException, Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 4");
@@ -2006,7 +2011,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp5DragDrop(DragEvent event) throws InterruptedException {
+    private void dp5DragDrop(DragEvent event) throws InterruptedException, Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 5");
@@ -2029,7 +2034,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp6DragDrop(DragEvent event) throws InterruptedException {
+    private void dp6DragDrop(DragEvent event) throws InterruptedException, Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 6");
@@ -2052,7 +2057,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp7DragDrop(DragEvent event) {
+    private void dp7DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 7");
@@ -2075,7 +2080,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp8DragDrop(DragEvent event) {
+    private void dp8DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 8");
@@ -2098,7 +2103,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp9DragDrop(DragEvent event) {
+    private void dp9DragDrop(DragEvent event) throws Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 9");
@@ -2121,7 +2126,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp10DragDrop(DragEvent event) throws InterruptedException {
+    private void dp10DragDrop(DragEvent event) throws InterruptedException, Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 10");
@@ -2144,7 +2149,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp11DragDrop(DragEvent event) throws InterruptedException {
+    private void dp11DragDrop(DragEvent event) throws InterruptedException, Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 11");
@@ -2167,7 +2172,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     @FXML
-    private void dp12DragDrop(DragEvent event) throws InterruptedException {
+    private void dp12DragDrop(DragEvent event) throws InterruptedException, Exception {
         Dragboard db = event.getDragboard();
         if (db.hasString()) {
             System.out.println("Dropped at DropPoint 12");
