@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 
 /**
  * FXML Controller class
@@ -19,12 +20,14 @@ import javafx.fxml.Initializable;
  * @author benbartel
  */
 public class HomeController implements Initializable {
+    //static int colorType;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //colorType = 0;
     }    
 
     @FXML
@@ -34,6 +37,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void btnColors(ActionEvent event) {
+        //colorType = 1;
     }
 
 }

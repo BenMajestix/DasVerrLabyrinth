@@ -160,6 +160,14 @@ public class GameControllerVar {
     public Label labelCardsLeft;
     @FXML
     public ImageView cardStack;
+    @FXML
+    public ImageView backgroundRed;
+    @FXML
+    public ImageView backgroundBlue;
+    @FXML
+    public ImageView backgroundYellow;
+    @FXML
+    public ImageView backgroundGreen;
     
     
     @FXML

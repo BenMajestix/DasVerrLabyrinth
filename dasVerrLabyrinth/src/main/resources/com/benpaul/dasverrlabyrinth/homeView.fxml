@@ -9,28 +9,29 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" cacheShape="false" centerShape="false" maxHeight="800.0" maxWidth="1200.0" minHeight="800.0" minWidth="1200.0" prefHeight="800.0" prefWidth="1200.0" scaleShape="false" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.HomeController">
+<AnchorPane id="AnchorPane" cacheShape="false" centerShape="false" maxHeight="1000.0" maxWidth="1500.0" minHeight="800.0" minWidth="1200.0" prefHeight="1000.0" prefWidth="1500.0" scaleShape="false" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benpaul.dasverrlabyrinth.HomeController">
     <stylesheets>
         <URL value="@/styles/homeview.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="855.0" fitWidth="1200.0" layoutY="62.0" preserveRatio="true">
+      <ImageView fitHeight="1000.0" fitWidth="1790.0" layoutX="-136.0" preserveRatio="true">
          <image>
             <Image url="@../../../img/Labyrinth.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="474.0" layoutY="544.0" mnemonicParsing="false" onAction="#btnStartGame" prefHeight="118.0" prefWidth="252.0" text="Start">
+      <Button layoutX="635.0" layoutY="661.0" mnemonicParsing="false" onAction="#btnStartGame" prefHeight="118.0" prefWidth="252.0" text="Start">
          <font>
             <Font size="59.0" />
          </font></Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="82.0" layoutX="236.0" layoutY="247.0" stroke="WHITE" strokeType="INSIDE" width="690.0" />
-      <Label layoutX="242.0" layoutY="235.0" prefHeight="104.0" prefWidth="716.0" text="Das Verrückte Labyrinth" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="82.0" layoutX="406.0" layoutY="362.0" stroke="WHITE" strokeType="INSIDE" width="690.0" />
+      <Label layoutX="412.0" layoutY="351.0" prefHeight="104.0" prefWidth="716.0" text="Das Verrückte Labyrinth" textFill="WHITE">
          <font>
             <Font size="64.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="76.0" stroke="BLACK" strokeType="INSIDE" width="1200.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="76.0" layoutY="724.0" stroke="BLACK" strokeType="INSIDE" width="1200.0" />
-      <Button layoutX="1092.0" layoutY="86.0" mnemonicParsing="false" onAction="#btnColors" text="Change Colors" />
+      <Button layoutX="1362.0" layoutY="19.0" mnemonicParsing="false" onAction="#btnColors" prefHeight="40.0" prefWidth="115.0" text="Change Colors">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
    </children>
 </AnchorPane>
