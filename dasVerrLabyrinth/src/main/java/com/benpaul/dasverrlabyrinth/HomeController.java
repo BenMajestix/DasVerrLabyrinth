@@ -32,4 +32,8 @@ public class HomeController implements Initializable {
         App.setRoot("gameView");
     }
 
+    @FXML
+    private void btnColors(ActionEvent event) {
+    }
+
 }
