@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -84,6 +85,7 @@ public class GameController extends GameControllerVar implements Initializable {
         
         playerModel playerRed = new playerModel("Red");
         playerModel playerBlue = new playerModel("Blue");
+        playerBlue.setIsBot(true);
         playerModel playerYellow = new playerModel("Yellow");
         playerModel playerGreen = new playerModel("Green");
         
@@ -240,11 +242,12 @@ public class GameController extends GameControllerVar implements Initializable {
                 if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
                     App.players[playerTurn].score = App.players[playerTurn].score + 1;
                     System.out.println("Tile youre looking for found.");
-                    try{
-                        App.players[playerTurn].items[i] = App.getRndmItem();
-                    }
-                    catch(Exception e){
+                    if(App.allItems.isEmpty()){
+                        System.out.println("Game is Over");
                         App.setRoot("finishView");
+                    }
+                    else{
+                        App.players[playerTurn].items[i] = App.getRndmItem();
                     }
                 }
             }
@@ -254,6 +257,158 @@ public class GameController extends GameControllerVar implements Initializable {
             runGame();
         }
     }
+    
+    public void startCompTurn() throws Exception{
+        tileModel[][] tempBoard = new tileModel[7][7];
+        tileModel offTemp;
+        
+        int[] item0Koor = new int[2];
+        int[] item1Koor = new int[2];
+        int[] item2Koor = new int[2];
+        for(int x = 0; x < 7; x++){
+            for(int y = 0; y < 7; y++){
+                if(App.players[playerTurn].items[0].equals(tempBoard[y][x].collectable)){item0Koor[0] = x; item0Koor[1] = y;}
+                if(App.players[playerTurn].items[1].equals(tempBoard[y][x].collectable)){item1Koor[0] = x; item1Koor[1] = y;}
+                if(App.players[playerTurn].items[2].equals(tempBoard[y][x].collectable)){item2Koor[0] = x; item2Koor[1] = y;}
+            }
+        }
+        
+        for(int sides = 0; sides < 12; sides++){
+            tempBoard = App.boardTiles;
+            offTemp = App.offBoardTile;
+            switch(sides){
+                //Von OBEN nach Unten
+                case 0: 
+                    offTemp = boardTiles[6][1];
+                    boardTiles[6][1] = boardTiles[5][1];
+                    boardTiles[5][1] = boardTiles[4][1];
+                    boardTiles[4][1] = boardTiles[3][1];
+                    boardTiles[3][1] = boardTiles[2][1];
+                    boardTiles[2][1] = boardTiles[1][1];
+                    boardTiles[1][1] = boardTiles[0][1];
+                    boardTiles[0][1] = App.offBoardTile;
+                    break;
+                case 1: 
+                    offTemp = boardTiles[6][2];
+                    boardTiles[6][3] = boardTiles[5][3];
+                    boardTiles[5][3] = boardTiles[4][3];
+                    boardTiles[4][3] = boardTiles[3][3];
+                    boardTiles[3][3] = boardTiles[2][3];
+                    boardTiles[2][3] = boardTiles[1][3];
+                    boardTiles[1][3] = boardTiles[0][3];
+                    boardTiles[0][3] = App.offBoardTile;
+                    break;
+                case 2: 
+                    offTemp = boardTiles[6][5];
+                    boardTiles[6][5] = boardTiles[5][5];
+                    boardTiles[5][5] = boardTiles[4][5];
+                    boardTiles[4][5] = boardTiles[3][5];
+                    boardTiles[3][5] = boardTiles[2][5];
+                    boardTiles[2][5] = boardTiles[1][5];
+                    boardTiles[1][5] = boardTiles[0][5];
+                    boardTiles[0][5] = App.offBoardTile;
+                    break;
+                    //Von RECHTS nach links
+                case 3: 
+                    offTemp = boardTiles[1][6];
+                    boardTiles[1][6] = boardTiles[1][5];
+                    boardTiles[1][5] = boardTiles[1][4];
+                    boardTiles[1][4] = boardTiles[1][3];
+                    boardTiles[1][3] = boardTiles[1][2];
+                    boardTiles[1][2] = boardTiles[1][1];
+                    boardTiles[1][1] = boardTiles[1][0];
+                    boardTiles[1][0] = App.offBoardTile;
+                    break;
+                case 4: 
+                    offTemp = boardTiles[3][6];
+                    boardTiles[3][6] = boardTiles[3][5];
+                    boardTiles[3][5] = boardTiles[3][4];
+                    boardTiles[3][4] = boardTiles[3][3];
+                    boardTiles[3][3] = boardTiles[3][2];
+                    boardTiles[3][2] = boardTiles[3][1];
+                    boardTiles[3][1] = boardTiles[3][0];
+                    boardTiles[3][0] = App.offBoardTile;
+                    break;
+                case 5: 
+                    offTemp = boardTiles[5][6];
+                    boardTiles[5][6] = boardTiles[5][5];
+                    boardTiles[5][5] = boardTiles[5][4];
+                    boardTiles[5][4] = boardTiles[5][3];
+                    boardTiles[5][3] = boardTiles[5][2];
+                    boardTiles[5][2] = boardTiles[5][1];
+                    boardTiles[5][1] = boardTiles[5][0];
+                    boardTiles[5][0] = App.offBoardTile;
+                    break;
+                    //Von UNTEN Nach Oben
+                case 6: 
+                    offTemp = boardTiles[0][1];
+                    boardTiles[0][1] = boardTiles[1][1];
+                    boardTiles[1][1] = boardTiles[2][1];
+                    boardTiles[2][1] = boardTiles[3][1];
+                    boardTiles[3][1] = boardTiles[4][1];
+                    boardTiles[4][1] = boardTiles[5][1];
+                    boardTiles[5][1] = boardTiles[6][1];
+                    boardTiles[6][1] = App.offBoardTile;
+                    break;
+                case 7: 
+                    offTemp = boardTiles[0][2];
+                    boardTiles[0][3] = boardTiles[1][3];
+                    boardTiles[1][3] = boardTiles[2][3];
+                    boardTiles[2][3] = boardTiles[3][3];
+                    boardTiles[3][3] = boardTiles[4][3];
+                    boardTiles[4][3] = boardTiles[5][3];
+                    boardTiles[5][3] = boardTiles[6][3];
+                    boardTiles[6][3] = App.offBoardTile;
+                    break;
+                case 8: 
+                    offTemp = boardTiles[0][5];
+                    boardTiles[0][5] = boardTiles[1][5];
+                    boardTiles[1][5] = boardTiles[2][5];
+                    boardTiles[2][5] = boardTiles[3][5];
+                    boardTiles[3][5] = boardTiles[4][5];
+                    boardTiles[4][5] = boardTiles[5][5];
+                    boardTiles[5][5] = boardTiles[6][5];
+                    boardTiles[6][5] = App.offBoardTile;
+                    break;
+                    //Von Links nach rechts
+                case 9: 
+                    offTemp = boardTiles[1][0];
+                    boardTiles[1][0] = boardTiles[1][1];
+                    boardTiles[1][1] = boardTiles[1][2];
+                    boardTiles[1][2] = boardTiles[1][3];
+                    boardTiles[1][3] = boardTiles[1][4];
+                    boardTiles[1][4] = boardTiles[1][5];
+                    boardTiles[1][5] = boardTiles[1][6];
+                    boardTiles[1][6] = App.offBoardTile;
+                    break;
+                case 10: 
+                    offTemp = boardTiles[3][0];
+                    boardTiles[3][0] = boardTiles[3][1];
+                    boardTiles[3][1] = boardTiles[3][2];
+                    boardTiles[3][2] = boardTiles[3][3];
+                    boardTiles[3][3] = boardTiles[3][4];
+                    boardTiles[3][4] = boardTiles[3][5];
+                    boardTiles[3][5] = boardTiles[3][6];
+                    boardTiles[3][6] = App.offBoardTile;
+                    break;
+                case 11: 
+                    offTemp = boardTiles[5][0];
+                    boardTiles[5][0] = boardTiles[5][1];
+                    boardTiles[5][1] = boardTiles[5][2];
+                    boardTiles[5][2] = boardTiles[5][3];
+                    boardTiles[5][3] = boardTiles[5][4];
+                    boardTiles[5][4] = boardTiles[5][5];
+                    boardTiles[5][5] = boardTiles[5][6];
+                    boardTiles[5][6] = App.offBoardTile;
+                    break;
+            }
+            
+            startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2);
+            startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item1Koor[0], item1Koor[1], tempBoard, 2);
+            startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item2Koor[0], item2Koor[1], tempBoard, 2);
+        }
+    }
+    
     
     public void checkItemFound(){
         for(int o = 0; o < 4; o++){
@@ -334,18 +489,19 @@ public class GameController extends GameControllerVar implements Initializable {
     
     @FXML
     private void tryAnimat(ActionEvent event) {
+        ImageView image = i13;
         
         
         
-        /*TranslateTransition newTranslate = new TranslateTransition();
+        TranslateTransition newTranslate = new TranslateTransition();
         newTranslate.setDuration(Duration.millis(2000));
-        newTranslate.setNode(currTile);
+        newTranslate.setNode(image);
         newTranslate.setByX(500);
         newTranslate.setByY(400);
         newTranslate.setCycleCount(1);
         newTranslate.setAutoReverse(false);
         //newTranslate.
-        newTranslate.play();*/
+        newTranslate.play();
     }
     
     
@@ -410,6 +566,25 @@ public class GameController extends GameControllerVar implements Initializable {
             
             switch(row){
                 case 1: 
+                    ImageView[] images = new ImageView[7];
+                    images[6] = i16;
+                    images[5] = i15;
+                    images[4] = i14;
+                    images[3] = i13;
+                    images[2] = i12;
+                    images[1] = i11;
+                    images[0] = i10;
+                    
+                    int[] offset = new int[7];
+                    offset[6] = -84;
+                    offset[5] = -87;
+                    offset[4] = -83;
+                    offset[3] = -84;
+                    offset[2] = -84;
+                    offset[1] = -84;
+                    offset[0] = -84;
+                    
+                    int offset2 = 273;
                     rowTranslate1.setDuration(Duration.millis(500));
                     rowTranslate1.setCycleCount(1);
                     rowTranslate1.setAutoReverse(false);
@@ -1367,6 +1542,90 @@ public class GameController extends GameControllerVar implements Initializable {
         checkItemFound();
     }
     
+    public void startAnimation(ImageView[] images, int[] offset, int offset2, int dir){
+        
+        TranslateTransition rowTranslate1 = new TranslateTransition();
+        TranslateTransition rowTranslate2 = new TranslateTransition();
+        TranslateTransition rowTranslate3 = new TranslateTransition();
+        TranslateTransition rowTranslate4 = new TranslateTransition();
+        TranslateTransition rowTranslate5 = new TranslateTransition();
+        TranslateTransition rowTranslate6 = new TranslateTransition();
+        TranslateTransition rowTranslate7 = new TranslateTransition();
+            
+        rowTranslate1.setDuration(Duration.millis(500));
+        rowTranslate1.setCycleCount(1);
+        rowTranslate1.setAutoReverse(false);
+        rowTranslate1.setNode(i16);
+        rowTranslate1.setByX(-84);
+        rowTranslate1.play();
+
+        rowTranslate2.setDuration(Duration.millis(500));
+        rowTranslate2.setCycleCount(1);
+        rowTranslate2.setAutoReverse(false);
+        rowTranslate2.setNode(i15);
+        rowTranslate2.setByX(-87);
+        rowTranslate2.play();
+
+        rowTranslate3.setDuration(Duration.millis(500));
+        rowTranslate3.setCycleCount(1);
+        rowTranslate3.setAutoReverse(false);
+        rowTranslate3.setNode(i14);
+        rowTranslate3.setByX(-83);
+        rowTranslate3.play();
+
+        rowTranslate4.setDuration(Duration.millis(500));
+        rowTranslate4.setCycleCount(1);
+        rowTranslate4.setAutoReverse(false);
+        rowTranslate4.setNode(i13);
+        rowTranslate4.setByX(-89);
+        rowTranslate4.play();
+
+        rowTranslate5.setDuration(Duration.millis(500));
+        rowTranslate5.setCycleCount(1);
+        rowTranslate5.setAutoReverse(false);
+        rowTranslate5.setNode(i12);
+        rowTranslate5.setByX(-83);
+        rowTranslate5.play();
+
+        rowTranslate6.setDuration(Duration.millis(500));
+        rowTranslate6.setCycleCount(1);
+        rowTranslate6.setAutoReverse(false);
+        rowTranslate6.setNode(i11);
+        rowTranslate6.setByX(-89);
+        rowTranslate6.play();
+
+        rowTranslate7.setDuration(Duration.millis(500));
+        rowTranslate7.setCycleCount(1);
+        rowTranslate7.setAutoReverse(false);
+        rowTranslate7.setNode(i10);
+        rowTranslate7.setByX(-217);
+        rowTranslate7.setByY(273);
+        rowTranslate7.play();
+
+        rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                i16.setX(i16.getX() + 84);
+                i15.setX(i15.getX() + 87);
+                i14.setX(i14.getX() + 83);
+                i13.setX(i13.getX() + 89);
+                i12.setX(i12.getX() + 83);
+                i11.setX(i11.getX() + 89);
+                i10.setX(i10.getX() + 217);
+                i10.setY(i10.getY() - 273);
+                makeBoard();
+            }
+        });
+    }
+    
+    public void resetImageViews(){
+        i10.setX(205);
+        i10.setY(287);
+        i30.setX(376);
+        i30.setY(376);
+    
+    }
+    
     public void updateTileLoc(){
         int x, y;
         for(x = 0; x < 7; x++){
@@ -1376,7 +1635,6 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
     }
-    
     
     public void makeBoard(){
         i01.setImage(App.boardTiles[0][1].tileImage);
@@ -1516,7 +1774,7 @@ public class GameController extends GameControllerVar implements Initializable {
     //All tiles already looked at.
     ArrayList<tileModel> alrObsTiles = new ArrayList();
     
-    public boolean startAlg(int startX, int startY, int endX, int endY) throws Exception{
+    public boolean startCheckAlgo(int startX, int startY, int endX, int endY, tileModel[][] compBoard, int mode) throws Exception{
         boolean erfolgreich = false;
         //Clearing everything and resetting it.
         
@@ -1544,9 +1802,16 @@ public class GameController extends GameControllerVar implements Initializable {
             throw new Exception("Die Koordinaten sind ungültig.");
         }
         else{
-            //Setzt Start und End Tile
-            startTile = App.boardTiles[startX][startY];
-            endTile = App.boardTiles[endX][endY];
+            if(!(compBoard == null)){
+                //Setzt Start und End Tile
+                startTile = App.boardTiles[startX][startY];
+                endTile = App.boardTiles[endX][endY];
+            }
+            else{
+                //Setzt Start und End Tile
+                startTile = compBoard[startX][startY];
+                endTile = compBoard[endX][endY];
+            }
         }
         
         if(startX == endX && startY == endY){
@@ -1575,11 +1840,21 @@ public class GameController extends GameControllerVar implements Initializable {
                         case 2: o = 0; break;
                         case 3: o = 1; break;
                     }
-                    switch(i){
-                        case 0: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
-                        case 1: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
-                        case 2: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor + 1][startTile.location.yCoor])); break;
-                        case 3: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor - 1])); break;
+                    if(!(compBoard == null)){
+                        switch(i){
+                            case 0: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
+                            case 1: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
+                            case 2: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor + 1][startTile.location.yCoor])); break;
+                            case 3: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor - 1])); break;
+                        }
+                    }
+                    else{
+                        switch(i){
+                            case 0: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
+                            case 1: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
+                            case 2: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor + 1][startTile.location.yCoor])); break;
+                            case 3: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor][startTile.location.yCoor - 1])); break;
+                        }
                     }
                 }
             }
@@ -1626,9 +1901,8 @@ public class GameController extends GameControllerVar implements Initializable {
                     break breakWhile;
                 }
                 else{
-                    startTile(currObsTile.get(i), i);
+                    startTile(currObsTile.get(i), i, compBoard);
                 }
-                    
             }
         }
         if(objecFound){System.out.println("--Algorithmus erfolgreich!");erfolgreich = true;}
@@ -1636,7 +1910,7 @@ public class GameController extends GameControllerVar implements Initializable {
         return erfolgreich;
     }
     
-    public algoTile startTile(algoTile tile, int index){
+    public algoTile startTile(algoTile tile, int index, tileModel[][] compBoard){
         //Alle Seiten aus denen ein Weg geht
         System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
         System.out.println("Rechts Ausgang: " + tile.tile.ableToExit[1]);
@@ -1658,7 +1932,10 @@ public class GameController extends GameControllerVar implements Initializable {
                     case 2: o = 0; break;
                     case 3: o = 1; break;
                 }
-                switch(i){
+                if(!(compBoard == null)){
+                    
+                }
+                switch(i){//HIER--------------------
                     //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
                     case 0: currObsTile.add(new algoTile(o , App.boardTiles[tile.tile.location.xCoor - 1][tile.tile.location.yCoor])); System.out.println("up");break;
                     case 1: currObsTile.add(new algoTile(o , App.boardTiles[tile.tile.location.xCoor][tile.tile.location.yCoor + 1])); System.out.println("right"); break;
@@ -1690,7 +1967,7 @@ public class GameController extends GameControllerVar implements Initializable {
     public boolean checkNextTileInput(tileModel currTile, int dir){
         boolean w = false;
         try{
-            switch(dir){
+            switch(dir){//HIER--------------------
                 case 0: 
                     System.out.println("-Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
                     if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
@@ -1800,67 +2077,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
     
     
-    private void btnTurnSwap(ActionEvent event) {
-        switch(playerTurn){
-            case 0:
-                player_blue.toFront();
-                player_red.toBack();
-                player_yellow.toBack();
-                player_green.toBack();
-            break;
-            case 1:
-                player_yellow.toFront();
-                player_red.toBack();
-                player_blue.toBack();
-                player_green.toBack();
-            break;
-            case 2:
-                player_green.toFront();
-                player_red.toBack();
-                player_blue.toBack();
-                player_yellow.toBack();
-                
-            break;
-            case 3:
-                player_red.toFront();
-                player_blue.toBack();
-                player_yellow.toBack();
-                player_green.toBack();
-            break;
-        }
-    }
 
-    
-    public void updateImgForTurn(){
-        switch(playerTurn){
-            case 0:
-                player_blue.toFront();
-                player_red.toBack();
-                player_yellow.toBack();
-                player_green.toBack();
-            break;
-            case 1:
-                player_yellow.toFront();
-                player_red.toBack();
-                player_blue.toBack();
-                player_green.toBack();
-            break;
-            case 2:
-                player_green.toFront();
-                player_red.toBack();
-                player_blue.toBack();
-                player_yellow.toBack();
-                
-            break;
-            case 3:
-                player_red.toFront();
-                player_blue.toBack();
-                player_yellow.toBack();
-                player_green.toBack();
-            break;
-        }
-    }
-    
     
     
     @FXML
@@ -2242,7 +2459,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 0:
                 System.out.println("Alte Spielerposition: " + oldRedTilePos[0] + " " + oldRedTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startAlg(oldRedTilePos[0], oldRedTilePos[1], x, y)){
+                if(startCheckAlgo(oldRedTilePos[0], oldRedTilePos[1], x, y, null, 1)){
                     player_red.setX(mouseX);
                     player_red.setY(mouseY);
                     App.players[0].pos[0] = x;
@@ -2259,7 +2476,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 1:
                 System.out.println("Alte Spielerposition: " + oldBlueTilePos[0] + " " + oldBlueTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startAlg(oldBlueTilePos[0], oldBlueTilePos[1], x, y)){
+                if(startCheckAlgo(oldBlueTilePos[0], oldBlueTilePos[1], x, y, null, 1)){
                     player_blue.setX(mouseX);
                     player_blue.setY(mouseY);
                     App.players[1].pos[0] = x;
@@ -2276,7 +2493,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 2:
                 System.out.println("Alte Spielerposition: " + oldYellowTilePos[0] + " " + oldYellowTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startAlg(oldYellowTilePos[0], oldYellowTilePos[1], x, y)){
+                if(startCheckAlgo(oldYellowTilePos[0], oldYellowTilePos[1], x, y, null, 1)){
                     player_yellow.setX(mouseX);
                     player_yellow.setY(mouseY);
                     App.players[2].pos[0] = x;
@@ -2293,7 +2510,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 3:
                 System.out.println("Alte Spielerposition: " + oldGreenTilePos[0] + " " + oldGreenTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startAlg(oldGreenTilePos[0], oldGreenTilePos[1], x, y)){
+                if(startCheckAlgo(oldGreenTilePos[0], oldGreenTilePos[1], x, y, null, 1)){
                     player_green.setX(mouseX);
                     player_green.setY(mouseY);
                     App.players[3].pos[0] = x;

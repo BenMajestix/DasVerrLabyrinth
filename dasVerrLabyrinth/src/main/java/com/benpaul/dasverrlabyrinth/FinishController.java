@@ -22,23 +22,21 @@ import javafx.scene.image.ImageView;
  */
 public class FinishController implements Initializable {
 
-    @FXML
-    private ImageView firstPlace;
-    @FXML
-    private ImageView secondPlace;
-    @FXML
-    private ImageView thirdPlace;
+    ArrayList<playerModel> scores;
     
-    ArrayList<Integer> scores;
-
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         scores = new ArrayList();
-        scores.add(App.players[0].score);
-        scores.add(App.players[1].score);
-        scores.add(App.players[2].score);
-        scores.add(App.players[3].score);
+        scores.add(App.players[0]);
+        scores.add(App.players[1]);
+        scores.add(App.players[2]);
+        scores.add(App.players[3]);
+        
+        determinWinner();
+        System.out.println("Winner: " + scores.get(0).score);
+        System.out.println("Second: " + scores.get(1).score);
+        System.out.println("Third: " + scores.get(2).score);
+        System.out.println("Last: " + scores.get(3).score);
         
         Image firstPlaceImg;
         File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
@@ -49,12 +47,28 @@ public class FinishController implements Initializable {
     private void btnRestart(ActionEvent event) {
     }
     
-    private int determinWinner(){
-        int largest = scores.get(0);
-        for(int x=0; x<4; x++)
-            if (scores.get(x) > largest)
-                largest = scores.get(x);
-        return largest;
+    private void determinWinner(){
+        boolean done = false;
+
+        while(!(done)){
+            for(int i = 0; i < 2; i++){
+                boolean something = false;
+                if(scores.get(i).score >= scores.get(i++).score){
+                }
+                else{
+                    something = true;
+                    playerModel temp1 = scores.get(i);
+                    playerModel temp2 = scores.get(i + 1);
+                    scores.remove(i);
+                    scores.remove(i + 1);
+                    scores.add(i, temp1);
+                    scores.add(i + 1, temp2);
+                }
+                if(something == false){done = true;}
+            }
+        }
+        
+        
     }
 
     

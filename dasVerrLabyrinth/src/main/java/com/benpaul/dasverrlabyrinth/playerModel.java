@@ -14,15 +14,25 @@ public class playerModel {
     String name;
     int[] pos = new int[2];
     int score;
-
+    boolean isBot;
+    
     public playerModel(String name) {
         this.name = name;
+        isBot = false;
     }
 
     public itemModel[] getItems() {
         return items;
     }
 
+    public boolean isIsBot() {
+        return isBot;
+    }
+
+    public void setIsBot(boolean isBot) {
+        this.isBot = isBot;
+    }
+    
     public void setItems(itemModel[] items) {
         this.items = items;
     }

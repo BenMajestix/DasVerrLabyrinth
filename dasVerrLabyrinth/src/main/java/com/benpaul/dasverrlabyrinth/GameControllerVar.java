@@ -105,7 +105,6 @@ public class GameControllerVar {
     public ImageView currTile;
     @FXML
     public ImageView imgBackgr;
-
     @FXML
     public ImageView player_red;
     @FXML
@@ -115,8 +114,9 @@ public class GameControllerVar {
     @FXML
     public ImageView player_green;
     //For testing, for removal later
+    @FXML
     public TextField txtAlgoStart;
-    
+    @FXML
     public TextField txtAlgoEnd;
     
     //The first Phase of a move, where the Player is putting a tile onto the Board
