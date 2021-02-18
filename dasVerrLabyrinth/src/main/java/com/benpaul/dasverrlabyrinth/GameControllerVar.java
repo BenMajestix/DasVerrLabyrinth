@@ -6,6 +6,7 @@
 package com.benpaul.dasverrlabyrinth;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -124,6 +125,10 @@ public class GameControllerVar {
     //The second Phase of a move, where the Player is moving his piece
     boolean movingPhaseOver = false;
     
+    boolean botTilePhaseOver = false;
+    boolean botMovingPhaseOver = false;
+    boolean botEvalPhaseOver = false;
+    
     public int playerTurn;
     
     public final int[] tileXCoor = new int[7];
@@ -168,7 +173,8 @@ public class GameControllerVar {
     public ImageView backgroundYellow;
     @FXML
     public ImageView backgroundGreen;
-    
+    @FXML
+    public Button btnDrehen;
     
     @FXML
     private ImageView dp01;

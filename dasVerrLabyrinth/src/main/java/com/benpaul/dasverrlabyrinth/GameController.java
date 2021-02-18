@@ -36,6 +36,11 @@ import javafx.util.Duration;
  */
 public class GameController extends GameControllerVar implements Initializable {
 
+    int[] botBestPos = new int[2];
+    int botBestPosDist = 100;
+    int[] botCurrObjective = new int[2];
+    int botBestTileSide;
+    int currTileSide;
     
     /**
      * Initializes the controller class.
@@ -85,7 +90,7 @@ public class GameController extends GameControllerVar implements Initializable {
         
         playerModel playerRed = new playerModel("Red");
         playerModel playerBlue = new playerModel("Blue");
-        playerBlue.setIsBot(true);
+        //playerBlue.setIsBot(true);
         playerModel playerYellow = new playerModel("Yellow");
         playerModel playerGreen = new playerModel("Green");
         
@@ -230,183 +235,242 @@ public class GameController extends GameControllerVar implements Initializable {
                 break;
             }
         
-        
-        if(!(tilePhaseOver)){
-            enableTilePhase();
+        if(App.players[playerTurn].isBot){
+            System.out.println("Start Comp Turn");
+            startCompTurn();
         }
-        else if(!(movingPhaseOver)){
-            enableMovingPhase();
-        }
-        else if(tilePhaseOver && movingPhaseOver){
-            for(int i = 0; i < 3; i++){
-                if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
-                    App.players[playerTurn].score = App.players[playerTurn].score + 1;
-                    System.out.println("Tile youre looking for found.");
-                    if(App.allItems.isEmpty()){
-                        System.out.println("Game is Over");
-                        App.setRoot("finishView");
-                    }
-                    else{
-                        App.players[playerTurn].items[i] = App.getRndmItem();
+        else{
+            if(!(tilePhaseOver)){
+                enableTilePhase();
+            }
+            else if(!(movingPhaseOver)){
+                enableMovingPhase();
+            }
+            else if(tilePhaseOver && movingPhaseOver){
+                for(int i = 0; i < 3; i++){
+                    if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
+                        App.players[playerTurn].score = App.players[playerTurn].score + 1;
+                        System.out.println("Tile youre looking for found.");
+                        if(App.allItems.isEmpty()){
+                            System.out.println("Game is Over");
+                            App.setRoot("finishView");
+                        }
+                        else{
+                            App.players[playerTurn].items[i] = App.getRndmItem();
+                        }
                     }
                 }
+                playerTurn++;
+                movingPhaseOver = false;
+                tilePhaseOver = false;
+                runGame();
             }
-            playerTurn++;
-            movingPhaseOver = false;
-            tilePhaseOver = false;
-            runGame();
         }
     }
     
     public void startCompTurn() throws Exception{
-        tileModel[][] tempBoard = new tileModel[7][7];
-        tileModel offTemp;
+        ArrayList<int[]> perfectMoveLoc = new ArrayList();
         
-        int[] item0Koor = new int[2];
-        int[] item1Koor = new int[2];
-        int[] item2Koor = new int[2];
-        for(int x = 0; x < 7; x++){
-            for(int y = 0; y < 7; y++){
-                if(App.players[playerTurn].items[0].equals(tempBoard[y][x].collectable)){item0Koor[0] = x; item0Koor[1] = y;}
-                if(App.players[playerTurn].items[1].equals(tempBoard[y][x].collectable)){item1Koor[0] = x; item1Koor[1] = y;}
-                if(App.players[playerTurn].items[2].equals(tempBoard[y][x].collectable)){item2Koor[0] = x; item2Koor[1] = y;}
+        if(!(botEvalPhaseOver)){
+            System.out.println("Start Eval Phase");
+            tileModel[][] tempBoard = new tileModel[7][7];
+            tileModel offTemp;
+            int[] item0Koor = new int[2];
+            int[] item1Koor = new int[2];
+            int[] item2Koor = new int[2];
+            for(int x = 0; x < 7; x++){
+                for(int y = 0; y < 7; y++){
+                    if(App.players[playerTurn].items[0].equals(App.boardTiles[y][x].collectable)){item0Koor[0] = x; item0Koor[1] = y;}
+                    if(App.players[playerTurn].items[1].equals(App.boardTiles[y][x].collectable)){item1Koor[0] = x; item1Koor[1] = y;}
+                    if(App.players[playerTurn].items[2].equals(App.boardTiles[y][x].collectable)){item2Koor[0] = x; item2Koor[1] = y;}
+                }
             }
+
+            for(int sides = 0; sides < 12; sides++){
+                currTileSide = sides;
+                tempBoard = App.boardTiles;
+                offTemp = App.offBoardTile;
+                switch(sides){
+                    //Von OBEN nach Unten
+                    case 0: 
+                        offTemp = boardTiles[6][1];
+                        boardTiles[6][1] = boardTiles[5][1];
+                        boardTiles[5][1] = boardTiles[4][1];
+                        boardTiles[4][1] = boardTiles[3][1];
+                        boardTiles[3][1] = boardTiles[2][1];
+                        boardTiles[2][1] = boardTiles[1][1];
+                        boardTiles[1][1] = boardTiles[0][1];
+                        boardTiles[0][1] = App.offBoardTile;
+                        break;
+                    case 1: 
+                        offTemp = boardTiles[6][2];
+                        boardTiles[6][3] = boardTiles[5][3];
+                        boardTiles[5][3] = boardTiles[4][3];
+                        boardTiles[4][3] = boardTiles[3][3];
+                        boardTiles[3][3] = boardTiles[2][3];
+                        boardTiles[2][3] = boardTiles[1][3];
+                        boardTiles[1][3] = boardTiles[0][3];
+                        boardTiles[0][3] = App.offBoardTile;
+                        break;
+                    case 2: 
+                        offTemp = boardTiles[6][5];
+                        boardTiles[6][5] = boardTiles[5][5];
+                        boardTiles[5][5] = boardTiles[4][5];
+                        boardTiles[4][5] = boardTiles[3][5];
+                        boardTiles[3][5] = boardTiles[2][5];
+                        boardTiles[2][5] = boardTiles[1][5];
+                        boardTiles[1][5] = boardTiles[0][5];
+                        boardTiles[0][5] = App.offBoardTile;
+                        break;
+                        //Von RECHTS nach links
+                    case 3: 
+                        offTemp = boardTiles[1][6];
+                        boardTiles[1][6] = boardTiles[1][5];
+                        boardTiles[1][5] = boardTiles[1][4];
+                        boardTiles[1][4] = boardTiles[1][3];
+                        boardTiles[1][3] = boardTiles[1][2];
+                        boardTiles[1][2] = boardTiles[1][1];
+                        boardTiles[1][1] = boardTiles[1][0];
+                        boardTiles[1][0] = App.offBoardTile;
+                        break;
+                    case 4: 
+                        offTemp = boardTiles[3][6];
+                        boardTiles[3][6] = boardTiles[3][5];
+                        boardTiles[3][5] = boardTiles[3][4];
+                        boardTiles[3][4] = boardTiles[3][3];
+                        boardTiles[3][3] = boardTiles[3][2];
+                        boardTiles[3][2] = boardTiles[3][1];
+                        boardTiles[3][1] = boardTiles[3][0];
+                        boardTiles[3][0] = App.offBoardTile;
+                        break;
+                    case 5: 
+                        offTemp = boardTiles[5][6];
+                        boardTiles[5][6] = boardTiles[5][5];
+                        boardTiles[5][5] = boardTiles[5][4];
+                        boardTiles[5][4] = boardTiles[5][3];
+                        boardTiles[5][3] = boardTiles[5][2];
+                        boardTiles[5][2] = boardTiles[5][1];
+                        boardTiles[5][1] = boardTiles[5][0];
+                        boardTiles[5][0] = App.offBoardTile;
+                        break;
+                        //Von UNTEN Nach Oben
+                    case 6: 
+                        offTemp = boardTiles[0][1];
+                        boardTiles[0][1] = boardTiles[1][1];
+                        boardTiles[1][1] = boardTiles[2][1];
+                        boardTiles[2][1] = boardTiles[3][1];
+                        boardTiles[3][1] = boardTiles[4][1];
+                        boardTiles[4][1] = boardTiles[5][1];
+                        boardTiles[5][1] = boardTiles[6][1];
+                        boardTiles[6][1] = App.offBoardTile;
+                        break;
+                    case 7: 
+                        offTemp = boardTiles[0][2];
+                        boardTiles[0][3] = boardTiles[1][3];
+                        boardTiles[1][3] = boardTiles[2][3];
+                        boardTiles[2][3] = boardTiles[3][3];
+                        boardTiles[3][3] = boardTiles[4][3];
+                        boardTiles[4][3] = boardTiles[5][3];
+                        boardTiles[5][3] = boardTiles[6][3];
+                        boardTiles[6][3] = App.offBoardTile;
+                        break;
+                    case 8: 
+                        offTemp = boardTiles[0][5];
+                        boardTiles[0][5] = boardTiles[1][5];
+                        boardTiles[1][5] = boardTiles[2][5];
+                        boardTiles[2][5] = boardTiles[3][5];
+                        boardTiles[3][5] = boardTiles[4][5];
+                        boardTiles[4][5] = boardTiles[5][5];
+                        boardTiles[5][5] = boardTiles[6][5];
+                        boardTiles[6][5] = App.offBoardTile;
+                        break;
+                        //Von Links nach rechts
+                    case 9: 
+                        offTemp = boardTiles[1][0];
+                        boardTiles[1][0] = boardTiles[1][1];
+                        boardTiles[1][1] = boardTiles[1][2];
+                        boardTiles[1][2] = boardTiles[1][3];
+                        boardTiles[1][3] = boardTiles[1][4];
+                        boardTiles[1][4] = boardTiles[1][5];
+                        boardTiles[1][5] = boardTiles[1][6];
+                        boardTiles[1][6] = App.offBoardTile;
+                        break;
+                    case 10: 
+                        offTemp = boardTiles[3][0];
+                        boardTiles[3][0] = boardTiles[3][1];
+                        boardTiles[3][1] = boardTiles[3][2];
+                        boardTiles[3][2] = boardTiles[3][3];
+                        boardTiles[3][3] = boardTiles[3][4];
+                        boardTiles[3][4] = boardTiles[3][5];
+                        boardTiles[3][5] = boardTiles[3][6];
+                        boardTiles[3][6] = App.offBoardTile;
+                        break;
+                    case 11: 
+                        offTemp = boardTiles[5][0];
+                        boardTiles[5][0] = boardTiles[5][1];
+                        boardTiles[5][1] = boardTiles[5][2];
+                        boardTiles[5][2] = boardTiles[5][3];
+                        boardTiles[5][3] = boardTiles[5][4];
+                        boardTiles[5][4] = boardTiles[5][5];
+                        boardTiles[5][5] = boardTiles[5][6];
+                        boardTiles[5][6] = App.offBoardTile;
+                        break;
+                }
+                botCurrObjective = item0Koor;
+                if(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2)){
+                    perfectMoveLoc.add(botCurrObjective);
+                }
+                botCurrObjective = item1Koor;
+                if(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2)){
+                    perfectMoveLoc.add(botCurrObjective);
+                }
+                botCurrObjective = item2Koor;
+                if(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2)){
+                    perfectMoveLoc.add(botCurrObjective);
+                }
+            }
+            botEvalPhaseOver = true;
+            startCompTurn();
         }
-        
-        for(int sides = 0; sides < 12; sides++){
-            tempBoard = App.boardTiles;
-            offTemp = App.offBoardTile;
-            switch(sides){
-                //Von OBEN nach Unten
-                case 0: 
-                    offTemp = boardTiles[6][1];
-                    boardTiles[6][1] = boardTiles[5][1];
-                    boardTiles[5][1] = boardTiles[4][1];
-                    boardTiles[4][1] = boardTiles[3][1];
-                    boardTiles[3][1] = boardTiles[2][1];
-                    boardTiles[2][1] = boardTiles[1][1];
-                    boardTiles[1][1] = boardTiles[0][1];
-                    boardTiles[0][1] = App.offBoardTile;
-                    break;
-                case 1: 
-                    offTemp = boardTiles[6][2];
-                    boardTiles[6][3] = boardTiles[5][3];
-                    boardTiles[5][3] = boardTiles[4][3];
-                    boardTiles[4][3] = boardTiles[3][3];
-                    boardTiles[3][3] = boardTiles[2][3];
-                    boardTiles[2][3] = boardTiles[1][3];
-                    boardTiles[1][3] = boardTiles[0][3];
-                    boardTiles[0][3] = App.offBoardTile;
-                    break;
-                case 2: 
-                    offTemp = boardTiles[6][5];
-                    boardTiles[6][5] = boardTiles[5][5];
-                    boardTiles[5][5] = boardTiles[4][5];
-                    boardTiles[4][5] = boardTiles[3][5];
-                    boardTiles[3][5] = boardTiles[2][5];
-                    boardTiles[2][5] = boardTiles[1][5];
-                    boardTiles[1][5] = boardTiles[0][5];
-                    boardTiles[0][5] = App.offBoardTile;
-                    break;
-                    //Von RECHTS nach links
-                case 3: 
-                    offTemp = boardTiles[1][6];
-                    boardTiles[1][6] = boardTiles[1][5];
-                    boardTiles[1][5] = boardTiles[1][4];
-                    boardTiles[1][4] = boardTiles[1][3];
-                    boardTiles[1][3] = boardTiles[1][2];
-                    boardTiles[1][2] = boardTiles[1][1];
-                    boardTiles[1][1] = boardTiles[1][0];
-                    boardTiles[1][0] = App.offBoardTile;
-                    break;
-                case 4: 
-                    offTemp = boardTiles[3][6];
-                    boardTiles[3][6] = boardTiles[3][5];
-                    boardTiles[3][5] = boardTiles[3][4];
-                    boardTiles[3][4] = boardTiles[3][3];
-                    boardTiles[3][3] = boardTiles[3][2];
-                    boardTiles[3][2] = boardTiles[3][1];
-                    boardTiles[3][1] = boardTiles[3][0];
-                    boardTiles[3][0] = App.offBoardTile;
-                    break;
-                case 5: 
-                    offTemp = boardTiles[5][6];
-                    boardTiles[5][6] = boardTiles[5][5];
-                    boardTiles[5][5] = boardTiles[5][4];
-                    boardTiles[5][4] = boardTiles[5][3];
-                    boardTiles[5][3] = boardTiles[5][2];
-                    boardTiles[5][2] = boardTiles[5][1];
-                    boardTiles[5][1] = boardTiles[5][0];
-                    boardTiles[5][0] = App.offBoardTile;
-                    break;
-                    //Von UNTEN Nach Oben
-                case 6: 
-                    offTemp = boardTiles[0][1];
-                    boardTiles[0][1] = boardTiles[1][1];
-                    boardTiles[1][1] = boardTiles[2][1];
-                    boardTiles[2][1] = boardTiles[3][1];
-                    boardTiles[3][1] = boardTiles[4][1];
-                    boardTiles[4][1] = boardTiles[5][1];
-                    boardTiles[5][1] = boardTiles[6][1];
-                    boardTiles[6][1] = App.offBoardTile;
-                    break;
-                case 7: 
-                    offTemp = boardTiles[0][2];
-                    boardTiles[0][3] = boardTiles[1][3];
-                    boardTiles[1][3] = boardTiles[2][3];
-                    boardTiles[2][3] = boardTiles[3][3];
-                    boardTiles[3][3] = boardTiles[4][3];
-                    boardTiles[4][3] = boardTiles[5][3];
-                    boardTiles[5][3] = boardTiles[6][3];
-                    boardTiles[6][3] = App.offBoardTile;
-                    break;
-                case 8: 
-                    offTemp = boardTiles[0][5];
-                    boardTiles[0][5] = boardTiles[1][5];
-                    boardTiles[1][5] = boardTiles[2][5];
-                    boardTiles[2][5] = boardTiles[3][5];
-                    boardTiles[3][5] = boardTiles[4][5];
-                    boardTiles[4][5] = boardTiles[5][5];
-                    boardTiles[5][5] = boardTiles[6][5];
-                    boardTiles[6][5] = App.offBoardTile;
-                    break;
-                    //Von Links nach rechts
-                case 9: 
-                    offTemp = boardTiles[1][0];
-                    boardTiles[1][0] = boardTiles[1][1];
-                    boardTiles[1][1] = boardTiles[1][2];
-                    boardTiles[1][2] = boardTiles[1][3];
-                    boardTiles[1][3] = boardTiles[1][4];
-                    boardTiles[1][4] = boardTiles[1][5];
-                    boardTiles[1][5] = boardTiles[1][6];
-                    boardTiles[1][6] = App.offBoardTile;
-                    break;
-                case 10: 
-                    offTemp = boardTiles[3][0];
-                    boardTiles[3][0] = boardTiles[3][1];
-                    boardTiles[3][1] = boardTiles[3][2];
-                    boardTiles[3][2] = boardTiles[3][3];
-                    boardTiles[3][3] = boardTiles[3][4];
-                    boardTiles[3][4] = boardTiles[3][5];
-                    boardTiles[3][5] = boardTiles[3][6];
-                    boardTiles[3][6] = App.offBoardTile;
-                    break;
-                case 11: 
-                    offTemp = boardTiles[5][0];
-                    boardTiles[5][0] = boardTiles[5][1];
-                    boardTiles[5][1] = boardTiles[5][2];
-                    boardTiles[5][2] = boardTiles[5][3];
-                    boardTiles[5][3] = boardTiles[5][4];
-                    boardTiles[5][4] = boardTiles[5][5];
-                    boardTiles[5][5] = boardTiles[5][6];
-                    boardTiles[5][6] = App.offBoardTile;
-                    break;
+        else if(!(botTilePhaseOver)){
+            enableTilePhase();
+            System.out.println("Bot Start Tile Phase");
+            switch(botBestTileSide){
+                case 0: moveColumn(1, 1); break;
+                case 1: moveColumn(3, 1); break;
+                case 2: moveColumn(5, 1); break;
+                case 3: moveRow(1, 0); break;
+                case 4: moveRow(3, 0); break;
+                case 5: moveRow(5, 0); break;
+                case 6: moveColumn(5, 0); break;
+                case 7: moveColumn(3, 0); break;
+                case 8: moveColumn(1, 0); break;
+                case 9: moveRow(5, 1); break;
+                case 10: moveRow(3, 1); break;
+                case 11: moveRow(1, 1); break;
             }
+            botTilePhaseOver = true;
+        }
+        else if(!(botMovingPhaseOver)){
+            enableMovingPhase();
+            System.out.println("moving phase reached");
             
-            startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2);
-            startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item1Koor[0], item1Koor[1], tempBoard, 2);
-            startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item2Koor[0], item2Koor[1], tempBoard, 2);
+            if(!(perfectMoveLoc.isEmpty())){
+                int moveTo = (int) (Math.random() * perfectMoveLoc.size()-1);
+                System.out.println("Perfekt: ");
+                System.out.println("X: " + perfectMoveLoc.get(moveTo)[0]);
+                System.out.println("Y: " + perfectMoveLoc.get(moveTo)[1]);
+            }
+            else{
+                System.out.println("Nicht Perfekt:");
+                System.out.println("X: " + botBestPos[0]);
+                System.out.println("Y: " + botBestPos[1]);
+            }
         }
+        else{
+            
+        }
+        
     }
     
     
@@ -421,7 +485,6 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
         
-    
     public void enableTilePhase(){
         updateLabel();
         
@@ -491,19 +554,16 @@ public class GameController extends GameControllerVar implements Initializable {
     private void tryAnimat(ActionEvent event) {
         ImageView image = i13;
         
-        
-        
         TranslateTransition newTranslate = new TranslateTransition();
         newTranslate.setDuration(Duration.millis(2000));
         newTranslate.setNode(image);
-        newTranslate.setByX(500);
-        newTranslate.setByY(400);
+        int testInt = 200;
+        newTranslate.setByX(- testInt);
         newTranslate.setCycleCount(1);
         newTranslate.setAutoReverse(false);
         //newTranslate.
         newTranslate.play();
     }
-    
     
     public void startMoveRow(int row, int direction) throws Exception{
         if(row == 1 || row == 3 || row == 5){
@@ -514,7 +574,7 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
     
-    public void moveRow(int row, int direction) throws InterruptedException{
+    public void moveRow(int row, int direction) throws InterruptedException, Exception{
         //Von rechts schiebend
         if(direction == 0){
             //Es werden alle Vier Spieler durchgegangen
@@ -556,237 +616,23 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[row][5] = boardTiles[row][6];
             boardTiles[row][6] = offBoardTemp;
             
-            TranslateTransition rowTranslate1 = new TranslateTransition();
-            TranslateTransition rowTranslate2 = new TranslateTransition();
-            TranslateTransition rowTranslate3 = new TranslateTransition();
-            TranslateTransition rowTranslate4 = new TranslateTransition();
-            TranslateTransition rowTranslate5 = new TranslateTransition();
-            TranslateTransition rowTranslate6 = new TranslateTransition();
-            TranslateTransition rowTranslate7 = new TranslateTransition();
-            
             switch(row){
-                case 1: 
-                    ImageView[] images = new ImageView[7];
-                    images[6] = i16;
-                    images[5] = i15;
-                    images[4] = i14;
-                    images[3] = i13;
-                    images[2] = i12;
-                    images[1] = i11;
-                    images[0] = i10;
-                    
-                    int[] offset = new int[7];
-                    offset[6] = -84;
-                    offset[5] = -87;
-                    offset[4] = -83;
-                    offset[3] = -84;
-                    offset[2] = -84;
-                    offset[1] = -84;
-                    offset[0] = -84;
-                    
-                    int offset2 = 273;
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i16);
-                    rowTranslate1.setByX(-84);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i15);
-                    rowTranslate2.setByX(-87);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i14);
-                    rowTranslate3.setByX(-83);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i13);
-                    rowTranslate4.setByX(-89);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i12);
-                    rowTranslate5.setByX(-83);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i11);
-                    rowTranslate6.setByX(-89);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i10);
-                    rowTranslate7.setByX(-217);
-                    rowTranslate7.setByY(273);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            i16.setX(i16.getX() + 84);
-                            i15.setX(i15.getX() + 87);
-                            i14.setX(i14.getX() + 83);
-                            i13.setX(i13.getX() + 89);
-                            i12.setX(i12.getX() + 83);
-                            i11.setX(i11.getX() + 89);
-                            i10.setX(i10.getX() + 217);
-                            i10.setY(i10.getY() - 273);
-                            makeBoard();
-                        }
-                    });
+                case 1:
+                    ImageView[] imgs = {i16, i15, i14, i13, i12, i11, i10};
+                    int[] offSetNode = {275, -220};
+                    startAnimation(imgs, offSetNode, 2, 1);
                     break;
                 case 3: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i36);
-                    rowTranslate1.setByX(-84);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i35);
-                    rowTranslate2.setByX(-87);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i34);
-                    rowTranslate3.setByX(-83);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i33);
-                    rowTranslate4.setByX(-89);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i32);
-                    rowTranslate5.setByX(-83);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i31);
-                    rowTranslate6.setByX(-89);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i30);
-                    rowTranslate7.setByX(-217);
-                    rowTranslate7.setByY(102);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            i36.setX(i36.getX() + 84);
-                            i35.setX(i35.getX() + 87);
-                            i34.setX(i34.getX() + 83);
-                            i33.setX(i33.getX() + 89);
-                            i32.setX(i32.getX() + 83);
-                            i31.setX(i31.getX() + 89);
-                            i30.setX(i30.getX() + 217);
-                            i30.setY(i30.getY() - 102);
-                            makeBoard();
-                        }
-                    });
+                    ImageView[] imgs1 = {i36, i35, i34, i33, i32, i31, i30};
+                    int[] offSetNode1 = {105, -220};
+                    startAnimation(imgs1, offSetNode1, 2, 1);
                     break;
                 case 5: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i56);
-                    rowTranslate1.setByX(-84);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i55);
-                    rowTranslate2.setByX(-87);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i54);
-                    rowTranslate3.setByX(-83);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i53);
-                    rowTranslate4.setByX(-89);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i52);
-                    rowTranslate5.setByX(-83);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i51);
-                    rowTranslate6.setByX(-89);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i50);
-                    rowTranslate7.setByX(-217);
-                    rowTranslate7.setByY(-72);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            i56.setX(i56.getX() + 84);
-                            i55.setX(i55.getX() + 87);
-                            i54.setX(i54.getX() + 83);
-                            i53.setX(i53.getX() + 89);
-                            i52.setX(i52.getX() + 83);
-                            i51.setX(i51.getX() + 89);
-                            i50.setX(i50.getX() + 217);
-                            i50.setY(i50.getY() + 72);
-                            makeBoard();
-                        }
-                    });
+                    ImageView[] imgs2 = {i56, i55, i54, i53, i52, i51, i50};
+                    int[] offSetNode2 = {-65, -220};
+                    startAnimation(imgs2, offSetNode2, 2, 1);
                     break;
-                
             }
-            
-            
-            
         }
         //von links schiebend
         else if(direction == 1){
@@ -829,217 +675,28 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[row][1] = boardTiles[row][0];
             boardTiles[row][0] = offBoardTemp;
             
-            TranslateTransition rowTranslate1 = new TranslateTransition();
-            TranslateTransition rowTranslate2 = new TranslateTransition();
-            TranslateTransition rowTranslate3 = new TranslateTransition();
-            TranslateTransition rowTranslate4 = new TranslateTransition();
-            TranslateTransition rowTranslate5 = new TranslateTransition();
-            TranslateTransition rowTranslate6 = new TranslateTransition();
-            TranslateTransition rowTranslate7 = new TranslateTransition();
-            
             switch(row){
                 case 1: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i16);
-                    rowTranslate1.setByX(- 732);
-                    rowTranslate1.setByY(+ 273);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i15);
-                    rowTranslate2.setByX(84);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i14);
-                    rowTranslate3.setByX(87);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i13);
-                    rowTranslate4.setByX(83);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i12);
-                    rowTranslate5.setByX(89);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i11);
-                    rowTranslate6.setByX(83);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i10);
-                    rowTranslate7.setByX(89);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            i16.setX(i16.getX() + 732);
-                            i16.setY(i16.getY() - 273);
-                            i15.setX(i15.getX() - 84);
-                            i14.setX(i14.getX() - 87);
-                            i13.setX(i13.getX() - 83);
-                            i12.setX(i12.getX() - 89);
-                            i11.setX(i11.getX() - 83);
-                            i10.setX(i10.getX() - 89);
-                            makeBoard();
-                        }
-                    });
+                    ImageView[] imgs = {i15, i14, i13, i12, i11, i10, i16};
+                    int[] offSetNode = {275, -730};
+                    startAnimation(imgs, offSetNode, 1, 1);
                     break;
                 case 3: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i36);
-                    rowTranslate1.setByX(-732);
-                    rowTranslate1.setByY(+102);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i35);
-                    rowTranslate2.setByX(84);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i34);
-                    rowTranslate3.setByX(87);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i33);
-                    rowTranslate4.setByX(83);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i32);
-                    rowTranslate5.setByX(89);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i31);
-                    rowTranslate6.setByX(83);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i30);
-                    rowTranslate7.setByX(89);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            i36.setX(i36.getX() + 732);
-                            i36.setY(i36.getY() - 102);
-                            i35.setX(i35.getX() - 84);
-                            i34.setX(i34.getX() - 87);
-                            i33.setX(i33.getX() - 83);
-                            i32.setX(i32.getX() - 89);
-                            i31.setX(i31.getX() - 83);
-                            i30.setX(i30.getX() - 89);
-                            makeBoard();
-                        }
-                    });
+                    ImageView[] imgs1 = {i35, i34, i33, i32, i31, i30, i36};
+                    int[] offSetNode1 = {105, -730};
+                    startAnimation(imgs1, offSetNode1, 1, 1);
                     break;
                 case 5: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i56);
-                    rowTranslate1.setByX(-732);
-                    rowTranslate1.setByY(-72);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i55);
-                    rowTranslate2.setByX(84);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i54);
-                    rowTranslate3.setByX(87);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i53);
-                    rowTranslate4.setByX(83);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i52);
-                    rowTranslate5.setByX(89);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i51);
-                    rowTranslate6.setByX(83);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i50);
-                    rowTranslate7.setByX(89);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            i56.setX(i56.getX() + 732);
-                            i56.setY(i56.getY() + 72);
-                            i55.setX(i55.getX() - 84);
-                            i54.setX(i54.getX() - 87);
-                            i53.setX(i53.getX() - 83);
-                            i52.setX(i52.getX() - 89);
-                            i51.setX(i51.getX() - 83);
-                            i50.setX(i50.getX() - 89);
-                            makeBoard();
-                        }
-                    });
+                    ImageView[] imgs2 = {i55, i54, i53, i52, i51, i50, i56};
+                    int[] offSetNode2 = {-65, -730};
+                    startAnimation(imgs2, offSetNode2, 1, 1);
                     break;
             }
         }
         //makeBoard();
         checkItemFound();
+        
+        if(App.players[playerTurn].isBot){botTilePhaseOver = true; startCompTurn();}
     }
     
     public void startMoveColumn(int column, int direction) throws Exception{
@@ -1051,7 +708,7 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
     
-    public void moveColumn(int column, int direction){
+    public void moveColumn(int column, int direction) throws Exception{
         //Von unten schiebend
         if(direction == 0){
             for(int i = 0; i < 4; i++){
@@ -1070,7 +727,7 @@ public class GameController extends GameControllerVar implements Initializable {
                         }
                     }
                     else{
-                        //wenn der Spieler nicht links am Rand steht, dann wird er nach links verschoben, seine ImageView auch
+                        //wenn der Spieler nicht links am Rand steht, dann wird er nach oben verschoben, seine ImageView auch
                         switch(i){
                             case 0: player_red.setY(tileXCoor[App.players[i].pos[0] -1]); break;
                             case 1: player_blue.setY(tileXCoor[App.players[i].pos[0] -1]); break;
@@ -1094,206 +751,21 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[5][column] = boardTiles[6][column];
             boardTiles[6][column] = offBoardTemp;
             
-            TranslateTransition rowTranslate1 = new TranslateTransition();
-            TranslateTransition rowTranslate2 = new TranslateTransition();
-            TranslateTransition rowTranslate3 = new TranslateTransition();
-            TranslateTransition rowTranslate4 = new TranslateTransition();
-            TranslateTransition rowTranslate5 = new TranslateTransition();
-            TranslateTransition rowTranslate6 = new TranslateTransition();
-            TranslateTransition rowTranslate7 = new TranslateTransition();
-            
             switch(column){
-                case 1: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i01);
-                    rowTranslate1.setByX(-306);
-                    rowTranslate1.setByY(+362);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i11);
-                    rowTranslate2.setByY(-89);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i21);
-                    rowTranslate3.setByY(-83);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i31);
-                    rowTranslate4.setByY(-88);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i41);
-                    rowTranslate5.setByY(-83);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i51);
-                    rowTranslate6.setByY(-91);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i61);
-                    rowTranslate7.setByY(-81);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i01.setY(i01.getY() - 362);
-                        i01.setX(i01.getX() + 306);
-                        
-                        i61.setY(i61.getY() + 81);
-                        i51.setY(i51.getY() + 91);
-                        i41.setY(i41.getY() + 83);
-                        i31.setY(i31.getY() + 88);
-                        i21.setY(i21.getY() + 83);
-                        i11.setY(i11.getY() + 89);
-                        makeBoard();
-                    });
+                case 1:
+                    ImageView[] imgs = {i11, i21, i31, i41, i51, i61, i01};
+                    int[] offSetNode = {360, -305};
+                    startAnimation(imgs, offSetNode, 2, 2);
                     break;
-                case 3: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i03);
-                    rowTranslate1.setByX(-478);
-                    rowTranslate1.setByY(+362);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i13);
-                    rowTranslate2.setByY(-89);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i23);
-                    rowTranslate3.setByY(-83);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i33);
-                    rowTranslate4.setByY(-88);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i43);
-                    rowTranslate5.setByY(-83);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i53);
-                    rowTranslate6.setByY(-91);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i63);
-                    rowTranslate7.setByY(-81);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i03.setY(i03.getY() - 362);
-                        i03.setX(i03.getX() + 478);
-                        
-                        i63.setY(i63.getY() + 81);
-                        i53.setY(i53.getY() + 91);
-                        i43.setY(i43.getY() + 83);
-                        i33.setY(i33.getY() + 88);
-                        i23.setY(i23.getY() + 83);
-                        i13.setY(i13.getY() + 89);
-                        makeBoard();
-                    });
+                case 3:
+                    ImageView[] imgs1 = {i13, i23, i33, i43, i53, i63, i03};
+                    int[] offSetNode1 = {360, -475};
+                    startAnimation(imgs1, offSetNode1, 2, 2);
                     break;
-                case 5: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i05);
-                    rowTranslate1.setByX(-648);
-                    rowTranslate1.setByY(+362);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i15);
-                    rowTranslate2.setByY(-89);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i25);
-                    rowTranslate3.setByY(-83);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i35);
-                    rowTranslate4.setByY(-88);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i45);
-                    rowTranslate5.setByY(-83);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i55);
-                    rowTranslate6.setByY(-91);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i65);
-                    rowTranslate7.setByY(-81);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i05.setY(i05.getY() - 362);
-                        i05.setX(i05.getX() + 648);
-                        
-                        i65.setY(i65.getY() + 81);
-                        i55.setY(i55.getY() + 91);
-                        i45.setY(i45.getY() + 83);
-                        i35.setY(i35.getY() + 88);
-                        i25.setY(i25.getY() + 83);
-                        i15.setY(i15.getY() + 89);
-                        makeBoard();
-                    });
+                case 5:
+                    ImageView[] imgs2 = {i15, i25, i35, i45, i55, i65, i05};
+                    int[] offSetNode2 = {360, -645};
+                    startAnimation(imgs2, offSetNode2, 2, 2);
                     break;
             }
         }
@@ -1338,211 +810,31 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[1][column] = boardTiles[0][column];
             boardTiles[0][column] = offBoardTemp;
             
-            TranslateTransition rowTranslate1 = new TranslateTransition();
-            TranslateTransition rowTranslate2 = new TranslateTransition();
-            TranslateTransition rowTranslate3 = new TranslateTransition();
-            TranslateTransition rowTranslate4 = new TranslateTransition();
-            TranslateTransition rowTranslate5 = new TranslateTransition();
-            TranslateTransition rowTranslate6 = new TranslateTransition();
-            TranslateTransition rowTranslate7 = new TranslateTransition();
-            
             switch(column){
-                case 1: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i01);
-                    rowTranslate1.setByY(89);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i11);
-                    rowTranslate2.setByY(83);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i21);
-                    rowTranslate3.setByY(88);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i31);
-                    rowTranslate4.setByY(83);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i41);
-                    rowTranslate5.setByY(91);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i51);
-                    rowTranslate6.setByY(81);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i61);
-                    rowTranslate7.setByY(-153);
-                    rowTranslate7.setByX(-306);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i61.setY(i61.getY() + 153);
-                        i61.setX(i61.getX() + 306);
-                        i51.setY(i51.getY() - 81);
-                        i41.setY(i41.getY() - 91);
-                        i31.setY(i31.getY() - 83);
-                        i21.setY(i21.getY() - 88);
-                        i11.setY(i11.getY() - 83);
-                        i01.setY(i01.getY() - 89);
-                        makeBoard();
-                    });
+                case 1:
+                    ImageView[] imgs = {i01, i11, i21, i31, i41, i51, i61};
+                    int[] offSetNode = {-150, -305};
+                    startAnimation(imgs, offSetNode, 1, 2);
                     break;
-                case 3: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i03);
-                    rowTranslate1.setByY(89);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i13);
-                    rowTranslate2.setByY(83);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i23);
-                    rowTranslate3.setByY(88);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i33);
-                    rowTranslate4.setByY(83);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i43);
-                    rowTranslate5.setByY(91);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i53);
-                    rowTranslate6.setByY(81);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i63);
-                    rowTranslate7.setByY(-153);
-                    rowTranslate7.setByX(-478);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i63.setY(i63.getY() + 153);
-                        i63.setX(i63.getX() + 478);
-                        i53.setY(i53.getY() - 81);
-                        i43.setY(i43.getY() - 91);
-                        i33.setY(i33.getY() - 83);
-                        i23.setY(i23.getY() - 88);
-                        i13.setY(i13.getY() - 83);
-                        i03.setY(i03.getY() - 89);
-                        makeBoard();
-                    });
+                case 3:
+                    ImageView[] imgs1 = {i03, i13, i23, i33, i43, i53, i63};
+                    int[] offSetNode1 = {-150, -475};
+                    startAnimation(imgs1, offSetNode1, 1, 2);
                     break;
-                case 5: 
-                    rowTranslate1.setDuration(Duration.millis(500));
-                    rowTranslate1.setCycleCount(1);
-                    rowTranslate1.setAutoReverse(false);
-                    rowTranslate1.setNode(i05);
-                    rowTranslate1.setByY(89);
-                    rowTranslate1.play();
-                    
-                    rowTranslate2.setDuration(Duration.millis(500));
-                    rowTranslate2.setCycleCount(1);
-                    rowTranslate2.setAutoReverse(false);
-                    rowTranslate2.setNode(i15);
-                    rowTranslate2.setByY(83);
-                    rowTranslate2.play();
-                    
-                    rowTranslate3.setDuration(Duration.millis(500));
-                    rowTranslate3.setCycleCount(1);
-                    rowTranslate3.setAutoReverse(false);
-                    rowTranslate3.setNode(i25);
-                    rowTranslate3.setByY(88);
-                    rowTranslate3.play();
-                    
-                    rowTranslate4.setDuration(Duration.millis(500));
-                    rowTranslate4.setCycleCount(1);
-                    rowTranslate4.setAutoReverse(false);
-                    rowTranslate4.setNode(i35);
-                    rowTranslate4.setByY(83);
-                    rowTranslate4.play();
-                    
-                    rowTranslate5.setDuration(Duration.millis(500));
-                    rowTranslate5.setCycleCount(1);
-                    rowTranslate5.setAutoReverse(false);
-                    rowTranslate5.setNode(i45);
-                    rowTranslate5.setByY(91);
-                    rowTranslate5.play();
-                    
-                    rowTranslate6.setDuration(Duration.millis(500));
-                    rowTranslate6.setCycleCount(1);
-                    rowTranslate6.setAutoReverse(false);
-                    rowTranslate6.setNode(i55);
-                    rowTranslate6.setByY(81);
-                    rowTranslate6.play();
-                    
-                    rowTranslate7.setDuration(Duration.millis(500));
-                    rowTranslate7.setCycleCount(1);
-                    rowTranslate7.setAutoReverse(false);
-                    rowTranslate7.setNode(i65);
-                    rowTranslate7.setByY(-153);
-                    rowTranslate7.setByX(-648);
-                    rowTranslate7.play();
-                    
-                    rowTranslate7.setOnFinished((ActionEvent event) -> {
-                        i65.setY(i65.getY() + 153);
-                        i65.setX(i65.getX() + 648);
-                        i55.setY(i55.getY() - 81);
-                        i45.setY(i45.getY() - 91);
-                        i35.setY(i35.getY() - 83);
-                        i25.setY(i25.getY() - 88);
-                        i15.setY(i15.getY() - 83);
-                        i05.setY(i05.getY() - 89);
-                        makeBoard();
-                    });
-                break;
+                case 5:
+                    ImageView[] imgs2 = {i05, i15, i25, i35, i45, i55, i65};
+                    int[] offSetNode2 = {-150, -645};
+                    startAnimation(imgs2, offSetNode2, 1, 2);
+                    break;
             }
         }
         //makeBoard();
         checkItemFound();
+        
+        if(App.players[playerTurn].isBot){botTilePhaseOver = true; startCompTurn();}
     }
     
-    public void startAnimation(ImageView[] images, int[] offset, int offset2, int dir){
+    public void startAnimation(ImageView[] images, int[] offsetNode7, int dir, int mode){
         
         TranslateTransition rowTranslate1 = new TranslateTransition();
         TranslateTransition rowTranslate2 = new TranslateTransition();
@@ -1551,79 +843,132 @@ public class GameController extends GameControllerVar implements Initializable {
         TranslateTransition rowTranslate5 = new TranslateTransition();
         TranslateTransition rowTranslate6 = new TranslateTransition();
         TranslateTransition rowTranslate7 = new TranslateTransition();
-            
+        
         rowTranslate1.setDuration(Duration.millis(500));
         rowTranslate1.setCycleCount(1);
         rowTranslate1.setAutoReverse(false);
-        rowTranslate1.setNode(i16);
-        rowTranslate1.setByX(-84);
-        rowTranslate1.play();
+        rowTranslate1.setNode(images[0]);
 
         rowTranslate2.setDuration(Duration.millis(500));
         rowTranslate2.setCycleCount(1);
         rowTranslate2.setAutoReverse(false);
-        rowTranslate2.setNode(i15);
-        rowTranslate2.setByX(-87);
-        rowTranslate2.play();
+        rowTranslate2.setNode(images[1]);
 
         rowTranslate3.setDuration(Duration.millis(500));
         rowTranslate3.setCycleCount(1);
         rowTranslate3.setAutoReverse(false);
-        rowTranslate3.setNode(i14);
-        rowTranslate3.setByX(-83);
-        rowTranslate3.play();
+        rowTranslate3.setNode(images[2]);
 
         rowTranslate4.setDuration(Duration.millis(500));
         rowTranslate4.setCycleCount(1);
         rowTranslate4.setAutoReverse(false);
-        rowTranslate4.setNode(i13);
-        rowTranslate4.setByX(-89);
-        rowTranslate4.play();
+        rowTranslate4.setNode(images[3]);
 
         rowTranslate5.setDuration(Duration.millis(500));
         rowTranslate5.setCycleCount(1);
         rowTranslate5.setAutoReverse(false);
-        rowTranslate5.setNode(i12);
-        rowTranslate5.setByX(-83);
-        rowTranslate5.play();
+        rowTranslate5.setNode(images[4]);
 
         rowTranslate6.setDuration(Duration.millis(500));
         rowTranslate6.setCycleCount(1);
         rowTranslate6.setAutoReverse(false);
-        rowTranslate6.setNode(i11);
-        rowTranslate6.setByX(-89);
-        rowTranslate6.play();
+        rowTranslate6.setNode(images[5]);
 
         rowTranslate7.setDuration(Duration.millis(500));
         rowTranslate7.setCycleCount(1);
         rowTranslate7.setAutoReverse(false);
-        rowTranslate7.setNode(i10);
-        rowTranslate7.setByX(-217);
-        rowTranslate7.setByY(273);
+        rowTranslate7.setNode(images[6]);
+        rowTranslate7.setByX(offsetNode7[1]);
+        rowTranslate7.setByY(offsetNode7[0]);
+        
+        if(mode == 1){
+            if(dir == 1){
+                rowTranslate1.setByX(85);
+                rowTranslate2.setByX(85);
+                rowTranslate3.setByX(85);
+                rowTranslate4.setByX(85);
+                rowTranslate5.setByX(85);
+                rowTranslate6.setByX(85);
+            }
+            else if(dir == 2){
+                rowTranslate1.setByX(-85);
+                rowTranslate2.setByX(-85);
+                rowTranslate3.setByX(-85);
+                rowTranslate4.setByX(-85);
+                rowTranslate5.setByX(-85);
+                rowTranslate6.setByX(-85);
+            }
+        }
+        else if(mode == 2){
+            if(dir == 1){
+                rowTranslate1.setByY(85);
+                rowTranslate2.setByY(85);
+                rowTranslate3.setByY(85);
+                rowTranslate4.setByY(85);
+                rowTranslate5.setByY(85);
+                rowTranslate6.setByY(85);
+            }
+            else if(dir == 2){
+                rowTranslate1.setByY(-85);
+                rowTranslate2.setByY(-85);
+                rowTranslate3.setByY(-85);
+                rowTranslate4.setByY(-85);
+                rowTranslate5.setByY(-85);
+                rowTranslate6.setByY(-85);
+            }
+        }
+  
+        rowTranslate1.play();
+        rowTranslate2.play();
+        rowTranslate3.play();
+        rowTranslate4.play();
+        rowTranslate5.play();
+        rowTranslate6.play();
         rowTranslate7.play();
 
-        rowTranslate7.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                i16.setX(i16.getX() + 84);
-                i15.setX(i15.getX() + 87);
-                i14.setX(i14.getX() + 83);
-                i13.setX(i13.getX() + 89);
-                i12.setX(i12.getX() + 83);
-                i11.setX(i11.getX() + 89);
-                i10.setX(i10.getX() + 217);
-                i10.setY(i10.getY() - 273);
-                makeBoard();
+        rowTranslate7.setOnFinished((ActionEvent event) -> {
+            if(mode == 1){
+                if(dir == 1){
+                    images[0].setX(images[0].getX() - 85);
+                    images[1].setX(images[1].getX() - 85);
+                    images[2].setX(images[2].getX() - 85);
+                    images[3].setX(images[3].getX() - 85);
+                    images[4].setX(images[4].getX() - 85);
+                    images[5].setX(images[5].getX() - 85);
+                }
+                else if(dir == 2){
+                    images[0].setX(images[0].getX() + 85);
+                    images[1].setX(images[1].getX() + 85);
+                    images[2].setX(images[2].getX() + 85);
+                    images[3].setX(images[3].getX() + 85);
+                    images[4].setX(images[4].getX() + 85);
+                    images[5].setX(images[5].getX() + 85);
+                }
             }
+            else if(mode == 2){
+                if(dir == 1){
+                    images[0].setY(images[0].getY() - 85);
+                    images[1].setY(images[1].getY() - 85);
+                    images[2].setY(images[2].getY() - 85);
+                    images[3].setY(images[3].getY() - 85);
+                    images[4].setY(images[4].getY() - 85);
+                    images[5].setY(images[5].getY() - 85);
+                }
+                else if(dir == 2){
+                    images[0].setY(images[0].getY() + 85);
+                    images[1].setY(images[1].getY() + 85);
+                    images[2].setY(images[2].getY() + 85);
+                    images[3].setY(images[3].getY() + 85);
+                    images[4].setY(images[4].getY() + 85);
+                    images[5].setY(images[5].getY() + 85);
+                }
+            }
+            
+            images[6].setX(images[6].getX() - offsetNode7[1]);
+            images[6].setY(images[6].getY() - offsetNode7[0]);
+            
+            makeBoard();
         });
-    }
-    
-    public void resetImageViews(){
-        i10.setX(205);
-        i10.setY(287);
-        i30.setX(376);
-        i30.setY(376);
-    
     }
     
     public void updateTileLoc(){
@@ -1766,7 +1111,7 @@ public class GameController extends GameControllerVar implements Initializable {
 
 
     
-    //ALGORITHM
+    //ALGORITHM for evaluating if walking is possible
     //---------------
     
     //Tiles which are connected to the startTile, but not yet looked at.
@@ -1802,7 +1147,7 @@ public class GameController extends GameControllerVar implements Initializable {
             throw new Exception("Die Koordinaten sind ungültig.");
         }
         else{
-            if(!(compBoard == null)){
+            if(mode == 1){
                 //Setzt Start und End Tile
                 startTile = App.boardTiles[startX][startY];
                 endTile = App.boardTiles[endX][endY];
@@ -1824,10 +1169,10 @@ public class GameController extends GameControllerVar implements Initializable {
 
             //currObsTile.add(new algoTile(0, startTile));
             System.out.println("Exits of StartTile :");
-            System.out.println(startTile.ableToExit[0]);
-            System.out.println(startTile.ableToExit[1]);
-            System.out.println(startTile.ableToExit[2]);
-            System.out.println(startTile.ableToExit[3]);
+            System.out.println("Oben" + startTile.ableToExit[0]);
+            System.out.println("Rechts" + startTile.ableToExit[1]);
+            System.out.println("Unten" + startTile.ableToExit[2]);
+            System.out.println("Links" + startTile.ableToExit[3]);
             System.out.println(" ");
 
             for(int i = 0; i < 4; i++){
@@ -1840,7 +1185,7 @@ public class GameController extends GameControllerVar implements Initializable {
                         case 2: o = 0; break;
                         case 3: o = 1; break;
                     }
-                    if(!(compBoard == null)){
+                    if(mode == 1){
                         switch(i){
                             case 0: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
                             case 1: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
@@ -1866,7 +1211,13 @@ public class GameController extends GameControllerVar implements Initializable {
         breakWhile:
         //wird ausgeführt während das Ziel noch nicht gefunden wurde
         while(!(objecFound)){
-            if(fCount == 10){System.out.println("---fbreak"); break;}
+            if(fCount == 10){System.out.println("---fbreak"); 
+                /*if(!(alrObsTiles.isEmpty())){
+                    for(int i = 0; i < alrObsTiles.size(); i++){
+                        checkDistance(alrObsTiles.get(i));
+                    }
+                }*/
+            break;}
             else if(currObsTile.isEmpty()){fCount++;
                 System.out.println("F: " + fCount);}
             //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
@@ -1890,6 +1241,10 @@ public class GameController extends GameControllerVar implements Initializable {
                         continue breakFor;
                     }
                 }
+                
+                
+                checkDistance(currObsTile.get(i).tile);
+                
                 System.out.println("-----------------");
                 System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
                 System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
@@ -2001,31 +1356,41 @@ public class GameController extends GameControllerVar implements Initializable {
     //--------------
     //Algorithm Done
     
-    
-    /*
-    public void startCompTurn(){
-        for(int i = 1; i <= 12; i++){
-            int row, column, dir;
-            if(i <= 3){column = 1; dir = 1;}
-            else if(i >= 4 && i <= 6){}
-            else if(i >= 7 && i <= 9){}
-            else if(i >= 10 && i <= 12){}
-            for(int o = 0; o < 4; o++){
-                tileModel[][] tempBoard = new tileModel[7][7];
-                tempBoard = App.boardTiles;
-                
-            }
+    public void checkDistance(tileModel currTile){
+        //botCurrObjective
+        System.out.println("------------------------------------------------------->");
+        System.out.println("Start Check dist");
+        int xDist, yDist;
+        if(currTile.location.xCoor > botCurrObjective[0]){
+            xDist = currTile.location.xCoor - botCurrObjective[0];
+        }
+        else if(currTile.location.xCoor < botCurrObjective[0]){
+            xDist = botCurrObjective[0] - currTile.location.xCoor;
+        }
+        else{
+            xDist = 0;
+        }
+        
+        if(currTile.location.yCoor > botCurrObjective[1]){
+            yDist = currTile.location.yCoor - botCurrObjective[1];
+        }
+        else if(currTile.location.yCoor < botCurrObjective[1]){
+            yDist = botCurrObjective[1] - currTile.location.yCoor;
+        }
+        else{
+            yDist = 0;
+        }
+        System.out.println("XDist: " + xDist);
+        System.out.println("YDist: " + yDist);
+        
+        if(botBestPosDist > (xDist + yDist)){
+            botBestPosDist = xDist + yDist;
+            botBestPos[0] = currTile.location.xCoor;
+            botBestPos[1] = currTile.location.yCoor;
+            botBestTileSide = currTileSide;
+            System.out.println("New Best Tile, Dist: " + botBestPosDist + " Location: " + botBestPos[0] + botBestPos[1]);
         }
     }
-    */
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -2040,6 +1405,15 @@ public class GameController extends GameControllerVar implements Initializable {
         newTrans.setCycleCount(1);
         newTrans.setAutoReverse(false);
         newTrans.play();
+        
+        btnDrehen.setDisable(true);
+        
+        newTrans.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btnDrehen.setDisable(false);
+            }
+        });
         
         if(App.offBoardTile.location.rotation == 270){
             App.offBoardTile.location.setRotation(0);

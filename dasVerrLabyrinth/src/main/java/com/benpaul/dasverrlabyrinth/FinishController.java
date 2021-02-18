@@ -8,12 +8,12 @@ package com.benpaul.dasverrlabyrinth;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -33,10 +33,10 @@ public class FinishController implements Initializable {
         scores.add(App.players[3]);
         
         determinWinner();
-        System.out.println("Winner: " + scores.get(0).score);
-        System.out.println("Second: " + scores.get(1).score);
-        System.out.println("Third: " + scores.get(2).score);
-        System.out.println("Last: " + scores.get(3).score);
+        System.out.println("Winner: " + scores.get(3).score);
+        System.out.println("Second: " + scores.get(2).score);
+        System.out.println("Third: " + scores.get(1).score);
+        System.out.println("Last: " + scores.get(0).score);
         
         Image firstPlaceImg;
         File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
@@ -48,27 +48,19 @@ public class FinishController implements Initializable {
     }
     
     private void determinWinner(){
-        boolean done = false;
-
-        while(!(done)){
-            for(int i = 0; i < 2; i++){
-                boolean something = false;
-                if(scores.get(i).score >= scores.get(i++).score){
+        boolean sorted = false;
+        playerModel temp;
+        while(!sorted) {
+            sorted = true;
+            for (int i = 0; i < scores.size() - 1; i++) {
+                if (scores.get(i).score > scores.get(i+1).score) {
+                    temp = scores.get(i);
+                    scores.set(i, scores.get(i+1));
+                    scores.set(i+1, temp);
+                    sorted = false;
                 }
-                else{
-                    something = true;
-                    playerModel temp1 = scores.get(i);
-                    playerModel temp2 = scores.get(i + 1);
-                    scores.remove(i);
-                    scores.remove(i + 1);
-                    scores.add(i, temp1);
-                    scores.add(i + 1, temp2);
-                }
-                if(something == false){done = true;}
             }
         }
-        
-        
     }
 
     

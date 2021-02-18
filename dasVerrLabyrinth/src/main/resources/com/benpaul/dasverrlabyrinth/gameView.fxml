@@ -19,182 +19,180 @@
             <Image url="@../../../img/darkWood.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/labyrinth%20field.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i10" fitHeight="80.0" fitWidth="80.0" layoutX="289.0" layoutY="205.0" onDragDropped="#Ti10DragDrop" onDragOver="#Ti10DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i10" fitHeight="80.0" fitWidth="80.0" layoutX="290.0" layoutY="205.0" onDragDropped="#Ti10DragDrop" onDragOver="#Ti10DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i30" fitHeight="80.0" fitWidth="80.0" layoutX="289.0" layoutY="376.0" onDragDropped="#Ti30DragDrop" onDragOver="#Ti30DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i30" fitHeight="80.0" fitWidth="80.0" layoutX="290.0" layoutY="375.0" onDragDropped="#Ti30DragDrop" onDragOver="#Ti30DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i50" fitHeight="80.0" fitWidth="80.0" layoutX="289.0" layoutY="550.0" onDragDropped="#Ti50DragDrop" onDragOver="#Ti50DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i50" fitHeight="80.0" fitWidth="80.0" layoutX="290.0" layoutY="545.0" onDragDropped="#Ti50DragDrop" onDragOver="#Ti50DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i01" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="117.0" onDragDropped="#Ti01DragDrop" onDragOver="#Ti01DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i01" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="120.0" onDragDropped="#Ti01DragDrop" onDragOver="#Ti01DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i11" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="205.0" onDragDropped="#Ti11DragDrop" onDragOver="#Ti11DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i11" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="205.0" onDragDropped="#Ti11DragDrop" onDragOver="#Ti11DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i21" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="290.0" onDragDropped="#Ti21DragDrop" onDragOver="#Ti21DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i21" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="290.0" onDragDropped="#Ti21DragDrop" onDragOver="#Ti21DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i31" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="376.0" onDragDropped="#Ti31DragDrop" onDragOver="#Ti31DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i31" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="375.0" onDragDropped="#Ti31DragDrop" onDragOver="#Ti31DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i41" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="462.0" onDragDropped="#Ti41DragDrop" onDragOver="#Ti41DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i41" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="460.0" onDragDropped="#Ti41DragDrop" onDragOver="#Ti41DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i51" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="550.0" onDragDropped="#Ti51DragDrop" onDragOver="#Ti51DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i51" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="545.0" onDragDropped="#Ti51DragDrop" onDragOver="#Ti51DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i61" fitHeight="80.0" fitWidth="80.0" layoutX="376.0" layoutY="637.0" onDragDropped="#Ti61DragDrop" onDragOver="#Ti61DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i61" fitHeight="80.0" fitWidth="80.0" layoutX="375.0" layoutY="630.0" onDragDropped="#Ti61DragDrop" onDragOver="#Ti61DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i12" fitHeight="80.0" fitWidth="80.0" layoutX="462.0" layoutY="205.0" onDragDropped="#Ti12DragDrop" onDragOver="#Ti12DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i12" fitHeight="80.0" fitWidth="80.0" layoutX="460.0" layoutY="205.0" onDragDropped="#Ti12DragDrop" onDragOver="#Ti12DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i32" fitHeight="80.0" fitWidth="80.0" layoutX="462.0" layoutY="376.0" onDragDropped="#Ti32DragDrop" onDragOver="#Ti32DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i32" fitHeight="80.0" fitWidth="80.0" layoutX="460.0" layoutY="375.0" onDragDropped="#Ti32DragDrop" onDragOver="#Ti32DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i52" fitHeight="80.0" fitWidth="80.0" layoutX="462.0" layoutY="550.0" onDragDropped="#Ti52DragDrop" onDragOver="#Ti52DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i52" fitHeight="80.0" fitWidth="80.0" layoutX="460.0" layoutY="545.0" onDragDropped="#Ti52DragDrop" onDragOver="#Ti52DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i03" fitHeight="80.0" fitWidth="80.0" layoutX="548.0" layoutY="117.0" onDragDropped="#Ti03DragDrop" onDragOver="#Ti03DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i03" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="117.0" onDragDropped="#Ti03DragDrop" onDragOver="#Ti03DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i13" fitHeight="80.0" fitWidth="80.0" layoutX="548.0" layoutY="205.0" onDragDropped="#Ti13DragDrop" onDragOver="#Ti13DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i13" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="205.0" onDragDropped="#Ti13DragDrop" onDragOver="#Ti13DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i23" fitHeight="80.0" fitWidth="80.0" layoutX="548.0" layoutY="290.0" onDragDropped="#Ti23DragDrop" onDragOver="#Ti23DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i23" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="290.0" onDragDropped="#Ti23DragDrop" onDragOver="#Ti23DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i33" fitHeight="80.0" fitWidth="80.0" layoutX="547.0" layoutY="376.0" onDragDropped="#Ti33DragDrop" onDragOver="#Ti33DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i33" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="375.0" onDragDropped="#Ti33DragDrop" onDragOver="#Ti33DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i43" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="462.0" onDragDropped="#Ti43DragDrop" onDragOver="#Ti43DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i43" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="460.0" onDragDropped="#Ti43DragDrop" onDragOver="#Ti43DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i53" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="550.0" onDragDropped="#Ti53DragDrop" onDragOver="#Ti53DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i53" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="545.0" onDragDropped="#Ti53DragDrop" onDragOver="#Ti53DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i63" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="637.0" onDragDropped="#Ti63DragDrop" onDragOver="#Ti63DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i63" fitHeight="80.0" fitWidth="80.0" layoutX="545.0" layoutY="630.0" onDragDropped="#Ti63DragDrop" onDragOver="#Ti63DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i14" fitHeight="80.0" fitWidth="80.0" layoutX="633.0" layoutY="205.0" onDragDropped="#Ti14DragDrop" onDragOver="#Ti14DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i14" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="205.0" onDragDropped="#Ti14DragDrop" onDragOver="#Ti14DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i34" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="376.0" onDragDropped="#Ti34DragDrop" onDragOver="#Ti34DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i34" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="375.0" onDragDropped="#Ti34DragDrop" onDragOver="#Ti34DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i54" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="550.0" onDragDropped="#Ti54DragDrop" onDragOver="#Ti54DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i54" fitHeight="80.0" fitWidth="80.0" layoutX="630.0" layoutY="545.0" onDragDropped="#Ti54DragDrop" onDragOver="#Ti54DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i05" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="117.0" onDragDropped="#Ti05DragDrop" onDragOver="#Ti05DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i05" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="117.0" onDragDropped="#Ti05DragDrop" onDragOver="#Ti05DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="77.0" layoutX="-7.0" layoutY="18.0" stroke="WHITE" strokeType="INSIDE" width="993.0" />
-      <ImageView fx:id="i15" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="205.0" onDragDropped="#Ti15DragDrop" onDragOver="#Ti15DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i15" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="205.0" onDragDropped="#Ti15DragDrop" onDragOver="#Ti15DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i25" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="290.0" onDragDropped="#Ti25DragDrop" onDragOver="#Ti25DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i25" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="290.0" onDragDropped="#Ti25DragDrop" onDragOver="#Ti25DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i35" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="376.0" onDragDropped="#Ti35DragDrop" onDragOver="#Ti35DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i35" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="375.0" onDragDropped="#Ti35DragDrop" onDragOver="#Ti35DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i45" fitHeight="80.0" fitWidth="80.0" layoutX="719.0" layoutY="462.0" onDragDropped="#Ti45DragDrop" onDragOver="#Ti45DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i45" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="460.0" onDragDropped="#Ti45DragDrop" onDragOver="#Ti45DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i55" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="550.0" onDragDropped="#Ti55DragDrop" onDragOver="#Ti55DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i55" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="545.0" onDragDropped="#Ti55DragDrop" onDragOver="#Ti55DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i65" fitHeight="80.0" fitWidth="80.0" layoutX="718.0" layoutY="637.0" onDragDropped="#Ti65DragDrop" onDragOver="#Ti65DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i65" fitHeight="80.0" fitWidth="80.0" layoutX="715.0" layoutY="630.0" onDragDropped="#Ti65DragDrop" onDragOver="#Ti65DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i16" fitHeight="80.0" fitWidth="80.0" layoutX="803.0" layoutY="205.0" onDragDropped="#Ti16DragDrop" onDragOver="#Ti16DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i16" fitHeight="80.0" fitWidth="80.0" layoutX="800.0" layoutY="205.0" onDragDropped="#Ti16DragDrop" onDragOver="#Ti16DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i36" fitHeight="80.0" fitWidth="80.0" layoutX="803.0" layoutY="376.0" onDragDropped="#Ti36DragDrop" onDragOver="#Ti36DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i36" fitHeight="80.0" fitWidth="80.0" layoutX="800.0" layoutY="375.0" onDragDropped="#Ti36DragDrop" onDragOver="#Ti36DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="i56" fitHeight="80.0" fitWidth="80.0" layoutX="803.0" layoutY="550.0" onDragDropped="#Ti56DragDrop" onDragOver="#Ti56DragOver" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="i56" fitHeight="80.0" fitWidth="80.0" layoutX="800.0" layoutY="545.0" onDragDropped="#Ti56DragDrop" onDragOver="#Ti56DragOver" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/corner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="70.0" layoutY="478.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="81.0" layoutY="443.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
-      <ImageView fx:id="dp01" fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="currTile" fitHeight="80.0" fitWidth="80.0" layoutX="70.0" layoutY="480.0" onDragDetected="#tileDragDetec" onMouseDragged="#tileDrag" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="btnDrehen" layoutX="81.0" layoutY="443.0" mnemonicParsing="false" onAction="#currTileRight" text="Drehen" />
       <ImageView fx:id="dp02" fitHeight="56.0" fitWidth="80.0" layoutX="548.0" layoutY="53.0" onDragDropped="#dp2DragDrop" onDragOver="#dp2DragOver" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="dp03" fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dp04" fitHeight="70.0" fitWidth="80.0" layoutX="895.0" layoutY="210.0" onDragDropped="#dp4DragDrop" onDragOver="#dp4DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
       <ImageView fx:id="dp05" fitHeight="67.0" fitWidth="80.0" layoutX="895.0" layoutY="383.0" onDragDropped="#dp5DragDrop" onDragOver="#dp5DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
       <ImageView fx:id="dp06" fitHeight="67.0" fitWidth="80.0" layoutX="894.0" layoutY="557.0" onDragDropped="#dp6DragDrop" onDragOver="#dp6DragOver" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
@@ -267,5 +265,7 @@
          <font>
             <Font size="28.0" />
          </font></Label>
+      <ImageView fx:id="dp01" fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="dp03" fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
