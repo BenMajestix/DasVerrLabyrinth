@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.benpaul.dasverrlabyrinth;
 
 import static com.benpaul.dasverrlabyrinth.App.boardTiles;
@@ -11,6 +7,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -37,6 +34,7 @@ import javafx.util.Duration;
 public class GameController extends GameControllerVar implements Initializable {
 
     int[] botBestPos = new int[2];
+    
     int botBestPosDist = 100;
     int[] botCurrObjective = new int[2];
     int botBestTileSide;
@@ -74,6 +72,9 @@ public class GameController extends GameControllerVar implements Initializable {
         }
         */
         
+        botBestPos[0] = 100;
+        botBestPos[1] = 100;
+        
         playerTurn = 0;
         
         player_red.setX(315);
@@ -90,9 +91,11 @@ public class GameController extends GameControllerVar implements Initializable {
         
         playerModel playerRed = new playerModel("Red");
         playerModel playerBlue = new playerModel("Blue");
-        //playerBlue.setIsBot(true);
+        playerBlue.setIsBot(true);
         playerModel playerYellow = new playerModel("Yellow");
+        //playerYellow.setIsBot(true);
         playerModel playerGreen = new playerModel("Green");
+        playerGreen.setIsBot(true);
         
         App.players[0] = playerRed;
         App.players[1] = playerBlue;
@@ -273,160 +276,179 @@ public class GameController extends GameControllerVar implements Initializable {
         
         if(!(botEvalPhaseOver)){
             System.out.println("Start Eval Phase");
-            tileModel[][] tempBoard = new tileModel[7][7];
-            tileModel offTemp;
+            
+            
+            
             int[] item0Koor = new int[2];
             int[] item1Koor = new int[2];
             int[] item2Koor = new int[2];
             for(int x = 0; x < 7; x++){
                 for(int y = 0; y < 7; y++){
-                    if(App.players[playerTurn].items[0].equals(App.boardTiles[y][x].collectable)){item0Koor[0] = x; item0Koor[1] = y;}
-                    if(App.players[playerTurn].items[1].equals(App.boardTiles[y][x].collectable)){item1Koor[0] = x; item1Koor[1] = y;}
-                    if(App.players[playerTurn].items[2].equals(App.boardTiles[y][x].collectable)){item2Koor[0] = x; item2Koor[1] = y;}
+                    if(App.players[playerTurn].items[0].equals(App.boardTiles[x][y].collectable)){item0Koor[0] = x; item0Koor[1] = y;}
+                    if(App.players[playerTurn].items[1].equals(App.boardTiles[x][y].collectable)){item1Koor[0] = x; item1Koor[1] = y;}
+                    if(App.players[playerTurn].items[2].equals(App.boardTiles[x][y].collectable)){item2Koor[0] = x; item2Koor[1] = y;}
                 }
             }
-
+            
+            botBestPos[0] = App.players[playerTurn].pos[0];
+            botBestPos[1] = App.players[playerTurn].pos[1];
+            evalStop:
             for(int sides = 0; sides < 12; sides++){
+                //sides = 0;
                 currTileSide = sides;
-                tempBoard = App.boardTiles;
+                
+                tileModel offTemp;
+                tileModel[][] tempBoard = new tileModel[7][7];
+                
+                for(int i=0; i<App.boardTiles.length; i++){
+                    for(int j=0; j<App.boardTiles[i].length; j++){
+                        tempBoard[i][j]=App.boardTiles[i][j];
+                    }
+                }
+                
+                //tempBoard = App.boardTiles.clone();
                 offTemp = App.offBoardTile;
+                
                 switch(sides){
                     //Von OBEN nach Unten
                     case 0: 
-                        offTemp = boardTiles[6][1];
-                        boardTiles[6][1] = boardTiles[5][1];
-                        boardTiles[5][1] = boardTiles[4][1];
-                        boardTiles[4][1] = boardTiles[3][1];
-                        boardTiles[3][1] = boardTiles[2][1];
-                        boardTiles[2][1] = boardTiles[1][1];
-                        boardTiles[1][1] = boardTiles[0][1];
-                        boardTiles[0][1] = App.offBoardTile;
+                        offTemp = tempBoard[6][1];
+                        tempBoard[6][1] = tempBoard[5][1];
+                        tempBoard[5][1] = tempBoard[4][1];
+                        tempBoard[4][1] = tempBoard[3][1];
+                        tempBoard[3][1] = tempBoard[2][1];
+                        tempBoard[2][1] = tempBoard[1][1];
+                        tempBoard[1][1] = tempBoard[0][1];
+                        tempBoard[0][1] = App.offBoardTile;
                         break;
                     case 1: 
-                        offTemp = boardTiles[6][2];
-                        boardTiles[6][3] = boardTiles[5][3];
-                        boardTiles[5][3] = boardTiles[4][3];
-                        boardTiles[4][3] = boardTiles[3][3];
-                        boardTiles[3][3] = boardTiles[2][3];
-                        boardTiles[2][3] = boardTiles[1][3];
-                        boardTiles[1][3] = boardTiles[0][3];
-                        boardTiles[0][3] = App.offBoardTile;
+                        offTemp = tempBoard[6][2];
+                        tempBoard[6][3] = tempBoard[5][3];
+                        tempBoard[5][3] = tempBoard[4][3];
+                        tempBoard[4][3] = tempBoard[3][3];
+                        tempBoard[3][3] = tempBoard[2][3];
+                        tempBoard[2][3] = tempBoard[1][3];
+                        tempBoard[1][3] = tempBoard[0][3];
+                        tempBoard[0][3] = App.offBoardTile;
                         break;
                     case 2: 
-                        offTemp = boardTiles[6][5];
-                        boardTiles[6][5] = boardTiles[5][5];
-                        boardTiles[5][5] = boardTiles[4][5];
-                        boardTiles[4][5] = boardTiles[3][5];
-                        boardTiles[3][5] = boardTiles[2][5];
-                        boardTiles[2][5] = boardTiles[1][5];
-                        boardTiles[1][5] = boardTiles[0][5];
-                        boardTiles[0][5] = App.offBoardTile;
+                        offTemp = tempBoard[6][5];
+                        tempBoard[6][5] = tempBoard[5][5];
+                        tempBoard[5][5] = tempBoard[4][5];
+                        tempBoard[4][5] = tempBoard[3][5];
+                        tempBoard[3][5] = tempBoard[2][5];
+                        tempBoard[2][5] = tempBoard[1][5];
+                        tempBoard[1][5] = tempBoard[0][5];
+                        tempBoard[0][5] = App.offBoardTile;
                         break;
                         //Von RECHTS nach links
                     case 3: 
-                        offTemp = boardTiles[1][6];
-                        boardTiles[1][6] = boardTiles[1][5];
-                        boardTiles[1][5] = boardTiles[1][4];
-                        boardTiles[1][4] = boardTiles[1][3];
-                        boardTiles[1][3] = boardTiles[1][2];
-                        boardTiles[1][2] = boardTiles[1][1];
-                        boardTiles[1][1] = boardTiles[1][0];
-                        boardTiles[1][0] = App.offBoardTile;
+                        offTemp = tempBoard[1][6];
+                        tempBoard[1][6] = tempBoard[1][5];
+                        tempBoard[1][5] = tempBoard[1][4];
+                        tempBoard[1][4] = tempBoard[1][3];
+                        tempBoard[1][3] = tempBoard[1][2];
+                        tempBoard[1][2] = tempBoard[1][1];
+                        tempBoard[1][1] = tempBoard[1][0];
+                        tempBoard[1][0] = App.offBoardTile;
                         break;
                     case 4: 
-                        offTemp = boardTiles[3][6];
-                        boardTiles[3][6] = boardTiles[3][5];
-                        boardTiles[3][5] = boardTiles[3][4];
-                        boardTiles[3][4] = boardTiles[3][3];
-                        boardTiles[3][3] = boardTiles[3][2];
-                        boardTiles[3][2] = boardTiles[3][1];
-                        boardTiles[3][1] = boardTiles[3][0];
-                        boardTiles[3][0] = App.offBoardTile;
+                        offTemp = tempBoard[3][6];
+                        tempBoard[3][6] = tempBoard[3][5];
+                        tempBoard[3][5] = tempBoard[3][4];
+                        tempBoard[3][4] = tempBoard[3][3];
+                        tempBoard[3][3] = tempBoard[3][2];
+                        tempBoard[3][2] = tempBoard[3][1];
+                        tempBoard[3][1] = tempBoard[3][0];
+                        tempBoard[3][0] = App.offBoardTile;
                         break;
                     case 5: 
-                        offTemp = boardTiles[5][6];
-                        boardTiles[5][6] = boardTiles[5][5];
-                        boardTiles[5][5] = boardTiles[5][4];
-                        boardTiles[5][4] = boardTiles[5][3];
-                        boardTiles[5][3] = boardTiles[5][2];
-                        boardTiles[5][2] = boardTiles[5][1];
-                        boardTiles[5][1] = boardTiles[5][0];
-                        boardTiles[5][0] = App.offBoardTile;
+                        offTemp = tempBoard[5][6];
+                        tempBoard[5][6] = tempBoard[5][5];
+                        tempBoard[5][5] = tempBoard[5][4];
+                        tempBoard[5][4] = tempBoard[5][3];
+                        tempBoard[5][3] = tempBoard[5][2];
+                        tempBoard[5][2] = tempBoard[5][1];
+                        tempBoard[5][1] = tempBoard[5][0];
+                        tempBoard[5][0] = App.offBoardTile;
                         break;
                         //Von UNTEN Nach Oben
                     case 6: 
-                        offTemp = boardTiles[0][1];
-                        boardTiles[0][1] = boardTiles[1][1];
-                        boardTiles[1][1] = boardTiles[2][1];
-                        boardTiles[2][1] = boardTiles[3][1];
-                        boardTiles[3][1] = boardTiles[4][1];
-                        boardTiles[4][1] = boardTiles[5][1];
-                        boardTiles[5][1] = boardTiles[6][1];
-                        boardTiles[6][1] = App.offBoardTile;
+                        offTemp = tempBoard[0][1];
+                        tempBoard[0][1] = tempBoard[1][1];
+                        tempBoard[1][1] = tempBoard[2][1];
+                        tempBoard[2][1] = tempBoard[3][1];
+                        tempBoard[3][1] = tempBoard[4][1];
+                        tempBoard[4][1] = tempBoard[5][1];
+                        tempBoard[5][1] = tempBoard[6][1];
+                        tempBoard[6][1] = App.offBoardTile;
                         break;
                     case 7: 
-                        offTemp = boardTiles[0][2];
-                        boardTiles[0][3] = boardTiles[1][3];
-                        boardTiles[1][3] = boardTiles[2][3];
-                        boardTiles[2][3] = boardTiles[3][3];
-                        boardTiles[3][3] = boardTiles[4][3];
-                        boardTiles[4][3] = boardTiles[5][3];
-                        boardTiles[5][3] = boardTiles[6][3];
-                        boardTiles[6][3] = App.offBoardTile;
+                        offTemp = tempBoard[0][2];
+                        tempBoard[0][3] = tempBoard[1][3];
+                        tempBoard[1][3] = tempBoard[2][3];
+                        tempBoard[2][3] = tempBoard[3][3];
+                        tempBoard[3][3] = tempBoard[4][3];
+                        tempBoard[4][3] = tempBoard[5][3];
+                        tempBoard[5][3] = tempBoard[6][3];
+                        tempBoard[6][3] = App.offBoardTile;
                         break;
                     case 8: 
-                        offTemp = boardTiles[0][5];
-                        boardTiles[0][5] = boardTiles[1][5];
-                        boardTiles[1][5] = boardTiles[2][5];
-                        boardTiles[2][5] = boardTiles[3][5];
-                        boardTiles[3][5] = boardTiles[4][5];
-                        boardTiles[4][5] = boardTiles[5][5];
-                        boardTiles[5][5] = boardTiles[6][5];
-                        boardTiles[6][5] = App.offBoardTile;
+                        offTemp = tempBoard[0][5];
+                        tempBoard[0][5] = tempBoard[1][5];
+                        tempBoard[1][5] = tempBoard[2][5];
+                        tempBoard[2][5] = tempBoard[3][5];
+                        tempBoard[3][5] = tempBoard[4][5];
+                        tempBoard[4][5] = tempBoard[5][5];
+                        tempBoard[5][5] = tempBoard[6][5];
+                        tempBoard[6][5] = App.offBoardTile;
                         break;
                         //Von Links nach rechts
                     case 9: 
-                        offTemp = boardTiles[1][0];
-                        boardTiles[1][0] = boardTiles[1][1];
-                        boardTiles[1][1] = boardTiles[1][2];
-                        boardTiles[1][2] = boardTiles[1][3];
-                        boardTiles[1][3] = boardTiles[1][4];
-                        boardTiles[1][4] = boardTiles[1][5];
-                        boardTiles[1][5] = boardTiles[1][6];
-                        boardTiles[1][6] = App.offBoardTile;
+                        offTemp = tempBoard[1][0];
+                        tempBoard[1][0] = tempBoard[1][1];
+                        tempBoard[1][1] = tempBoard[1][2];
+                        tempBoard[1][2] = tempBoard[1][3];
+                        tempBoard[1][3] = tempBoard[1][4];
+                        tempBoard[1][4] = tempBoard[1][5];
+                        tempBoard[1][5] = tempBoard[1][6];
+                        tempBoard[1][6] = App.offBoardTile;
                         break;
                     case 10: 
-                        offTemp = boardTiles[3][0];
-                        boardTiles[3][0] = boardTiles[3][1];
-                        boardTiles[3][1] = boardTiles[3][2];
-                        boardTiles[3][2] = boardTiles[3][3];
-                        boardTiles[3][3] = boardTiles[3][4];
-                        boardTiles[3][4] = boardTiles[3][5];
-                        boardTiles[3][5] = boardTiles[3][6];
-                        boardTiles[3][6] = App.offBoardTile;
+                        offTemp = tempBoard[3][0];
+                        tempBoard[3][0] = tempBoard[3][1];
+                        tempBoard[3][1] = tempBoard[3][2];
+                        tempBoard[3][2] = tempBoard[3][3];
+                        tempBoard[3][3] = tempBoard[3][4];
+                        tempBoard[3][4] = tempBoard[3][5];
+                        tempBoard[3][5] = tempBoard[3][6];
+                        tempBoard[3][6] = App.offBoardTile;
                         break;
                     case 11: 
-                        offTemp = boardTiles[5][0];
-                        boardTiles[5][0] = boardTiles[5][1];
-                        boardTiles[5][1] = boardTiles[5][2];
-                        boardTiles[5][2] = boardTiles[5][3];
-                        boardTiles[5][3] = boardTiles[5][4];
-                        boardTiles[5][4] = boardTiles[5][5];
-                        boardTiles[5][5] = boardTiles[5][6];
-                        boardTiles[5][6] = App.offBoardTile;
+                        offTemp = tempBoard[5][0];
+                        tempBoard[5][0] = tempBoard[5][1];
+                        tempBoard[5][1] = tempBoard[5][2];
+                        tempBoard[5][2] = tempBoard[5][3];
+                        tempBoard[5][3] = tempBoard[5][4];
+                        tempBoard[5][4] = tempBoard[5][5];
+                        tempBoard[5][5] = tempBoard[5][6];
+                        tempBoard[5][6] = App.offBoardTile;
                         break;
                 }
                 botCurrObjective = item0Koor;
-                if(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2)){
+                if(startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard)){
                     perfectMoveLoc.add(botCurrObjective);
+                    break evalStop;
                 }
                 botCurrObjective = item1Koor;
-                if(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2)){
+                if(startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard)){
                     perfectMoveLoc.add(botCurrObjective);
+                    break evalStop;
                 }
                 botCurrObjective = item2Koor;
-                if(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard, 2)){
+                if(startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard)){
                     perfectMoveLoc.add(botCurrObjective);
+                    break evalStop;
                 }
             }
             botEvalPhaseOver = true;
@@ -435,6 +457,7 @@ public class GameController extends GameControllerVar implements Initializable {
         else if(!(botTilePhaseOver)){
             enableTilePhase();
             System.out.println("Bot Start Tile Phase");
+            System.out.println(botBestTileSide);
             switch(botBestTileSide){
                 case 0: moveColumn(1, 1); break;
                 case 1: moveColumn(3, 1); break;
@@ -450,13 +473,28 @@ public class GameController extends GameControllerVar implements Initializable {
                 case 11: moveRow(1, 1); break;
             }
             botTilePhaseOver = true;
+            PauseTransition p = new PauseTransition(Duration.millis(2000));
+            p.setOnFinished(e -> {
+                try {
+                    startCompTurn();
+                } catch (Exception ex) {
+                }
+            });
         }
         else if(!(botMovingPhaseOver)){
+            if(botBestPos[0] == 100 || botBestPos[1] == 100){
+                botBestPos[0] = App.players[playerTurn].pos[0];
+                botBestPos[1] = App.players[playerTurn].pos[1];
+            }
+            if(!(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botBestPos[0], botBestPos[1]))){
+                botBestPos[0] = App.players[playerTurn].pos[0];
+                botBestPos[1] = App.players[playerTurn].pos[1];
+            }
             enableMovingPhase();
             System.out.println("moving phase reached");
             
             if(!(perfectMoveLoc.isEmpty())){
-                int moveTo = (int) (Math.random() * perfectMoveLoc.size()-1);
+                int moveTo = (int) (Math.random() * perfectMoveLoc.size());
                 System.out.println("Perfekt: ");
                 System.out.println("X: " + perfectMoveLoc.get(moveTo)[0]);
                 System.out.println("Y: " + perfectMoveLoc.get(moveTo)[1]);
@@ -466,12 +504,153 @@ public class GameController extends GameControllerVar implements Initializable {
                 System.out.println("X: " + botBestPos[0]);
                 System.out.println("Y: " + botBestPos[1]);
             }
+            moveBot(botBestPos[0], botBestPos[1]);
+            
+            PauseTransition p = new PauseTransition(Duration.millis(2000));
+            p.setOnFinished(e -> {
+                try {
+                    startCompTurn();
+                } catch (Exception ex) {
+                }
+            });
+            //startCompTurn();
         }
         else{
-            
+        for(int i = 0; i < 3; i++){
+            if(App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)){
+                App.players[playerTurn].score = App.players[playerTurn].score + 1;
+                System.out.println("Tile youre looking for found.");
+                if(App.allItems.isEmpty()){
+                    System.out.println("Game is Over");
+                    App.setRoot("finishView");
+                }
+                else{
+                    App.players[playerTurn].items[i] = App.getRndmItem();
+                }
+            }
+        }
+        playerTurn++;
+        botEvalPhaseOver = false;
+        botMovingPhaseOver = false;
+        botTilePhaseOver = false;
+        runGame();
+        }
+    }
+    
+    
+    
+    
+    public void moveBot(int x, int y){
+        
+        double[] xCoords = {290, 375, 460, 545, 630, 715, 800};
+        //double[] xCoords = {270, 355, 440, 325, 610, 695, 780};
+        double[] yCoords = {120, 205, 290, 375, 460, 545, 630};
+        //double[] yCoords = {100, 185, 270, 355, 440, 325, 610};
+        
+        TranslateTransition botTranslate = new TranslateTransition();
+        
+        botTranslate.setDuration(Duration.millis(3000));
+        botTranslate.setCycleCount(1);
+        botTranslate.setAutoReverse(false);
+        
+        double moveByX = 0;
+        double moveByY = 0;
+        switch(playerTurn){
+            case 0: 
+                //Rot
+                botTranslate.setNode(player_red);
+                
+                if(player_red.getX() >= xCoords[y]){
+                    moveByX = -(player_red.getX() - xCoords[y]);
+                }
+                else{
+                    moveByX = (xCoords[y] - player_red.getX());
+                }
+                
+                if(player_red.getY() >= yCoords[x]){
+                    moveByY = -(player_red.getY() - yCoords[x]);
+                }
+                else{
+                    moveByY = (yCoords[x] - player_red.getY());
+                }
+                break;
+            case 1: 
+                //Blau
+                botTranslate.setNode(player_blue);
+                
+                if(player_blue.getX() >= xCoords[y]){
+                    moveByX = -(player_blue.getX() - xCoords[y]);
+                }
+                else{
+                    moveByX = (xCoords[y] - player_blue.getX());
+                }
+                
+                if(player_blue.getY() >= yCoords[x]){
+                    moveByY = -(player_blue.getY() - yCoords[x]);
+                }
+                else{
+                    moveByY = (yCoords[x] - player_blue.getY());
+                }
+                break;
+            case 2: 
+                //Gelb
+                botTranslate.setNode(player_yellow);
+                
+                if(player_yellow.getX() >= xCoords[y]){
+                    moveByX = -(player_yellow.getX() - xCoords[y]);
+                }
+                else{
+                    moveByX = (xCoords[y] - player_yellow.getX());
+                }
+                
+                if(player_yellow.getY() >= yCoords[x]){
+                    moveByY = -(player_yellow.getY() - yCoords[x]);
+                }
+                else{
+                    moveByY = (yCoords[x] - player_yellow.getY());
+                }
+                break;
+            case 3: 
+                //Gruen
+                botTranslate.setNode(player_green);
+                
+                if(player_green.getX() >= xCoords[y]){
+                    moveByX = -(player_green.getX() - xCoords[y]);
+                }
+                else{
+                    moveByX = (xCoords[y] - player_green.getX());
+                }
+                
+                if(player_green.getY() >= yCoords[x]){
+                    moveByY = -(player_green.getY() - yCoords[x]);
+                }
+                else{
+                    moveByY = (yCoords[x] - player_green.getY());
+                }
+                break;
         }
         
+        botTranslate.setByX(moveByX);
+        botTranslate.setByY(moveByY);        
+        
+        botTranslate.play();
+        
+        System.out.println(player_blue.getX());
+        System.out.println(player_blue.getY());
+        
+        App.players[playerTurn].pos[0] = x;
+        App.players[playerTurn].pos[1] = y;
+        
+        botMovingPhaseOver = true;
+        botTranslate.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Animation Done!");
+            }
+        });
     }
+    
+    
     
     
     public void checkItemFound(){
@@ -696,7 +875,7 @@ public class GameController extends GameControllerVar implements Initializable {
         //makeBoard();
         checkItemFound();
         
-        if(App.players[playerTurn].isBot){botTilePhaseOver = true; startCompTurn();}
+        if(App.players[playerTurn].isBot){botTilePhaseOver = true;}
     }
     
     public void startMoveColumn(int column, int direction) throws Exception{
@@ -831,7 +1010,7 @@ public class GameController extends GameControllerVar implements Initializable {
         //makeBoard();
         checkItemFound();
         
-        if(App.players[playerTurn].isBot){botTilePhaseOver = true; startCompTurn();}
+        if(App.players[playerTurn].isBot){botTilePhaseOver = true; }
     }
     
     public void startAnimation(ImageView[] images, int[] offsetNode7, int dir, int mode){
@@ -1119,7 +1298,7 @@ public class GameController extends GameControllerVar implements Initializable {
     //All tiles already looked at.
     ArrayList<tileModel> alrObsTiles = new ArrayList();
     
-    public boolean startCheckAlgo(int startX, int startY, int endX, int endY, tileModel[][] compBoard, int mode) throws Exception{
+    public boolean startCheckAlgo(int startX, int startY, int endX, int endY) throws Exception{
         boolean erfolgreich = false;
         //Clearing everything and resetting it.
         
@@ -1147,16 +1326,9 @@ public class GameController extends GameControllerVar implements Initializable {
             throw new Exception("Die Koordinaten sind ungültig.");
         }
         else{
-            if(mode == 1){
-                //Setzt Start und End Tile
-                startTile = App.boardTiles[startX][startY];
-                endTile = App.boardTiles[endX][endY];
-            }
-            else{
-                //Setzt Start und End Tile
-                startTile = compBoard[startX][startY];
-                endTile = compBoard[endX][endY];
-            }
+           //Setzt Start und End Tile
+           startTile = App.boardTiles[startX][startY];
+           endTile = App.boardTiles[endX][endY];
         }
         
         if(startX == endX && startY == endY){
@@ -1175,65 +1347,32 @@ public class GameController extends GameControllerVar implements Initializable {
             System.out.println("Links" + startTile.ableToExit[3]);
             System.out.println(" ");
 
-            for(int i = 0; i < 4; i++){
-                if(startTile.ableToExit[i] && checkNextTileInput(startTile, i)){
-                    System.out.println("Hit at Exit Nr.: " + i);
-                    int o = 5;
-                    switch(i){
-                        case 0: o = 2; break;
-                        case 1: o = 3; break;
-                        case 2: o = 0; break;
-                        case 3: o = 1; break;
-                    }
-                    if(mode == 1){
-                        switch(i){
-                            case 0: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
-                            case 1: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
-                            case 2: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor + 1][startTile.location.yCoor])); break;
-                            case 3: currObsTile.add(new algoTile(o, App.boardTiles[startTile.location.xCoor][startTile.location.yCoor - 1])); break;
-                        }
-                    }
-                    else{
-                        switch(i){
-                            case 0: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor - 1][startTile.location.yCoor])); break;
-                            case 1: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor][startTile.location.yCoor + 1])); break;
-                            case 2: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor + 1][startTile.location.yCoor])); break;
-                            case 3: currObsTile.add(new algoTile(o, compBoard[startTile.location.xCoor][startTile.location.yCoor - 1])); break;
-                        }
-                    }
-                }
-            }
+            algoTile startAlgoTile = new algoTile(null, startTile);
+            currObsTile.add(startAlgoTile);
+            startTile(startAlgoTile, 0);
         }
-        
         
         int fCount = 0;
         //Break Flag für die While Loop
         breakWhile:
         //wird ausgeführt während das Ziel noch nicht gefunden wurde
         while(!(objecFound)){
-            if(fCount == 10){System.out.println("---fbreak"); 
-                /*if(!(alrObsTiles.isEmpty())){
-                    for(int i = 0; i < alrObsTiles.size(); i++){
-                        checkDistance(alrObsTiles.get(i));
-                    }
-                }*/
-            break;}
-            else if(currObsTile.isEmpty()){fCount++;
-                System.out.println("F: " + fCount);}
-            //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
-            for(algoTile currObTile : currObsTile){
-                if(compareTiles(currObTile.tile, endTile)){
+            if(fCount >= 10){System.out.println("---fbreak"); break;}
+            else if(currObsTile.isEmpty()){fCount++; System.out.println("F: " + fCount);}
+            
+            
+            //continue flag für die For Loop
+            breakFor:
+            //Geht alle currently observed tiles durch
+            for (int i = 0; i < currObsTile.size(); i++){
+		//Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
+                if(compareTiles(currObsTile.get(i).tile, endTile)){
                     objecFound = true;
                     System.out.println("--Found EndTile!");
                     //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
                     //Better performance
                     break breakWhile;
                 }
-            }
-            //continue flag für die For Loop
-            breakFor:
-            //Geht alle currently observed tiles durch
-            for (int i = 0; i < currObsTile.size(); i++){
                 //Wenn dieses Tile schon in der alreadyObservedList ist, dann wird beim nächsten weitergemacht
                 for(int o = 0; o < alrObsTiles.size(); o++) {
                     if(compareTiles(alrObsTiles.get(o), (currObsTile.get(i).tile))){
@@ -1243,7 +1382,7 @@ public class GameController extends GameControllerVar implements Initializable {
                 }
                 
                 
-                checkDistance(currObsTile.get(i).tile);
+                //checkDistance(currObsTile.get(i).tile);
                 
                 System.out.println("-----------------");
                 System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
@@ -1256,16 +1395,18 @@ public class GameController extends GameControllerVar implements Initializable {
                     break breakWhile;
                 }
                 else{
-                    startTile(currObsTile.get(i), i, compBoard);
+                    startTile(currObsTile.get(i), i);
                 }
             }
         }
         if(objecFound){System.out.println("--Algorithmus erfolgreich!");erfolgreich = true;}
         else{System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");}
+        
+        
         return erfolgreich;
     }
     
-    public algoTile startTile(algoTile tile, int index, tileModel[][] compBoard){
+    public algoTile startTile(algoTile tile, int index){
         //Alle Seiten aus denen ein Weg geht
         System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
         System.out.println("Rechts Ausgang: " + tile.tile.ableToExit[1]);
@@ -1273,7 +1414,10 @@ public class GameController extends GameControllerVar implements Initializable {
         System.out.println("Links Ausgang: " + tile.tile.ableToExit[3]);
         //Die Seite aus der der Algorithmus gekommen ist wird als false gesetzt
         //Damit er nicht in eine Loop verfällt
-        tile.tile.ableToExit[tile.fromDir] = false;
+        if(!(tile.fromDir == null)){
+            tile.tile.ableToExit[tile.fromDir] = false;
+	}
+		
         
         //Geht alle Seiten des Tiles durch
         for(int i = 0; i < 4; i++){
@@ -1286,9 +1430,6 @@ public class GameController extends GameControllerVar implements Initializable {
                     case 1: o = 3; break;
                     case 2: o = 0; break;
                     case 3: o = 1; break;
-                }
-                if(!(compBoard == null)){
-                    
                 }
                 switch(i){//HIER--------------------
                     //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
@@ -1356,10 +1497,199 @@ public class GameController extends GameControllerVar implements Initializable {
     //--------------
     //Algorithm Done
     
+    
+    
+    
+    
+    
+    
+    
+    //BOT Algorithm START
+    //----------------------------
+    
+    public boolean startCheckAlgoBot(int startX, int startY, int endX, int endY, tileModel[][] compBoard) throws Exception{
+        boolean erfolgreich = false;
+        //Clearing everything and resetting it.
+        
+        for(int x = 0; x < 7; x++){
+            for(int y = 0; y < 7; y++){
+                compBoard[x][y].ableToExit[0] = false;
+                compBoard[x][y].ableToExit[1] = false;
+                compBoard[x][y].ableToExit[2] = false;
+                compBoard[x][y].ableToExit[3] = false;
+                compBoard[x][y].getLocation().setxCoor(x);
+                compBoard[x][y].getLocation().setyCoor(y);
+                compBoard[x][y].checkExit();
+            }
+        }
+        
+        
+        currObsTile.clear();
+        alrObsTiles.clear();
+        objecFound = false;
+        
+        tileModel startTile;
+        tileModel endTile;
+        
+        //Die Koordinaten müssen sich im Spielbaren Feld befinden
+        if(startX < 0 || startX > 6 || startY < 0 || startY > 6 || endX < 0 || endX > 6 || endY < 0 || endY > 6){
+            throw new Exception("Die Koordinaten sind ungültig.");
+        }
+        else{
+           //Setzt Start und End Tile
+           startTile = compBoard[startX][startY];
+           endTile = compBoard[endX][endY];
+        }
+        
+        
+        if(startX == endX && startY == endY){
+            objecFound = true;
+            System.out.println("Der Spieler ist schon auf dem Richtigen Tile!");
+        }
+        else{
+            System.out.println("EndX: " + endTile.location.xCoor);
+            System.out.println("EndY: " + endTile.location.yCoor);
+
+            //currObsTile.add(new algoTile(0, startTile));
+            System.out.println("Exits of StartTile :");
+            System.out.println("Oben" + startTile.ableToExit[0]);
+            System.out.println("Rechts" + startTile.ableToExit[1]);
+            System.out.println("Unten" + startTile.ableToExit[2]);
+            System.out.println("Links" + startTile.ableToExit[3]);
+            System.out.println(" ");
+
+            algoTile startAlgoTile = new algoTile(null, startTile);
+            currObsTile.add(startAlgoTile);
+            startTile(startAlgoTile, 0);
+        }
+        
+        int fCount = 0;
+        //Break Flag für die While Loop
+        breakWhile:
+        //wird ausgeführt während das Ziel noch nicht gefunden wurde
+        while(!(objecFound)){
+            if(fCount >= 10){System.out.println("---fbreak"); break;}
+            else if(currObsTile.isEmpty()){fCount++; System.out.println("F: " + fCount);}
+            
+            
+            //continue flag für die For Loop
+            breakFor:
+            //Geht alle currently observed tiles durch
+            for (int i = 0; i < currObsTile.size(); i++){
+		//Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
+                if(compareTiles(currObsTile.get(i).tile, endTile)){
+                    objecFound = true;
+                    System.out.println("--Found EndTile!");
+                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
+                    //Better performance
+                    break breakWhile;
+                }
+                //Wenn dieses Tile schon in der alreadyObservedList ist, dann wird beim nächsten weitergemacht
+                for(int o = 0; o < alrObsTiles.size(); o++) {
+                    if(compareTiles(alrObsTiles.get(o), (currObsTile.get(i).tile))){
+                        currObsTile.remove(i);
+                        continue breakFor;
+                    }
+                }
+                
+                
+                
+                
+                System.out.println("-----------------");
+                System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
+                System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
+                if(compareTiles(currObsTile.get(i).tile, endTile)){
+                    objecFound = true;
+                    System.out.println("--Found EndTile!");
+                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
+                    //Better performance
+                    break breakWhile;
+                }
+                else{
+                    startTile(currObsTile.get(i), i);
+                }
+            }
+        }
+        if(objecFound){System.out.println("--Algorithmus erfolgreich!");erfolgreich = true;}
+        else{System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");}
+        
+        for(int g = 0; g < alrObsTiles.size(); g++){
+            checkDistance(alrObsTiles.get(g));
+        }
+        
+        return erfolgreich;
+    }
+    
+    
+    public algoTile startTileBot(algoTile tile, int index, tileModel[][] compBoard){
+        //Alle Seiten aus denen ein Weg geht
+        System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
+        System.out.println("Rechts Ausgang: " + tile.tile.ableToExit[1]);
+        System.out.println("Unten Ausgang: " + tile.tile.ableToExit[2]);
+        System.out.println("Links Ausgang: " + tile.tile.ableToExit[3]);
+        //Die Seite aus der der Algorithmus gekommen ist wird als false gesetzt
+        //Damit er nicht in eine Loop verfällt
+        if(!(tile.fromDir == null)){
+            tile.tile.ableToExit[tile.fromDir] = false;
+		}
+		
+        //Geht alle Seiten des Tiles durch
+        for(int i = 0; i < 4; i++){
+            //Wenn die Seite einen Ausgang hat, und das Angrenzende Tile auch, dann true
+            if(tile.tile.ableToExit[i] && checkNextTileInputBot(tile.tile, i, compBoard)){
+                System.out.println("Hit at Exit Nr.: " + i);
+                int o = 5;
+                switch(i){
+                    case 0: o = 2; break;
+                    case 1: o = 3; break;
+                    case 2: o = 0; break;
+                    case 3: o = 1; break;
+                }
+                switch(i){//HIER--------------------
+                    //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
+                    case 0: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor - 1][tile.tile.location.yCoor])); System.out.println("Adding Tile on Top");break;
+                    case 1: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor][tile.tile.location.yCoor + 1])); System.out.println("Adding Tile Right"); break;
+                    case 2: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor + 1][tile.tile.location.yCoor])); System.out.println("Adding Tile on Bottom"); break;
+                    case 3: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor][tile.tile.location.yCoor - 1])); System.out.println("Adding Tile Left"); break;
+                }
+            }
+        }
+        currObsTile.remove(index);
+        alrObsTiles.add(tile.tile);
+        return tile;
+    }
+    
+    
+    public boolean checkNextTileInputBot(tileModel currTile, int dir, tileModel[][] compBoard){
+        boolean w = false;
+        try{
+            switch(dir){//HIER--------------------
+                case 0: 
+                    System.out.println("-Oberes Tile: " + compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
+                    if(compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;
+                case 1: 
+                    System.out.println("-Rechtes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
+                    if(compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[3]){w = true;} break;
+                case 2: 
+                    System.out.println("-Unteres Tile: " + compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
+                    if(compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[0]){w = true;} break;
+                case 3:
+                    System.out.println("-Linkes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
+                    if(compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[1]){w = true;} break;
+            }
+        }
+        catch(Exception e){
+            w = false;
+        }
+        return w;
+    }
+    
+    
     public void checkDistance(tileModel currTile){
         //botCurrObjective
         System.out.println("------------------------------------------------------->");
-        System.out.println("Start Check dist");
+        System.out.println("Start Check Distance");
+        System.out.println("Side: " + currTileSide);
         int xDist, yDist;
         if(currTile.location.xCoor > botCurrObjective[0]){
             xDist = currTile.location.xCoor - botCurrObjective[0];
@@ -1390,6 +1720,7 @@ public class GameController extends GameControllerVar implements Initializable {
             botBestTileSide = currTileSide;
             System.out.println("New Best Tile, Dist: " + botBestPosDist + " Location: " + botBestPos[0] + botBestPos[1]);
         }
+        System.out.println("------------------------------------------------------->");
     }
     
     
@@ -1833,7 +2164,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 0:
                 System.out.println("Alte Spielerposition: " + oldRedTilePos[0] + " " + oldRedTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startCheckAlgo(oldRedTilePos[0], oldRedTilePos[1], x, y, null, 1)){
+                if(startCheckAlgo(oldRedTilePos[0], oldRedTilePos[1], x, y)){
                     player_red.setX(mouseX);
                     player_red.setY(mouseY);
                     App.players[0].pos[0] = x;
@@ -1850,7 +2181,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 1:
                 System.out.println("Alte Spielerposition: " + oldBlueTilePos[0] + " " + oldBlueTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startCheckAlgo(oldBlueTilePos[0], oldBlueTilePos[1], x, y, null, 1)){
+                if(startCheckAlgo(oldBlueTilePos[0], oldBlueTilePos[1], x, y)){
                     player_blue.setX(mouseX);
                     player_blue.setY(mouseY);
                     App.players[1].pos[0] = x;
@@ -1867,7 +2198,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 2:
                 System.out.println("Alte Spielerposition: " + oldYellowTilePos[0] + " " + oldYellowTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startCheckAlgo(oldYellowTilePos[0], oldYellowTilePos[1], x, y, null, 1)){
+                if(startCheckAlgo(oldYellowTilePos[0], oldYellowTilePos[1], x, y)){
                     player_yellow.setX(mouseX);
                     player_yellow.setY(mouseY);
                     App.players[2].pos[0] = x;
@@ -1884,7 +2215,7 @@ public class GameController extends GameControllerVar implements Initializable {
             case 3:
                 System.out.println("Alte Spielerposition: " + oldGreenTilePos[0] + " " + oldGreenTilePos[1]);
                 System.out.println("Mausposition: " +  x + " " + y);
-                if(startCheckAlgo(oldGreenTilePos[0], oldGreenTilePos[1], x, y, null, 1)){
+                if(startCheckAlgo(oldGreenTilePos[0], oldGreenTilePos[1], x, y)){
                     player_green.setX(mouseX);
                     player_green.setY(mouseY);
                     App.players[3].pos[0] = x;

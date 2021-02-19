@@ -263,7 +263,7 @@
       <Label fx:id="labelCardsLeft" layoutX="576.0" layoutY="827.0" text="Label" />
       <Label fx:id="lblInstr" layoutX="49.0" layoutY="26.0" prefHeight="58.0" prefWidth="926.0" text="Label" textFill="WHITE">
          <font>
-            <Font size="28.0" />
+            <Font name="Monospaced Regular" size="25.0" />
          </font></Label>
       <ImageView fx:id="dp01" fitHeight="56.0" fitWidth="80.0" layoutX="376.0" layoutY="54.0" onDragDropped="#dp1DragDrop" onDragOver="#dp1DragOver" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="dp03" fitHeight="56.0" fitWidth="80.0" layoutX="718.0" layoutY="53.0" onDragDropped="#dp3DragDrop" onDragOver="#dp3DragOver" pickOnBounds="true" preserveRatio="true" />

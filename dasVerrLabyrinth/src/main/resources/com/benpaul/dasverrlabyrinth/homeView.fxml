@@ -24,9 +24,9 @@
             <Font size="59.0" />
          </font></Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="82.0" layoutX="406.0" layoutY="362.0" stroke="WHITE" strokeType="INSIDE" width="690.0" />
-      <Label layoutX="412.0" layoutY="351.0" prefHeight="104.0" prefWidth="716.0" text="Das Verrückte Labyrinth" textFill="WHITE">
+      <Label layoutX="429.0" layoutY="351.0" prefHeight="104.0" prefWidth="716.0" text="Das Verrückte Labyrinth" textFill="WHITE">
          <font>
-            <Font size="64.0" />
+            <Font name="Monospaced Regular" size="46.0" />
          </font>
       </Label>
       <Button layoutX="1362.0" layoutY="19.0" mnemonicParsing="false" onAction="#btnColors" prefHeight="40.0" prefWidth="115.0" text="Change Colors">
