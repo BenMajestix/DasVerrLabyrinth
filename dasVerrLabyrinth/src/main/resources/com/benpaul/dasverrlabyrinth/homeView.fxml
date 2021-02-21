@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -33,5 +34,9 @@
          <font>
             <Font size="13.0" />
          </font></Button>
+      <CheckBox fx:id="checkRedBot" layoutX="1200.0" layoutY="782.0" mnemonicParsing="false" text="Roter Spieler" textFill="WHITE" />
+      <CheckBox fx:id="checkBlueBot" layoutX="1200.0" layoutY="818.0" mnemonicParsing="false" text="Blauer Spieler" textFill="WHITE" />
+      <CheckBox fx:id="checkYellowBot" layoutX="1200.0" layoutY="850.0" mnemonicParsing="false" text="Gelber Spieler" textFill="WHITE" />
+      <CheckBox fx:id="checkGreenBot" layoutX="1200.0" layoutY="880.0" mnemonicParsing="false" text="Grüner Spieler" textFill="WHITE" />
    </children>
 </AnchorPane>

@@ -90,12 +90,16 @@ public class GameController extends GameControllerVar implements Initializable {
         makeBoard();
         
         playerModel playerRed = new playerModel("Red");
+        playerRed.setName("Roter Spieler");
         playerModel playerBlue = new playerModel("Blue");
-        playerBlue.setIsBot(true);
+        playerBlue.setName("Blauer Spieler");
+        //playerBlue.setIsBot(true);
         playerModel playerYellow = new playerModel("Yellow");
+        playerYellow.setName("Gelber Spieler");
         //playerYellow.setIsBot(true);
         playerModel playerGreen = new playerModel("Green");
-        playerGreen.setIsBot(true);
+        playerGreen.setName("Gruener Spieler");
+        //playerGreen.setIsBot(true);
         
         App.players[0] = playerRed;
         App.players[1] = playerBlue;
@@ -271,12 +275,16 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
     
+    public void botRotateOffTile(){
+        
+    }
+    
+    
     public void startCompTurn() throws Exception{
         ArrayList<int[]> perfectMoveLoc = new ArrayList();
         
         if(!(botEvalPhaseOver)){
             System.out.println("Start Eval Phase");
-            
             
             
             int[] item0Koor = new int[2];
@@ -473,7 +481,8 @@ public class GameController extends GameControllerVar implements Initializable {
                 case 11: moveRow(1, 1); break;
             }
             botTilePhaseOver = true;
-            PauseTransition p = new PauseTransition(Duration.millis(2000));
+            PauseTransition p = new PauseTransition(Duration.millis(1000));
+            p.play();
             p.setOnFinished(e -> {
                 try {
                     startCompTurn();
@@ -506,7 +515,8 @@ public class GameController extends GameControllerVar implements Initializable {
             }
             moveBot(botBestPos[0], botBestPos[1]);
             
-            PauseTransition p = new PauseTransition(Duration.millis(2000));
+            PauseTransition p = new PauseTransition(Duration.millis(1000));
+            p.play();
             p.setOnFinished(e -> {
                 try {
                     startCompTurn();
@@ -549,7 +559,7 @@ public class GameController extends GameControllerVar implements Initializable {
         
         TranslateTransition botTranslate = new TranslateTransition();
         
-        botTranslate.setDuration(Duration.millis(3000));
+        botTranslate.setDuration(Duration.millis(1500));
         botTranslate.setCycleCount(1);
         botTranslate.setAutoReverse(false);
         
@@ -632,9 +642,10 @@ public class GameController extends GameControllerVar implements Initializable {
         
         botTranslate.setByX(moveByX);
         botTranslate.setByY(moveByY);        
-        
-        botTranslate.play();
-        
+        if(App.players[playerTurn].pos[0] == x && App.players[playerTurn].pos[1] == y){}
+        else{
+            botTranslate.play();
+        }
         System.out.println(player_blue.getX());
         System.out.println(player_blue.getY());
         
@@ -731,17 +742,17 @@ public class GameController extends GameControllerVar implements Initializable {
     
     @FXML
     private void tryAnimat(ActionEvent event) {
-        ImageView image = i13;
-        
         TranslateTransition newTranslate = new TranslateTransition();
         newTranslate.setDuration(Duration.millis(2000));
-        newTranslate.setNode(image);
-        int testInt = 200;
-        newTranslate.setByX(- testInt);
+        newTranslate.setNode(player_red);
+        newTranslate.setToX(545);
+        newTranslate.setToY(375);
         newTranslate.setCycleCount(1);
         newTranslate.setAutoReverse(false);
         //newTranslate.
-        newTranslate.play();
+        //newTranslate.play();
+        
+        moveBot(2, 2);
     }
     
     public void startMoveRow(int row, int direction) throws Exception{
@@ -1288,6 +1299,62 @@ public class GameController extends GameControllerVar implements Initializable {
         checkExits();
     }
 
+    ArrayList<pathfinderPathModel> allPaths = new ArrayList();
+    
+    public void startPathfinder(int[] startPoint, int[] endPoint){
+        boolean[] directions = checkPathDir(startPoint, endPoint);
+        
+        tileModel startTile, endTile;
+        startTile = App.boardTiles[startPoint[0]][startPoint[1]];
+        endTile = App.boardTiles[endPoint[0]][endPoint[1]];
+        
+        if(!(directions[0])){
+            //Es geht nach Unten
+            if(startTile.ableToExit[2] && checkNextTileInput(startTile, 2)){
+                
+            }
+        }
+        else if(directions[0]){
+            //Es geht nach Oben
+            
+        }
+    }
+    
+    public void newPath(tileModel tile, int dir){
+        
+    }
+    
+    
+    public boolean[] checkPathDir(int[] startPoint, int[] endPoint){
+        boolean[] directions = new boolean[2];
+        //[0] Die X Dir
+        //[1] Die Y Dir
+        if(startPoint[0] > endPoint[0]){
+            directions[0] = false;
+        }
+        else if(startPoint[0] < endPoint[0]){
+            directions[1] = true;
+        }
+        
+        if(startPoint[1] > endPoint[1]){
+            directions[1] = false;
+        }
+        else if(startPoint[1] < endPoint[1]){
+            directions[1] = true;
+        }
+        
+        return directions;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     
     //ALGORITHM for evaluating if walking is possible
@@ -1463,7 +1530,7 @@ public class GameController extends GameControllerVar implements Initializable {
     public boolean checkNextTileInput(tileModel currTile, int dir){
         boolean w = false;
         try{
-            switch(dir){//HIER--------------------
+            switch(dir){
                 case 0: 
                     System.out.println("-Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
                     if(App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]){w = true;} break;

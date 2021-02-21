@@ -23,7 +23,7 @@ public class App extends Application {
     
     private static Scene scene;
     
-    
+    boolean[] isBotList = new boolean[4];
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -125,9 +125,13 @@ public class App extends Application {
     }
     
     public static tileModel getRandomTile(){
+        //Generiert eine Random Int, welche Max so groß ist wie die ArrList.
         int i = (int) (Math.random() * allTiles.size());
+        //Dann wird das Random Tile Hier gespeichert
         tileModel tile = allTiles.get(i);
+        //Und hier wird das Tile dann removed
         allTiles.remove(i);
+        //Und zurückgegeben
         return tile;
     }
     

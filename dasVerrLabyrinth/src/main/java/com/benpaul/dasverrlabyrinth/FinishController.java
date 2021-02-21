@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -23,6 +24,12 @@ import javafx.scene.image.Image;
 public class FinishController implements Initializable {
 
     ArrayList<playerModel> scores;
+    @FXML
+    private ImageView firstPlace;
+    @FXML
+    private ImageView secondPlace;
+    @FXML
+    private ImageView thirdPlace;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -33,7 +40,7 @@ public class FinishController implements Initializable {
         scores.add(App.players[3]);
         
         determinWinner();
-        System.out.println("Winner: " + scores.get(3).score);
+        System.out.println("Winner: " + scores.get(3).name + " " + scores.get(3).score);
         System.out.println("Second: " + scores.get(2).score);
         System.out.println("Third: " + scores.get(1).score);
         System.out.println("Last: " + scores.get(0).score);

@@ -57,5 +57,8 @@
             <Font size="19.0" />
          </font>
       </Button>
+      <Label fx:id="lbl1st" layoutX="223.0" layoutY="123.0" text="1st" />
+      <Label fx:id="lbl2nd" layoutX="227.0" layoutY="150.0" text="2nd" />
+      <Label fx:id="lbl3rd" layoutX="222.0" layoutY="173.0" text="3rd" />
    </children>
 </AnchorPane>
