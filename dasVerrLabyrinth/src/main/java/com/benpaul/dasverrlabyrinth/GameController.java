@@ -30,11 +30,13 @@ import javafx.util.Duration;
  * @author benbartel
  */
 public class GameController extends GameControllerVar implements Initializable {
-
     
     
+    //Helper ArrayLists for the Bot
+    //The Final, possible Tiles and Locations are stored here.
+    ArrayList<Integer[]> botTileOptCoorNew = new ArrayList();
+    ArrayList<Integer[]> botTileOptConfNew = new ArrayList();
     
-
     /**
      * Initializes the controller class.
      *
@@ -132,7 +134,7 @@ public class GameController extends GameControllerVar implements Initializable {
     //--------------
     public void runGame() throws Exception {
         labelCardsLeft.setText(App.allItems.size() + "");
-
+        
         if (playerTurn == 4) {
             playerTurn = 0;
         }
@@ -391,10 +393,6 @@ public class GameController extends GameControllerVar implements Initializable {
         }
 
     }
-
-    //The same ArrList just like botTileOptCoor and botTileOptConf, but without duplicates. Explained later in botFindTiles()
-    ArrayList<Integer[]> botTileOptCoorNew = new ArrayList();
-    ArrayList<Integer[]> botTileOptConfNew = new ArrayList();
 
     @SuppressWarnings("ManualArrayToCollectionCopy")
     public void botFindTiles() throws Exception {
@@ -691,49 +689,58 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     public void checkItemFound() {
+        //Überprüft alle Spieler ob diese auf Tiles stehen, mit Items welche die Spieler
+        //gerade suchen.
+        //o ist der gerade überprüfte Spieler
         for (int o = 0; o < 4; o++) {
+            //i ist das Item welches gerade überprüft wird
             for (int i = 0; i < 3; i++) {
+                //wenn der Spieler auf dem richtigem Item steht
                 if (App.players[o].items[i].equals(App.boardTiles[App.players[o].pos[0]][App.players[o].pos[1]].collectable)) {
                     System.out.println("Tile youre looking for found. Player: " + o);
+                    //Es wird dem Spieler ein neues Random Item gegeben.
                     App.players[o].items[i] = App.getRndmItem();
                 }
             }
         }
     }
-
+    //Done
     public void enableTilePhase() {
+        //Updates das Label mit Instructions
         updateLabel();
-
+        //Setzt alle player ImageViews auf halb-durchsichtig
         player_red.setOpacity(0.5);
         player_blue.setOpacity(0.5);
         player_yellow.setOpacity(0.5);
         player_green.setOpacity(0.5);
-
+        //Disabled alle player imageViews, damit diese nicht verschoben werden können
         player_red.setDisable(true);
         player_blue.setDisable(true);
         player_yellow.setDisable(true);
         player_green.setDisable(true);
-
+        //Das Tile außerhalb des Feldes wird enabled, damit man es bewegen kann.
         currTile.setDisable(false);
+        //Und es wird sichtbar gemacht.
         currTile.setOpacity(1);
     }
-
+    //Done
     public void enableMovingPhase() {
+        //Updates das Label mit Instructions
         updateLabel();
-
+        //Das tile außerhalb des Feldes wird disabled, damit man es nicht bewegen kann
         currTile.setDisable(true);
         currTile.setOpacity(0.5);
-
+        //Setzt alle player ImageViews auf halb-durchsichtig
         player_red.setOpacity(0.5);
         player_blue.setOpacity(0.5);
         player_yellow.setOpacity(0.5);
         player_green.setOpacity(0.5);
-
+        //Disabled alle imageViews der Spieler
         player_red.setDisable(true);
         player_blue.setDisable(true);
         player_yellow.setDisable(true);
         player_green.setDisable(true);
-
+        //Henachdem welcher Spieler am Zug ist, wird dessen ImageView enabled und sichtbar gemacht
         switch (playerTurn) {
             case 0:
                 player_red.setDisable(false);
@@ -779,24 +786,7 @@ public class GameController extends GameControllerVar implements Initializable {
 
         lblInstr.setText("Der Spieler " + player + "ist am Zug und muss " + instr);
     }
-
-    @FXML
-    private void tryAnimat(ActionEvent event) throws Exception {
-        TranslateTransition newTranslate = new TranslateTransition();
-        newTranslate.setDuration(Duration.millis(2000));
-        newTranslate.setNode(player_red);
-        newTranslate.setToX(545);
-        newTranslate.setToY(375);
-        newTranslate.setCycleCount(1);
-        newTranslate.setAutoReverse(false);
-        //newTranslate.play();
-        botFindTiles();
-        //botAnimateOffTile(0);
-        //startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], App.boardTiles);
-
-        //moveBot(2, 2);
-    }
-
+    //Done
     public void startMoveRow(int row, int direction) throws Exception {
         //Es wird überprüft ob der Input Valide ist.
         //Dies ist zur Fehlervermeidung
@@ -806,7 +796,7 @@ public class GameController extends GameControllerVar implements Initializable {
             throw new Exception("Diese Reihe kann nicht bewegt werden.");
         }
     }
-
+    //Done
     public void moveRow(int row, int direction) throws InterruptedException, Exception {
         //Von rechts schiebend
         if (direction == 0) {
@@ -972,7 +962,7 @@ public class GameController extends GameControllerVar implements Initializable {
             botTilePhaseOver = true;
         }
     }
-
+    //Done
     public void startMoveColumn(int column, int direction) throws Exception {
         //Es wird überprüft ob der Input Valide ist.
         //Dies ist zur Fehlervermeidung
@@ -982,7 +972,7 @@ public class GameController extends GameControllerVar implements Initializable {
             throw new Exception("Diese Zeile kann nicht bewegt werden.");
         }
     }
-
+    //Done
     public void moveColumn(int column, int direction) throws Exception {
         //Von unten schiebend
         if (direction == 0) {
@@ -1328,16 +1318,20 @@ public class GameController extends GameControllerVar implements Initializable {
         rotateImages();
         updateTileLoc();
     }
-
+    //Done
     public void checkExits() {
+        //Es werden alle Tiles auf dem Board durchgegangen
         int x, y;
         for (x = 0; x < 7; x++) {
             for (y = 0; y < 7; y++) {
+                //Es wird nur zur sicherheit alle Koordinaten erneut gesetzt 
+                //Und die Exits aller Tiles werden noch einmal überprüft.
                 App.boardTiles[x][y].getLocation().setxCoor(x);
                 App.boardTiles[x][y].getLocation().setyCoor(y);
                 App.boardTiles[x][y].checkExit();
             }
         }
+        //Dies wird außerdem für das Offboardtile gemacht.
         App.offBoardTile.checkExit();
     }
 
@@ -1415,10 +1409,10 @@ public class GameController extends GameControllerVar implements Initializable {
         checkExits();
     }
     
+    
     //ALGORITHM for evaluating if walking is possible
     //---------------
     
-
     public boolean startCheckAlgo(int startX, int startY, int endX, int endY) throws Exception {
         boolean erfolgreich = false;
         //Clearing everything and resetting it.
