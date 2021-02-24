@@ -363,17 +363,31 @@ public class GameController extends GameControllerVar implements Initializable {
                 System.out.println("Perfekt: ");
                 System.out.println("X: " + perfectMoveLoc.get(moveTo)[0]);
                 System.out.println("Y: " + perfectMoveLoc.get(moveTo)[1]);
-            } else {
+            } 
+            else {
+                ArrayList<Integer[]> goodCoor = new ArrayList();
+                
                 for (int i = 0; i < botTileOptCoorNew.size(); i++) {
                     if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoorNew.get(i)[0], botTileOptCoorNew.get(i)[1])) {
-                        botBestPos[0] = botTileOptCoorNew.get(i)[0];
-                        botBestPos[1] = botTileOptCoorNew.get(i)[1];
+                        goodCoor.add(botTileOptCoorNew.get(i));
+                        System.out.println("Coords that Work:----------   >>>");
+                        System.out.println(botTileOptCoorNew.get(i)[0] + botTileOptCoorNew.get(i)[1]);
+                        //botBestPos[0] = botTileOptCoorNew.get(i)[0];
+                        //botBestPos[1] = botTileOptCoorNew.get(i)[1];
                     } else {
                         System.out.println("Cant find good tile for Bot!");
                         botBestPos[0] = App.players[playerTurn].pos[0];
                         botBestPos[1] = App.players[playerTurn].pos[1];
                     }
                 }
+                
+                if(goodCoor.isEmpty()){}
+                else{
+                    int rndm = (int) (Math.random() * goodCoor.size());
+                    botBestPos[0] = goodCoor.get(rndm)[0];
+                    botBestPos[1] = goodCoor.get(rndm)[1];
+                }
+                
 
                 System.out.println("Nicht Perfekt:");
                 System.out.println("X: " + botBestPos[0]);
@@ -440,7 +454,7 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
                 //Es wird ein 2.Board erstellt mit welchem wir gleich dann arbeiten können.
-                tileModel[][] board = new tileModel[7][7];
+                tileModel[][] board;
                 //Das tempBoard wird benutztz und es wird an einer stelle das OffBoardTile eingefügt.
                 //Dieses wird dann in board gespeichert.
                 board = botInsertTileBoard(l, tempBoard, tempOffTile).clone();
