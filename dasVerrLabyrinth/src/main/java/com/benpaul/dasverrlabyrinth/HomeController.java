@@ -49,8 +49,8 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void btnColors(ActionEvent event) {
-        //colorType = 1;
+    private void btnFinishView(ActionEvent event) throws IOException {
+        App.setRoot("finishView");
     }
 
 }

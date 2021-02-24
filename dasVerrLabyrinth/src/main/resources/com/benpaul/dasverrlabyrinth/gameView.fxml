@@ -20,10 +20,10 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="618.0" layoutX="274.0" layoutY="106.0" stroke="WHITE" strokeType="INSIDE" width="623.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="767.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="544.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="324.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="102.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="767.0" stroke="#008a00" strokeType="INSIDE" strokeWidth="4.0" width="525.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="544.0" stroke="#ffd000" strokeType="INSIDE" strokeWidth="4.0" width="525.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="324.0" stroke="#0069ff" strokeType="INSIDE" strokeWidth="4.0" width="525.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="102.0" stroke="RED" strokeType="INSIDE" strokeWidth="4.0" width="525.0" />
       <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/labyrinth%20field.png" />
@@ -244,10 +244,6 @@
          </image>
       </ImageView>
       <Button layoutX="92.0" layoutY="182.0" mnemonicParsing="false" onAction="#tryAnimat" text="Button" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7c0000" height="118.0" layoutX="1000.0" layoutY="111.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#001c7a" height="118.0" layoutX="1000.0" layoutY="333.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dad306" height="118.0" layoutX="1000.0" layoutY="553.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#007906" height="118.0" layoutX="1000.0" layoutY="776.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
       <ImageView fx:id="imgObjRed2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="70.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjRed1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="70.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjRed3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="70.0" pickOnBounds="true" />

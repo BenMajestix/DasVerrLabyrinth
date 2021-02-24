@@ -6,6 +6,7 @@
 package com.benpaul.dasverrlabyrinth;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,25 +34,28 @@ public class FinishController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        scores = new ArrayList();
-        scores.add(App.players[0]);
-        scores.add(App.players[1]);
-        scores.add(App.players[2]);
-        scores.add(App.players[3]);
-        
-        determinWinner();
-        System.out.println("Winner: " + scores.get(3).name + " " + scores.get(3).score);
-        System.out.println("Second: " + scores.get(2).score);
-        System.out.println("Third: " + scores.get(1).score);
-        System.out.println("Last: " + scores.get(0).score);
-        
-        Image firstPlaceImg;
-        File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
-        firstPlaceImg = new Image(firstPlaceFile.toURI().toString());
+        if(App.players[0] != null){
+            scores = new ArrayList();
+            scores.add(App.players[0]);
+            scores.add(App.players[1]);
+            scores.add(App.players[2]);
+            scores.add(App.players[3]);
+
+            determinWinner();
+            System.out.println("Winner: " + scores.get(3).name + " " + scores.get(3).score);
+            System.out.println("Second: " + scores.get(2).score);
+            System.out.println("Third: " + scores.get(1).score);
+            System.out.println("Last: " + scores.get(0).score);
+
+            Image firstPlaceImg;
+            File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
+            firstPlaceImg = new Image(firstPlaceFile.toURI().toString());
+    }
     }    
 
     @FXML
-    private void btnRestart(ActionEvent event) {
+    private void btnRestart(ActionEvent event) throws IOException {
+        App.setRoot("homeView");
     }
     
     private void determinWinner(){

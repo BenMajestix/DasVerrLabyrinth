@@ -52,5 +52,6 @@
             <Font name="Monospaced Regular" size="43.0" />
          </font>
       </Label>
+      <Button layoutX="167.0" layoutY="856.0" mnemonicParsing="false" onAction="#btnFinishView" text="test" />
    </children>
 </AnchorPane>
