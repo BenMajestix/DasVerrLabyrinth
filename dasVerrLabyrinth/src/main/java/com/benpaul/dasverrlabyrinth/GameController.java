@@ -53,35 +53,6 @@ public class GameController extends GameControllerVar implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-<<<<<<< Updated upstream
-        /*
-        if(HomeController.colorType == 0){
-            
-        }
-        else{
-            Image ImageRed;
-            File colorRed = new File("src/main/resources/Colors/weinrot.png");
-            ImageRed = new Image(colorRed.toURI().toString());
-            backgroundRed.setImage(ImageRed);
-            Image ImageBlue;
-            File colorBlue = new File("src/main/resources/Colors/pastellblau.png");
-            ImageBlue = new Image(colorBlue.toURI().toString());
-            backgroundBlue.setImage(ImageBlue);
-            Image ImageYellow;
-            File colorYellow = new File("src/main/resources/Colors/pastellgelb.png");
-            ImageYellow = new Image(colorYellow.toURI().toString());
-            backgroundYellow.setImage(ImageYellow);
-            Image ImageGreen;
-            File colorGreen = new File("src/main/resources/Colors/pastellgruen.png");
-            ImageGreen = new Image(colorGreen.toURI().toString());
-            backgroundGreen.setImage(ImageGreen);
-        
-        }
-         */
-
-=======
-        
->>>>>>> Stashed changes
         playerTurn = 0;
         //Die Spielfiguren werden an die richtigen Startpositionen gesetzt
         player_red.setX(315);
