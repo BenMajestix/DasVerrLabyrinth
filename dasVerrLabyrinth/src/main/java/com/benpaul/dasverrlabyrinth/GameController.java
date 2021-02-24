@@ -53,6 +53,7 @@ public class GameController extends GameControllerVar implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+<<<<<<< Updated upstream
         /*
         if(HomeController.colorType == 0){
             
@@ -78,6 +79,9 @@ public class GameController extends GameControllerVar implements Initializable {
         }
          */
 
+=======
+        
+>>>>>>> Stashed changes
         playerTurn = 0;
         //Die Spielfiguren werden an die richtigen Startpositionen gesetzt
         player_red.setX(315);
