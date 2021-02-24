@@ -19,6 +19,11 @@
             <Image url="@../../../img/darkWood.jpg" />
          </image>
       </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="618.0" layoutX="274.0" layoutY="106.0" stroke="WHITE" strokeType="INSIDE" width="623.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="767.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="544.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="324.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="136.0" layoutX="991.0" layoutY="102.0" stroke="WHITE" strokeType="INSIDE" width="510.0" />
       <ImageView fx:id="imgBackgr" fitHeight="697.0" fitWidth="732.0" layoutX="238.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../all_tiles/labyrinth%20field.png" />
@@ -239,10 +244,10 @@
          </image>
       </ImageView>
       <Button layoutX="92.0" layoutY="182.0" mnemonicParsing="false" onAction="#tryAnimat" text="Button" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7c0000" height="118.0" layoutX="1000.0" layoutY="111.0" stroke="BLACK" strokeType="INSIDE" width="500.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#001c7a" height="118.0" layoutX="1000.0" layoutY="333.0" stroke="BLACK" strokeType="INSIDE" width="500.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dad306" height="118.0" layoutX="1000.0" layoutY="553.0" stroke="BLACK" strokeType="INSIDE" width="500.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#007906" height="118.0" layoutX="1000.0" layoutY="776.0" stroke="BLACK" strokeType="INSIDE" width="500.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7c0000" height="118.0" layoutX="1000.0" layoutY="111.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#001c7a" height="118.0" layoutX="1000.0" layoutY="333.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dad306" height="118.0" layoutX="1000.0" layoutY="553.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#007906" height="118.0" layoutX="1000.0" layoutY="776.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
       <ImageView fx:id="imgObjRed2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="70.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjRed1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="70.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjRed3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="70.0" pickOnBounds="true" />
@@ -255,13 +260,16 @@
       <ImageView fx:id="imgObjGreen2" fitHeight="200.0" fitWidth="120.0" layoutX="1190.0" layoutY="735.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjGreen1" fitHeight="200.0" fitWidth="120.0" layoutX="1030.0" layoutY="735.0" pickOnBounds="true" />
       <ImageView fx:id="imgObjGreen3" fitHeight="200.0" fitWidth="120.0" layoutX="1356.0" layoutY="735.0" pickOnBounds="true" />
-      <ImageView fx:id="cardStack" fitHeight="206.0" fitWidth="148.0" layoutX="516.0" layoutY="732.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+      <ImageView fx:id="cardStack" fitHeight="206.0" fitWidth="148.0" layoutX="517.0" layoutY="732.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
          <image>
             <Image url="@../../../img/cardbackGeneral.png" />
          </image>
       </ImageView>
-      <Label fx:id="labelCardsLeft" layoutX="576.0" layoutY="827.0" text="Label" />
-      <Label fx:id="lblInstr" layoutX="49.0" layoutY="26.0" prefHeight="58.0" prefWidth="926.0" text="Label" textFill="WHITE">
+      <Label fx:id="labelCardsLeft" layoutX="569.0" layoutY="822.0" text="Label">
+         <font>
+            <Font name="Monospaced Regular" size="22.0" />
+         </font></Label>
+      <Label fx:id="lblInstr" layoutX="8.0" layoutY="28.0" prefHeight="58.0" prefWidth="926.0" text="Label" textFill="WHITE">
          <font>
             <Font name="Monospaced Regular" size="22.0" />
          </font></Label>
