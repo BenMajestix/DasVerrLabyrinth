@@ -5,7 +5,6 @@
  */
 package com.benpaul.dasverrlabyrinth;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
-import javafx.scene.image.Image;
 
 /**
  * FXML Controller class
@@ -38,6 +36,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //colorType = 0;
+        checkRedBot.setDisable(true);
     }    
 
     @FXML

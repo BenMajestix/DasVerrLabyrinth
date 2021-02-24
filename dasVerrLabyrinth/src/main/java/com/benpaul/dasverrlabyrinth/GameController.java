@@ -32,12 +32,15 @@ import javafx.util.Duration;
  * @author benbartel
  */
 public class GameController extends GameControllerVar implements Initializable {
-
+	//BOT VAR
+	//The best Location the Bot can move to.
     int[] botBestPos = new int[2];
-    
-    int botBestPosDist = 100;
+    //Shortest Distance to an Objective
+    Integer botBestPosDist = null;
+	
     int[] botCurrObjective = new int[2];
-    int botBestTileSide;
+    Integer botBestTileSide;
+    Integer botBestTileRot;
     int currTileSide;
     
     /**
@@ -76,7 +79,7 @@ public class GameController extends GameControllerVar implements Initializable {
         botBestPos[1] = 100;
         
         playerTurn = 0;
-        
+        //Die Spielfiguren werden an die richtigen Startpositionen gesetzt
         player_red.setX(315);
         player_red.setY(662);
         player_yellow.setX(313);
@@ -87,35 +90,36 @@ public class GameController extends GameControllerVar implements Initializable {
         player_green.setY(660);
         imgBackgr.setRotate(270);
         
+		//Die Tiles werden auf das Board gesetzt
         makeBoard();
         
+		//Die Spieler werden erstellt.
         playerModel playerRed = new playerModel("Red");
         playerRed.setName("Roter Spieler");
         playerModel playerBlue = new playerModel("Blue");
         playerBlue.setName("Blauer Spieler");
-        //playerBlue.setIsBot(true);
         playerModel playerYellow = new playerModel("Yellow");
         playerYellow.setName("Gelber Spieler");
-        //playerYellow.setIsBot(true);
         playerModel playerGreen = new playerModel("Green");
         playerGreen.setName("Gruener Spieler");
-        //playerGreen.setIsBot(true);
-        
+		
+        //Die Spieler werden in App.players gespeichert.
         App.players[0] = playerRed;
         App.players[1] = playerBlue;
         App.players[2] = playerYellow;
         App.players[3] = playerGreen;
         
+		//Den Spielern werden zufälllige Items/Objectives zugeteilt
         for(int i = 0; i < 4; i++){
             App.players[i].items[0] = App.getRndmItem();
             App.players[i].items[1] = App.getRndmItem();
             App.players[i].items[2] = App.getRndmItem();
             
-            System.out.println("player " + i + " " + App.players[i].items[0].item);
-            System.out.println("player " + i + " " + App.players[i].items[1].item);
-            System.out.println("player " + i + " " + App.players[i].items[2].item);
+            System.out.println("Player " + i + " " + App.players[i].items[0].item);
+            System.out.println("Player " + i + " " + App.players[i].items[1].item);
+            System.out.println("Player " + i + " " + App.players[i].items[2].item);
         }
-        
+        //Die Positionen der Spieler werden gesetzt
         playerYellow.pos[0] = 0;
         playerYellow.pos[1] = 0;
         
@@ -136,21 +140,21 @@ public class GameController extends GameControllerVar implements Initializable {
         
         playerGreen.score = 0;
         
-        tileXCoor[0] = 116;
+        tileXCoor[0] = 120;
         tileXCoor[1] = 205;
-        tileXCoor[2] = 288;
-        tileXCoor[3] = 376;
-        tileXCoor[4] = 459;
-        tileXCoor[5] = 550;
-        tileXCoor[6] = 631;
+        tileXCoor[2] = 290;
+        tileXCoor[3] = 375;
+        tileXCoor[4] = 460;
+        tileXCoor[5] = 560;
+        tileXCoor[6] = 630;
         
-        tileYCoor[0] = 287;
-        tileYCoor[1] = 376;
-        tileYCoor[2] = 459;
-        tileYCoor[3] = 548;
-        tileYCoor[4] = 631;
-        tileYCoor[5] = 718;
-        tileYCoor[6] = 802;
+        tileYCoor[0] = 290;
+        tileYCoor[1] = 375;
+        tileYCoor[2] = 460;
+        tileYCoor[3] = 545;
+        tileYCoor[4] = 630;
+        tileYCoor[5] = 715;
+        tileYCoor[6] = 800;
         
         
         try {
@@ -275,9 +279,7 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
     
-    public void botRotateOffTile(){
-        
-    }
+    
     
     
     public void startCompTurn() throws Exception{
@@ -285,180 +287,7 @@ public class GameController extends GameControllerVar implements Initializable {
         
         if(!(botEvalPhaseOver)){
             System.out.println("Start Eval Phase");
-            
-            
-            int[] item0Koor = new int[2];
-            int[] item1Koor = new int[2];
-            int[] item2Koor = new int[2];
-            for(int x = 0; x < 7; x++){
-                for(int y = 0; y < 7; y++){
-                    if(App.players[playerTurn].items[0].equals(App.boardTiles[x][y].collectable)){item0Koor[0] = x; item0Koor[1] = y;}
-                    if(App.players[playerTurn].items[1].equals(App.boardTiles[x][y].collectable)){item1Koor[0] = x; item1Koor[1] = y;}
-                    if(App.players[playerTurn].items[2].equals(App.boardTiles[x][y].collectable)){item2Koor[0] = x; item2Koor[1] = y;}
-                }
-            }
-            
-            botBestPos[0] = App.players[playerTurn].pos[0];
-            botBestPos[1] = App.players[playerTurn].pos[1];
-            evalStop:
-            for(int sides = 0; sides < 12; sides++){
-                //sides = 0;
-                currTileSide = sides;
-                
-                tileModel offTemp;
-                tileModel[][] tempBoard = new tileModel[7][7];
-                
-                for(int i=0; i<App.boardTiles.length; i++){
-                    for(int j=0; j<App.boardTiles[i].length; j++){
-                        tempBoard[i][j]=App.boardTiles[i][j];
-                    }
-                }
-                
-                //tempBoard = App.boardTiles.clone();
-                offTemp = App.offBoardTile;
-                
-                switch(sides){
-                    //Von OBEN nach Unten
-                    case 0: 
-                        offTemp = tempBoard[6][1];
-                        tempBoard[6][1] = tempBoard[5][1];
-                        tempBoard[5][1] = tempBoard[4][1];
-                        tempBoard[4][1] = tempBoard[3][1];
-                        tempBoard[3][1] = tempBoard[2][1];
-                        tempBoard[2][1] = tempBoard[1][1];
-                        tempBoard[1][1] = tempBoard[0][1];
-                        tempBoard[0][1] = App.offBoardTile;
-                        break;
-                    case 1: 
-                        offTemp = tempBoard[6][2];
-                        tempBoard[6][3] = tempBoard[5][3];
-                        tempBoard[5][3] = tempBoard[4][3];
-                        tempBoard[4][3] = tempBoard[3][3];
-                        tempBoard[3][3] = tempBoard[2][3];
-                        tempBoard[2][3] = tempBoard[1][3];
-                        tempBoard[1][3] = tempBoard[0][3];
-                        tempBoard[0][3] = App.offBoardTile;
-                        break;
-                    case 2: 
-                        offTemp = tempBoard[6][5];
-                        tempBoard[6][5] = tempBoard[5][5];
-                        tempBoard[5][5] = tempBoard[4][5];
-                        tempBoard[4][5] = tempBoard[3][5];
-                        tempBoard[3][5] = tempBoard[2][5];
-                        tempBoard[2][5] = tempBoard[1][5];
-                        tempBoard[1][5] = tempBoard[0][5];
-                        tempBoard[0][5] = App.offBoardTile;
-                        break;
-                        //Von RECHTS nach links
-                    case 3: 
-                        offTemp = tempBoard[1][6];
-                        tempBoard[1][6] = tempBoard[1][5];
-                        tempBoard[1][5] = tempBoard[1][4];
-                        tempBoard[1][4] = tempBoard[1][3];
-                        tempBoard[1][3] = tempBoard[1][2];
-                        tempBoard[1][2] = tempBoard[1][1];
-                        tempBoard[1][1] = tempBoard[1][0];
-                        tempBoard[1][0] = App.offBoardTile;
-                        break;
-                    case 4: 
-                        offTemp = tempBoard[3][6];
-                        tempBoard[3][6] = tempBoard[3][5];
-                        tempBoard[3][5] = tempBoard[3][4];
-                        tempBoard[3][4] = tempBoard[3][3];
-                        tempBoard[3][3] = tempBoard[3][2];
-                        tempBoard[3][2] = tempBoard[3][1];
-                        tempBoard[3][1] = tempBoard[3][0];
-                        tempBoard[3][0] = App.offBoardTile;
-                        break;
-                    case 5: 
-                        offTemp = tempBoard[5][6];
-                        tempBoard[5][6] = tempBoard[5][5];
-                        tempBoard[5][5] = tempBoard[5][4];
-                        tempBoard[5][4] = tempBoard[5][3];
-                        tempBoard[5][3] = tempBoard[5][2];
-                        tempBoard[5][2] = tempBoard[5][1];
-                        tempBoard[5][1] = tempBoard[5][0];
-                        tempBoard[5][0] = App.offBoardTile;
-                        break;
-                        //Von UNTEN Nach Oben
-                    case 6: 
-                        offTemp = tempBoard[0][1];
-                        tempBoard[0][1] = tempBoard[1][1];
-                        tempBoard[1][1] = tempBoard[2][1];
-                        tempBoard[2][1] = tempBoard[3][1];
-                        tempBoard[3][1] = tempBoard[4][1];
-                        tempBoard[4][1] = tempBoard[5][1];
-                        tempBoard[5][1] = tempBoard[6][1];
-                        tempBoard[6][1] = App.offBoardTile;
-                        break;
-                    case 7: 
-                        offTemp = tempBoard[0][2];
-                        tempBoard[0][3] = tempBoard[1][3];
-                        tempBoard[1][3] = tempBoard[2][3];
-                        tempBoard[2][3] = tempBoard[3][3];
-                        tempBoard[3][3] = tempBoard[4][3];
-                        tempBoard[4][3] = tempBoard[5][3];
-                        tempBoard[5][3] = tempBoard[6][3];
-                        tempBoard[6][3] = App.offBoardTile;
-                        break;
-                    case 8: 
-                        offTemp = tempBoard[0][5];
-                        tempBoard[0][5] = tempBoard[1][5];
-                        tempBoard[1][5] = tempBoard[2][5];
-                        tempBoard[2][5] = tempBoard[3][5];
-                        tempBoard[3][5] = tempBoard[4][5];
-                        tempBoard[4][5] = tempBoard[5][5];
-                        tempBoard[5][5] = tempBoard[6][5];
-                        tempBoard[6][5] = App.offBoardTile;
-                        break;
-                        //Von Links nach rechts
-                    case 9: 
-                        offTemp = tempBoard[1][0];
-                        tempBoard[1][0] = tempBoard[1][1];
-                        tempBoard[1][1] = tempBoard[1][2];
-                        tempBoard[1][2] = tempBoard[1][3];
-                        tempBoard[1][3] = tempBoard[1][4];
-                        tempBoard[1][4] = tempBoard[1][5];
-                        tempBoard[1][5] = tempBoard[1][6];
-                        tempBoard[1][6] = App.offBoardTile;
-                        break;
-                    case 10: 
-                        offTemp = tempBoard[3][0];
-                        tempBoard[3][0] = tempBoard[3][1];
-                        tempBoard[3][1] = tempBoard[3][2];
-                        tempBoard[3][2] = tempBoard[3][3];
-                        tempBoard[3][3] = tempBoard[3][4];
-                        tempBoard[3][4] = tempBoard[3][5];
-                        tempBoard[3][5] = tempBoard[3][6];
-                        tempBoard[3][6] = App.offBoardTile;
-                        break;
-                    case 11: 
-                        offTemp = tempBoard[5][0];
-                        tempBoard[5][0] = tempBoard[5][1];
-                        tempBoard[5][1] = tempBoard[5][2];
-                        tempBoard[5][2] = tempBoard[5][3];
-                        tempBoard[5][3] = tempBoard[5][4];
-                        tempBoard[5][4] = tempBoard[5][5];
-                        tempBoard[5][5] = tempBoard[5][6];
-                        tempBoard[5][6] = App.offBoardTile;
-                        break;
-                }
-                botCurrObjective = item0Koor;
-                if(startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard)){
-                    perfectMoveLoc.add(botCurrObjective);
-                    break evalStop;
-                }
-                botCurrObjective = item1Koor;
-                if(startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard)){
-                    perfectMoveLoc.add(botCurrObjective);
-                    break evalStop;
-                }
-                botCurrObjective = item2Koor;
-                if(startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], item0Koor[0], item0Koor[1], tempBoard)){
-                    perfectMoveLoc.add(botCurrObjective);
-                    break evalStop;
-                }
-            }
+            botFindTiles();
             botEvalPhaseOver = true;
             startCompTurn();
         }
@@ -466,6 +295,10 @@ public class GameController extends GameControllerVar implements Initializable {
             enableTilePhase();
             System.out.println("Bot Start Tile Phase");
             System.out.println(botBestTileSide);
+            
+            botAnimateOffTile(botBestTileRot);
+            App.offBoardTile = botRotateOffTile(App.offBoardTile, botBestTileRot);
+            
             switch(botBestTileSide){
                 case 0: moveColumn(1, 1); break;
                 case 1: moveColumn(3, 1); break;
@@ -491,6 +324,7 @@ public class GameController extends GameControllerVar implements Initializable {
             });
         }
         else if(!(botMovingPhaseOver)){
+            /*
             if(botBestPos[0] == 100 || botBestPos[1] == 100){
                 botBestPos[0] = App.players[playerTurn].pos[0];
                 botBestPos[1] = App.players[playerTurn].pos[1];
@@ -498,9 +332,9 @@ public class GameController extends GameControllerVar implements Initializable {
             if(!(startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botBestPos[0], botBestPos[1]))){
                 botBestPos[0] = App.players[playerTurn].pos[0];
                 botBestPos[1] = App.players[playerTurn].pos[1];
-            }
+            }*/
             enableMovingPhase();
-            System.out.println("moving phase reached");
+            System.out.println("Bot Moving phase reached");
             
             if(!(perfectMoveLoc.isEmpty())){
                 int moveTo = (int) (Math.random() * perfectMoveLoc.size());
@@ -513,7 +347,7 @@ public class GameController extends GameControllerVar implements Initializable {
                 System.out.println("X: " + botBestPos[0]);
                 System.out.println("Y: " + botBestPos[1]);
             }
-            moveBot(botBestPos[0], botBestPos[1]);
+            moveBot(botBestPos[1], botBestPos[0]);
             
             PauseTransition p = new PauseTransition(Duration.millis(1000));
             p.play();
@@ -549,6 +383,259 @@ public class GameController extends GameControllerVar implements Initializable {
     
     
     
+    @SuppressWarnings("ManualArrayToCollectionCopy")
+    public void botFindTiles() throws Exception{
+        
+        ArrayList<int[]> botTileOptCoor = new ArrayList();
+        ArrayList<int[]> botTileOptConf = new ArrayList();
+        for(int d = 0; d < 4; d++){
+            for(int l = 0; l < 12; l++){
+                tileModel tempOffTile = botRotateOffTile(App.offBoardTile, d);
+                //Kopiert das Array mit dem Board auf dieses Temporäre Board
+                tileModel[][] tempBoard = new tileModel[7][7];
+                for(int x = 0; x < 7; x++){
+                    for(int y = 0; y < 7; y++){
+                        tempBoard[x][y] = App.boardTiles[x][y];
+                    }
+                }
+                tileModel[][] board = new tileModel[7][7];
+                
+                board = botInsertTileBoard(l, tempBoard, tempOffTile).clone();
+                
+                
+                startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], board);
+                
+                doneTiles:
+                for (int[] botDoneTile : botDoneTiles) {
+                    //tileOptionsBot.add(new botDestOptModel(botDoneTile.clone(), l, d));
+                    botTileOptCoor.add(botDoneTile.clone());
+                    int[] ld = {l, d};
+                    botTileOptConf.add(ld);
+                }
+            }
+        }
+        ArrayList<int[]> botTileOptCoorNew = new ArrayList();
+        ArrayList<int[]> botTileOptConfNew = new ArrayList();
+        if(botTileOptCoor.isEmpty()){
+            int[] coord = {App.players[playerTurn].pos[0], App.players[playerTurn].pos[1]};
+            int[] conf = {2, 0};
+            botTileOptCoorNew.add(coord);
+            botTileOptConfNew.add(conf);
+        }
+        else{
+            for(int i = 0; i < botTileOptCoor.size(); i++){
+                boolean duplicate = false;
+                if(!botTileOptCoorNew.isEmpty()){
+                    for(int j = 0; j < botTileOptCoorNew.size(); j++){
+                        if(botTileOptCoor.get(i)[0] == botTileOptCoorNew.get(j)[0] && botTileOptCoor.get(i)[1] == botTileOptCoorNew.get(j)[1]){
+                            duplicate = true;
+                        }
+                    }
+                    if(!duplicate){
+                        botTileOptCoorNew.add(botTileOptCoor.get(i));
+                        botTileOptConfNew.add(botTileOptConf.get(i));
+                    }
+                }
+                else{
+                    botTileOptCoorNew.add(botTileOptCoor.get(i));
+                    botTileOptConfNew.add(botTileOptConf.get(i));
+                }
+            }
+        } 
+        for(int i = 0; i < botTileOptCoorNew.size(); i++){
+            System.out.println("Available Tiles for Player:");
+            System.out.println("Coor: " + botTileOptCoorNew.get(i)[0] + " " + botTileOptCoorNew.get(i)[1]);
+            System.out.println("Conf: " + botTileOptConfNew.get(i)[0] + " " + botTileOptConfNew.get(i)[1]);
+        }
+        int rndm = (int) (Math.random() * botTileOptCoorNew.size());
+        botBestPos = botTileOptCoorNew.get(rndm).clone();
+	
+        botBestTileSide = botTileOptConfNew.get(rndm)[0];
+        botBestTileRot = botTileOptConfNew.get(rndm)[1];
+    }
+    
+    
+    
+    
+    
+    public tileModel[][] botInsertTileBoard(int l, tileModel[][] tempBoard, tileModel offTempTile){
+        tileModel offTemp;
+        switch(l){
+            //Von OBEN nach Unten
+            case 0: 
+                offTemp = tempBoard[6][1];
+                tempBoard[6][1] = tempBoard[5][1];
+                tempBoard[5][1] = tempBoard[4][1];
+                tempBoard[4][1] = tempBoard[3][1];
+                tempBoard[3][1] = tempBoard[2][1];
+                tempBoard[2][1] = tempBoard[1][1];
+                tempBoard[1][1] = tempBoard[0][1];
+                tempBoard[0][1] = offTempTile;
+                break;
+            case 1: 
+                offTemp = tempBoard[6][3];
+                tempBoard[6][3] = tempBoard[5][3];
+                tempBoard[5][3] = tempBoard[4][3];
+                tempBoard[4][3] = tempBoard[3][3];
+                tempBoard[3][3] = tempBoard[2][3];
+                tempBoard[2][3] = tempBoard[1][3];
+                tempBoard[1][3] = tempBoard[0][3];
+                tempBoard[0][3] = offTempTile;
+                break;
+            case 2: 
+                offTemp = tempBoard[6][5];
+                tempBoard[6][5] = tempBoard[5][5];
+                tempBoard[5][5] = tempBoard[4][5];
+                tempBoard[4][5] = tempBoard[3][5];
+                tempBoard[3][5] = tempBoard[2][5];
+                tempBoard[2][5] = tempBoard[1][5];
+                tempBoard[1][5] = tempBoard[0][5];
+                tempBoard[0][5] = offTempTile;
+                break;
+                //Von RECHTS nach links
+            case 3: 
+                offTemp = tempBoard[1][0];
+                tempBoard[1][0] = tempBoard[1][1];
+                tempBoard[1][1] = tempBoard[1][2];
+                tempBoard[1][2] = tempBoard[1][3];
+                tempBoard[1][3] = tempBoard[1][4];
+                tempBoard[1][4] = tempBoard[1][5];
+                tempBoard[1][5] = tempBoard[1][6];
+                tempBoard[1][6] = offTempTile;
+                break;
+            case 4: 
+                offTemp = tempBoard[3][0];
+                tempBoard[3][0] = tempBoard[3][1];
+                tempBoard[3][1] = tempBoard[3][2];
+                tempBoard[3][2] = tempBoard[3][3];
+                tempBoard[3][3] = tempBoard[3][4];
+                tempBoard[3][4] = tempBoard[3][5];
+                tempBoard[3][5] = tempBoard[3][6];
+                tempBoard[3][6] = offTempTile;
+                break;
+            case 5: 
+                offTemp = tempBoard[5][0];
+                tempBoard[5][0] = tempBoard[5][1];
+                tempBoard[5][1] = tempBoard[5][2];
+                tempBoard[5][2] = tempBoard[5][3];
+                tempBoard[5][3] = tempBoard[5][4];
+                tempBoard[5][4] = tempBoard[5][5];
+                tempBoard[5][5] = tempBoard[5][6];
+                tempBoard[5][6] = offTempTile;
+                break;
+                //Von UNTEN Nach Oben
+            case 6: 
+                offTemp = tempBoard[0][5];
+                tempBoard[0][5] = tempBoard[1][5];
+                tempBoard[1][5] = tempBoard[2][5];
+                tempBoard[2][5] = tempBoard[3][5];
+                tempBoard[3][5] = tempBoard[4][5];
+                tempBoard[4][5] = tempBoard[5][5];
+                tempBoard[5][5] = tempBoard[6][5];
+                tempBoard[6][5] = offTempTile;
+                break;
+            case 7: 
+                offTemp = tempBoard[0][2];
+                tempBoard[0][3] = tempBoard[1][3];
+                tempBoard[1][3] = tempBoard[2][3];
+                tempBoard[2][3] = tempBoard[3][3];
+                tempBoard[3][3] = tempBoard[4][3];
+                tempBoard[4][3] = tempBoard[5][3];
+                tempBoard[5][3] = tempBoard[6][3];
+                tempBoard[6][3] = offTempTile;
+                break;
+            case 8: 
+                offTemp = tempBoard[0][1];
+                tempBoard[0][1] = tempBoard[1][1];
+                tempBoard[1][1] = tempBoard[2][1];
+                tempBoard[2][1] = tempBoard[3][1];
+                tempBoard[3][1] = tempBoard[4][1];
+                tempBoard[4][1] = tempBoard[5][1];
+                tempBoard[5][1] = tempBoard[6][1];
+                tempBoard[6][1] = offTempTile;
+                break;
+                //Von Links nach rechts
+            case 9: 
+                offTemp = tempBoard[5][6];
+                tempBoard[5][6] = tempBoard[5][5];
+                tempBoard[5][5] = tempBoard[5][4];
+                tempBoard[5][4] = tempBoard[5][3];
+                tempBoard[5][3] = tempBoard[5][2];
+                tempBoard[5][2] = tempBoard[5][1];
+                tempBoard[5][1] = tempBoard[5][0];
+                tempBoard[5][0] = offTempTile;
+                break;
+            case 10: 
+                offTemp = tempBoard[3][6];
+                tempBoard[3][6] = tempBoard[3][5];
+                tempBoard[3][5] = tempBoard[3][4];
+                tempBoard[3][4] = tempBoard[3][3];
+                tempBoard[3][3] = tempBoard[3][2];
+                tempBoard[3][2] = tempBoard[3][1];
+                tempBoard[3][1] = tempBoard[3][0];
+                tempBoard[3][0] = offTempTile;
+                break;
+            case 11: 
+                offTemp = tempBoard[1][6];
+                tempBoard[1][6] = tempBoard[1][5];
+                tempBoard[1][5] = tempBoard[1][4];
+                tempBoard[1][4] = tempBoard[1][3];
+                tempBoard[1][3] = tempBoard[1][2];
+                tempBoard[1][2] = tempBoard[1][1];
+                tempBoard[1][1] = tempBoard[1][0];
+                tempBoard[1][0] = offTempTile;
+                break;
+        }
+        for(int x = 0; x < 7; x++){
+            for(int y = 0; y < 7; y++){
+                tempBoard[x][y].location.setxCoor(x);
+                tempBoard[x][y].location.setyCoor(y);
+            }
+        }
+        tileModel[][] newBoard = tempBoard.clone();
+        return newBoard;
+    }
+    
+    
+    public tileModel botRotateOffTile(tileModel tile, int d){
+        switch(d){
+            case 0: tile.location.setRotation(0); break;
+            case 1: tile.location.setRotation(90); break;
+            case 2: tile.location.setRotation(180); break;
+            case 3: tile.location.setRotation(270); break;
+        }
+        tile.checkExit();
+        System.out.println(" ");
+        System.out.println("Rotate Bot OffBoard Tile to: " + App.offBoardTile.location.rotation);
+        System.out.println(" ");
+        return tile;
+    }   
+    
+    public void botAnimateOffTile(int d){
+        RotateTransition newTrans = new RotateTransition();
+        newTrans.setDuration(Duration.millis(0));
+        newTrans.setNode(currTile);
+        switch(d){
+            case 0: newTrans.setToAngle(0); break;
+            case 1: newTrans.setToAngle(90); break;
+            case 2: newTrans.setToAngle(180); break;
+            case 3: newTrans.setToAngle(270); break;
+        }
+        
+        newTrans.setCycleCount(1);
+        newTrans.setAutoReverse(false);
+        newTrans.play();
+        
+        btnDrehen.setDisable(true);
+        
+        newTrans.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btnDrehen.setDisable(false);
+            }
+        });
+    }
+    
     
     public void moveBot(int x, int y){
         
@@ -557,108 +644,31 @@ public class GameController extends GameControllerVar implements Initializable {
         double[] yCoords = {120, 205, 290, 375, 460, 545, 630};
         //double[] yCoords = {100, 185, 270, 355, 440, 325, 610};
         
-        TranslateTransition botTranslate = new TranslateTransition();
-        
-        botTranslate.setDuration(Duration.millis(1500));
-        botTranslate.setCycleCount(1);
-        botTranslate.setAutoReverse(false);
-        
-        double moveByX = 0;
-        double moveByY = 0;
         switch(playerTurn){
-            case 0: 
-                //Rot
-                botTranslate.setNode(player_red);
-                
-                if(player_red.getX() >= xCoords[y]){
-                    moveByX = -(player_red.getX() - xCoords[y]);
-                }
-                else{
-                    moveByX = (xCoords[y] - player_red.getX());
-                }
-                
-                if(player_red.getY() >= yCoords[x]){
-                    moveByY = -(player_red.getY() - yCoords[x]);
-                }
-                else{
-                    moveByY = (yCoords[x] - player_red.getY());
-                }
-                break;
-            case 1: 
-                //Blau
-                botTranslate.setNode(player_blue);
-                
-                if(player_blue.getX() >= xCoords[y]){
-                    moveByX = -(player_blue.getX() - xCoords[y]);
-                }
-                else{
-                    moveByX = (xCoords[y] - player_blue.getX());
-                }
-                
-                if(player_blue.getY() >= yCoords[x]){
-                    moveByY = -(player_blue.getY() - yCoords[x]);
-                }
-                else{
-                    moveByY = (yCoords[x] - player_blue.getY());
-                }
-                break;
-            case 2: 
-                //Gelb
-                botTranslate.setNode(player_yellow);
-                
-                if(player_yellow.getX() >= xCoords[y]){
-                    moveByX = -(player_yellow.getX() - xCoords[y]);
-                }
-                else{
-                    moveByX = (xCoords[y] - player_yellow.getX());
-                }
-                
-                if(player_yellow.getY() >= yCoords[x]){
-                    moveByY = -(player_yellow.getY() - yCoords[x]);
-                }
-                else{
-                    moveByY = (yCoords[x] - player_yellow.getY());
-                }
-                break;
-            case 3: 
-                //Gruen
-                botTranslate.setNode(player_green);
-                
-                if(player_green.getX() >= xCoords[y]){
-                    moveByX = -(player_green.getX() - xCoords[y]);
-                }
-                else{
-                    moveByX = (xCoords[y] - player_green.getX());
-                }
-                
-                if(player_green.getY() >= yCoords[x]){
-                    moveByY = -(player_green.getY() - yCoords[x]);
-                }
-                else{
-                    moveByY = (yCoords[x] - player_green.getY());
-                }
-                break;
-        }
+                case 0:
+                    player_red.setX(xCoords[x]);
+                    player_red.setY(yCoords[y]);
+                    break;
+                case 1:
+                    player_blue.setX(xCoords[x]);
+                    player_blue.setY(yCoords[y]);
+                    break;
+                case 2:
+                    player_yellow.setX(xCoords[x]);
+                    player_yellow.setY(yCoords[y]);
+                    break;
+                case 3:
+                    player_green.setX(xCoords[x]);
+                    player_green.setY(yCoords[y]);
+                    break;
+            }
         
-        botTranslate.setByX(moveByX);
-        botTranslate.setByY(moveByY);        
-        if(App.players[playerTurn].pos[0] == x && App.players[playerTurn].pos[1] == y){}
-        else{
-            botTranslate.play();
-        }
-        System.out.println(player_blue.getX());
-        System.out.println(player_blue.getY());
         
         App.players[playerTurn].pos[0] = x;
         App.players[playerTurn].pos[1] = y;
         
         botMovingPhaseOver = true;
-        botTranslate.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Animation Done!");
-            }
-        });
+        
     }
     
     
@@ -741,7 +751,7 @@ public class GameController extends GameControllerVar implements Initializable {
     }
     
     @FXML
-    private void tryAnimat(ActionEvent event) {
+    private void tryAnimat(ActionEvent event) throws Exception {
         TranslateTransition newTranslate = new TranslateTransition();
         newTranslate.setDuration(Duration.millis(2000));
         newTranslate.setNode(player_red);
@@ -749,10 +759,12 @@ public class GameController extends GameControllerVar implements Initializable {
         newTranslate.setToY(375);
         newTranslate.setCycleCount(1);
         newTranslate.setAutoReverse(false);
-        //newTranslate.
         //newTranslate.play();
+        botFindTiles();
+        //botAnimateOffTile(0);
+        //startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], App.boardTiles);
         
-        moveBot(2, 2);
+        //moveBot(2, 2);
     }
     
     public void startMoveRow(int row, int direction) throws Exception{
@@ -1298,7 +1310,7 @@ public class GameController extends GameControllerVar implements Initializable {
         
         checkExits();
     }
-
+    /*
     ArrayList<pathfinderPathModel> allPaths = new ArrayList();
     
     public void startPathfinder(int[] startPoint, int[] endPoint){
@@ -1345,7 +1357,7 @@ public class GameController extends GameControllerVar implements Initializable {
         
         return directions;
     }
-    
+    */
     
     
     
@@ -1573,9 +1585,11 @@ public class GameController extends GameControllerVar implements Initializable {
     
     //BOT Algorithm START
     //----------------------------
+    ArrayList<int[]> botDoneTiles = new ArrayList();
     
-    public boolean startCheckAlgoBot(int startX, int startY, int endX, int endY, tileModel[][] compBoard) throws Exception{
-        boolean erfolgreich = false;
+    
+    
+    public void startCheckAlgoBot(int startX, int startY, tileModel[][] compBoard) throws Exception{
         //Clearing everything and resetting it.
         
         for(int x = 0; x < 7; x++){
@@ -1590,121 +1604,68 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
         
-        
+        botDoneTiles.clear();
         currObsTile.clear();
-        alrObsTiles.clear();
-        objecFound = false;
+        boolean goodTileFound = false;
         
-        tileModel startTile;
-        tileModel endTile;
+        tileModel startTile = compBoard[startX][startY];
         
-        //Die Koordinaten müssen sich im Spielbaren Feld befinden
-        if(startX < 0 || startX > 6 || startY < 0 || startY > 6 || endX < 0 || endX > 6 || endY < 0 || endY > 6){
-            throw new Exception("Die Koordinaten sind ungültig.");
-        }
-        else{
-           //Setzt Start und End Tile
-           startTile = compBoard[startX][startY];
-           endTile = compBoard[endX][endY];
-        }
-        
-        
-        if(startX == endX && startY == endY){
-            objecFound = true;
-            System.out.println("Der Spieler ist schon auf dem Richtigen Tile!");
-        }
-        else{
-            System.out.println("EndX: " + endTile.location.xCoor);
-            System.out.println("EndY: " + endTile.location.yCoor);
 
-            //currObsTile.add(new algoTile(0, startTile));
-            System.out.println("Exits of StartTile :");
-            System.out.println("Oben" + startTile.ableToExit[0]);
-            System.out.println("Rechts" + startTile.ableToExit[1]);
-            System.out.println("Unten" + startTile.ableToExit[2]);
-            System.out.println("Links" + startTile.ableToExit[3]);
-            System.out.println(" ");
-
-            algoTile startAlgoTile = new algoTile(null, startTile);
-            currObsTile.add(startAlgoTile);
-            startTile(startAlgoTile, 0);
-        }
+        algoTile startAlgoTile = new algoTile(null, startTile);
+        currObsTile.add(startAlgoTile);
+        
+        startTile(startAlgoTile, 0);
+        
         
         int fCount = 0;
         //Break Flag für die While Loop
         breakWhile:
         //wird ausgeführt während das Ziel noch nicht gefunden wurde
-        while(!(objecFound)){
+        while(!(goodTileFound)){
             if(fCount >= 10){System.out.println("---fbreak"); break;}
             else if(currObsTile.isEmpty()){fCount++; System.out.println("F: " + fCount);}
             
             
-            //continue flag für die For Loop
+            //continue flag für die 'For Loop'
             breakFor:
             //Geht alle currently observed tiles durch
             for (int i = 0; i < currObsTile.size(); i++){
-		//Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
-                if(compareTiles(currObsTile.get(i).tile, endTile)){
-                    objecFound = true;
-                    System.out.println("--Found EndTile!");
-                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
-                    //Better performance
-                    break breakWhile;
-                }
                 //Wenn dieses Tile schon in der alreadyObservedList ist, dann wird beim nächsten weitergemacht
-                for(int o = 0; o < alrObsTiles.size(); o++) {
-                    if(compareTiles(alrObsTiles.get(o), (currObsTile.get(i).tile))){
+                for(int o = 0; o < botDoneTiles.size(); o++) {
+                    if(botDoneTiles.get(o).equals(currObsTile.get(i))){
                         currObsTile.remove(i);
                         continue breakFor;
                     }
                 }
                 
-                
-                
-                
                 System.out.println("-----------------");
                 System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
                 System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
-                if(compareTiles(currObsTile.get(i).tile, endTile)){
-                    objecFound = true;
-                    System.out.println("--Found EndTile!");
-                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
-                    //Better performance
-                    break breakWhile;
-                }
-                else{
-                    startTile(currObsTile.get(i), i);
-                }
+                
+                startTileBot(currObsTile.get(i), i, compBoard);
             }
         }
-        if(objecFound){System.out.println("--Algorithmus erfolgreich!");erfolgreich = true;}
-        else{System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");}
         
-        for(int g = 0; g < alrObsTiles.size(); g++){
-            checkDistance(alrObsTiles.get(g));
+        
+        System.out.println("Tiles From This Algo: -------------------------------------");
+        for(int[] tileCoor : botDoneTiles){
+            System.out.println(" ");
+            System.out.println(tileCoor[0] + " " + tileCoor[1]);
         }
-        
-        return erfolgreich;
     }
     
     
     public algoTile startTileBot(algoTile tile, int index, tileModel[][] compBoard){
-        //Alle Seiten aus denen ein Weg geht
-        System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
-        System.out.println("Rechts Ausgang: " + tile.tile.ableToExit[1]);
-        System.out.println("Unten Ausgang: " + tile.tile.ableToExit[2]);
-        System.out.println("Links Ausgang: " + tile.tile.ableToExit[3]);
         //Die Seite aus der der Algorithmus gekommen ist wird als false gesetzt
         //Damit er nicht in eine Loop verfällt
         if(!(tile.fromDir == null)){
             tile.tile.ableToExit[tile.fromDir] = false;
-		}
+        }
 		
         //Geht alle Seiten des Tiles durch
         for(int i = 0; i < 4; i++){
             //Wenn die Seite einen Ausgang hat, und das Angrenzende Tile auch, dann true
             if(tile.tile.ableToExit[i] && checkNextTileInputBot(tile.tile, i, compBoard)){
-                System.out.println("Hit at Exit Nr.: " + i);
                 int o = 5;
                 switch(i){
                     case 0: o = 2; break;
@@ -1714,15 +1675,16 @@ public class GameController extends GameControllerVar implements Initializable {
                 }
                 switch(i){//HIER--------------------
                     //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
-                    case 0: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor - 1][tile.tile.location.yCoor])); System.out.println("Adding Tile on Top");break;
-                    case 1: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor][tile.tile.location.yCoor + 1])); System.out.println("Adding Tile Right"); break;
-                    case 2: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor + 1][tile.tile.location.yCoor])); System.out.println("Adding Tile on Bottom"); break;
-                    case 3: currObsTile.add(new algoTile(o , compBoard[tile.tile.location.xCoor][tile.tile.location.yCoor - 1])); System.out.println("Adding Tile Left"); break;
+                    case 0: currObsTile.add(new algoTile(o, compBoard[tile.tile.location.xCoor - 1][tile.tile.location.yCoor])); break;
+                    case 1: currObsTile.add(new algoTile(o, compBoard[tile.tile.location.xCoor][tile.tile.location.yCoor + 1])); break;
+                    case 2: currObsTile.add(new algoTile(o, compBoard[tile.tile.location.xCoor + 1][tile.tile.location.yCoor])); break;
+                    case 3: currObsTile.add(new algoTile(o, compBoard[tile.tile.location.xCoor][tile.tile.location.yCoor - 1])); break;
                 }
             }
         }
         currObsTile.remove(index);
-        alrObsTiles.add(tile.tile);
+        int[] coorTile = {tile.tile.location.xCoor, tile.tile.location.yCoor};
+        botDoneTiles.add(coorTile);
         return tile;
     }
     
