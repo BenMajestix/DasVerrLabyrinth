@@ -107,6 +107,7 @@ public class GameController extends GameControllerVar implements Initializable {
         playerGreen.pos[0] = 6;
         playerGreen.pos[1] = 6;
 
+        //Die Scores der Spieler werden gesetzt
         playerRed.score = 0;
 
         playerBlue.score = 0;
@@ -115,6 +116,7 @@ public class GameController extends GameControllerVar implements Initializable {
 
         playerGreen.score = 0;
 
+        //Die Positionen der Tiles wird gespeichert
         tileXCoor[0] = 120;
         tileXCoor[1] = 205;
         tileXCoor[2] = 290;
@@ -132,6 +134,7 @@ public class GameController extends GameControllerVar implements Initializable {
         tileYCoor[6] = 800;
 
         try {
+            //startet das Spiel
             runGame();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -2006,29 +2009,52 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     //TARGETs FOR DROPPING
+    
+    //---------------------------------------------------------------------------------------------------
     @FXML
     private void dp1DragOver(DragEvent event) {
+        
+        //überprüft, ob der Inhalt des Strings im Dragboard "ImageView source text" ist
         if (event.getDragboard().getString().equals("ImageView source text")) {
+            
+            //bestätigt, dass man das Dragboard hier droppen kann
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
+        //bewirkt, dass das Event nicht an spätere event-listener gesendet wird
         event.consume();
     }
 
     @FXML
     private void dp1DragDrop(DragEvent event) throws Exception {
+        
+        //definiert das Dragboard db, mit dem Inhalt des Dragboards des Events
+        //ein Dragboard ist das, was man mit dem Mauszeiger bewegt bzw. aufnimmt
         Dragboard db = event.getDragboard();
+        
+        //überprüft, ob sich im Dragboard db ein String befindet
         if (db.hasString()) {
+            
+            //gibt in der Konsole aus, wo das Tile gedroppt wurde
             System.out.println("Dropped at DropPoint 1");
+            
+            //setzt die Variable TilePhaseOver auf true, sagt also, dass die Tile-legephase vorbei ist
             tilePhaseOver = true;
+            //managed den Zug (Zentrale Kontrolle des Spiels)
             runGame();
+            //Bewegt die Column 1 in Richtung 1
             moveColumn(1, 1);
+            //beendet den "Dropmodus" der Maus
             event.setDropCompleted(true);
+            //wenn sich im Dragboard kein String befindet, wird der "Dropmodus" nicht beendet
         } else {
             event.setDropCompleted(false);
         }
+        //bewirkt, dass das Event nicht an spätere event-listener gesendet wird
         event.consume();
     }
-
+    //---------------------------------------------------------------------------------------------------
+    //Dieser Bereich wird für alle Droppoints an denen man Tiles droppen kann wiederholt
+    
     @FXML
     private void dp2DragOver(DragEvent event) {
         if (event.getDragboard().getString().equals("ImageView source text")) {
@@ -2284,14 +2310,17 @@ public class GameController extends GameControllerVar implements Initializable {
 
     private void movePlayer(double mouseX, double mouseY, int x, int y) throws Exception {
 
+        //für genauen Droppoint mit der Maus, sodass auf der Spitze des Mauzeigers gedroppt wird
         mouseX -= 30;
         mouseY -= 30;
 
+        //erstellt neues Array aus zwei Integern für die alten Positionen der Spieler auf den Tiles
         int[] oldRedTilePos = new int[2];
         int[] oldBlueTilePos = new int[2];
         int[] oldYellowTilePos = new int[2];
         int[] oldGreenTilePos = new int[2];
 
+        //setzt beide Integer in den Arrays, abhängig von der nicht aktualisierten Position des Spielers
         oldRedTilePos[0] = App.players[0].pos[0];
         oldRedTilePos[1] = App.players[0].pos[1];
 
@@ -2304,22 +2333,42 @@ public class GameController extends GameControllerVar implements Initializable {
         oldGreenTilePos[0] = App.players[3].pos[0];
         oldGreenTilePos[1] = App.players[3].pos[1];
 
+        //überprüft, welcher Spieler am Zug ist
         switch (playerTurn) {
+            
+            //------------------------------------------------------------------------------------------------------------------------------
+            //falls der rote Spieler am Zug ist:
             case 0:
+                
+                //gibt in der Konsole die alte Position des roten Spielers aus
                 System.out.println("Alte Spielerposition: " + oldRedTilePos[0] + " " + oldRedTilePos[1]);
+                
+                //gibt in der Konsole die Mausposition aus
                 System.out.println("Mausposition: " + x + " " + y);
+                
+                //überprüft, ob der Algorithmus erfolgreich war
                 if (startCheckAlgo(oldRedTilePos[0], oldRedTilePos[1], x, y)) {
+                    
+                    //setzt die Position des roten Spielers auf mouseX und mouseY
                     player_red.setX(mouseX);
                     player_red.setY(mouseY);
+                    //ändert die position des roten Spielers in der ArrayList
                     App.players[0].pos[0] = x;
                     App.players[0].pos[1] = y;
+                    //gibt in der Konsole die Neue Spielerposition von rot aus
                     System.out.println("Spielerposition (red): " + App.players[0].pos[0] + " " + App.players[0].pos[1]);
+                    
+                    //setzt die Variable movingPhaseOver auf true, d.h. dass die Phase, in der der Spieler bewegt wird, vorbei ist
                     movingPhaseOver = true;
+                    //managed den Zug (Zentrale Kontrolle des Spiels)
                     runGame();
+                //gibt einen Fehlercode in der Konsole aus falls der Algorithmus nicht erfolgreich war, der Spieler also nicht zu der gewünschten Position ziehen kann
                 } else {
                     throw new Exception("Der Weg des Spielers ist versperrt");
                 }
                 break;
+                //------------------------------------------------------------------------------------------------------------------------------
+                //Dieser Bereich wird für die anderen Spieler mit anderen Farben wiederholt
 
             case 1:
                 System.out.println("Alte Spielerposition: " + oldBlueTilePos[0] + " " + oldBlueTilePos[1]);
@@ -2373,31 +2422,55 @@ public class GameController extends GameControllerVar implements Initializable {
         //App.players[0].setPos(mouseX mouseY);
     }
 
+    //DRAG AND DROP
+    
+    //---------------------------------------------------------------------------------------------------------------------
     @FXML
     private void Ti00DragOver(DragEvent event) {
+        
+        //überprüft, ob das bewegte Objekt ein Spieler ist, indem er sich das Dragboard holt
         if (event.getDragboard().getString().equals("player")) {
+            
+            //bestätigt, dass man das Dragboard hier droppen kann
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
+        //bewirkt, dass das Event nicht an spätere event-listener gesendet wird
         event.consume();
     }
 
     @FXML
     private void Ti00DragDrop(DragEvent event) throws Exception {
+        
+        //definiert das Dragboard db, mit dem Inhalt des Dragboards des Events
+        //ein Dragboard ist das, was man mit dem Mauszeiger bewegt bzw. aufnimmt
         Dragboard db = event.getDragboard();
+        
+        //überprüft, ob sich im Dragboard db ein String befindet
         if (db.hasString()) {
-
+            
+            //gibt in der Konsole aus, wo der Spieler gedroppt wurde
             System.out.println("Dropped at DropPoint 00");
 
+            //speichert die Mausposition (eventSceneX und eventSceneY) in mouseX und mouseY
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
+            
+            //führt die Methode movePlayer() mit den Angaben der Mausposition und der Tileposition aus
             movePlayer(mouseX, mouseY, 0, 0);
+            
+            //beendet den "Dropmodus" der Maus
             event.setDropCompleted(true);
+        //wenn sich im Dragboard kein String befindet, wird der "Dropmodus" nicht beendet
         } else {
             event.setDropCompleted(false);
         }
+        //bewirkt, dass das Event nicht an spätere event-listener gesendet wird
         event.consume();
     }
-
+    //---------------------------------------------------------------------------------------------------------------------
+    //dieser Bereich wird für alle Tiles, d.h. alle Droppoints für Player wiederholt
+    
+    
     @FXML
     private void Ti01DragOver(DragEvent event) {
         if (event.getDragboard().getString().equals("player")) {
