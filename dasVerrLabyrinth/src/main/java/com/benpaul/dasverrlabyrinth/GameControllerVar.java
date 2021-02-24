@@ -5,6 +5,7 @@
  */
 package com.benpaul.dasverrlabyrinth;
 
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -176,29 +177,25 @@ public class GameControllerVar {
     @FXML
     public Button btnDrehen;
     
-    @FXML
-    private ImageView dp01;
-    @FXML
-    private ImageView dp02;
-    @FXML
-    private ImageView dp03;
-    @FXML
-    private ImageView dp04;
-    @FXML
-    private ImageView dp05;
-    @FXML
-    private ImageView dp06;
-    @FXML
-    private ImageView dp07;
-    @FXML
-    private ImageView dp08;
-    @FXML
-    private ImageView dp09;
-    @FXML
-    private ImageView dp10;
-    @FXML
-    private ImageView dp11;
-    @FXML
-    private ImageView dp12;
     
+    
+    //VAR für "Pathfinder" ;D
+    //Tiles which are connected to the startTile, but not yet looked at.
+    ArrayList<GameController.algoTile> currObsTile = new ArrayList();
+    //All tiles already looked at.
+    ArrayList<tileModel> alrObsTiles = new ArrayList();
+    
+    //BOT VARIABLES
+    //The best Location the Bot can move to.
+    Integer[] botBestPos = new Integer[2];
+    //Shortest Distance to an Objective
+    Integer botBestPosDist = null;
+    //The Current Objective of the Bot Algo
+    Integer[] botCurrObjective = new Integer[2];
+    //The Best Side the Bot can put a Tile
+    Integer botBestTileSide;
+    //The Best Rotation from the Off Board Tile
+    Integer botBestTileRot;
+    //The Side which is currently looked at by the Bot Algo
+    Integer currTileSide;
 }

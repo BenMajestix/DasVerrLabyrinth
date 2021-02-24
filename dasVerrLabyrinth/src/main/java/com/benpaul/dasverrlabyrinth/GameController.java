@@ -30,21 +30,13 @@ import javafx.util.Duration;
  * @author benbartel
  */
 public class GameController extends GameControllerVar implements Initializable {
-
-    //BOT VARIABLES
-    //The best Location the Bot can move to.
-    Integer[] botBestPos = new Integer[2];
-    //Shortest Distance to an Objective
-    Integer botBestPosDist = null;
-    //The Current Objective of the Bot Algo
-    Integer[] botCurrObjective = new Integer[2];
-    //The Best Side the Bot can put a Tile
-    Integer botBestTileSide;
-    //The Best Rotation from the Off Board Tile
-    Integer botBestTileRot;
-    //The Side which is currently looked at by the Bot Algo
-    Integer currTileSide;
-
+    
+    
+    //Helper ArrayLists for the Bot
+    //The Final, possible Tiles and Locations are stored here.
+    ArrayList<Integer[]> botTileOptCoorNew = new ArrayList();
+    ArrayList<Integer[]> botTileOptConfNew = new ArrayList();
+    
     /**
      * Initializes the controller class.
      *
@@ -140,12 +132,12 @@ public class GameController extends GameControllerVar implements Initializable {
             ex.printStackTrace();
         }
     }
-
+    
     //GAME
     //--------------
     public void runGame() throws Exception {
         labelCardsLeft.setText(App.allItems.size() + "");
-
+        
         if (playerTurn == 4) {
             playerTurn = 0;
         }
@@ -404,10 +396,6 @@ public class GameController extends GameControllerVar implements Initializable {
         }
 
     }
-
-    //The same ArrList just like botTileOptCoor and botTileOptConf, but without duplicates. Explained later in botFindTiles()
-    ArrayList<Integer[]> botTileOptCoorNew = new ArrayList();
-    ArrayList<Integer[]> botTileOptConfNew = new ArrayList();
 
     @SuppressWarnings("ManualArrayToCollectionCopy")
     public void botFindTiles() throws Exception {
@@ -704,49 +692,58 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     public void checkItemFound() {
+        //Überprüft alle Spieler ob diese auf Tiles stehen, mit Items welche die Spieler
+        //gerade suchen.
+        //o ist der gerade überprüfte Spieler
         for (int o = 0; o < 4; o++) {
+            //i ist das Item welches gerade überprüft wird
             for (int i = 0; i < 3; i++) {
+                //wenn der Spieler auf dem richtigem Item steht
                 if (App.players[o].items[i].equals(App.boardTiles[App.players[o].pos[0]][App.players[o].pos[1]].collectable)) {
                     System.out.println("Tile youre looking for found. Player: " + o);
+                    //Es wird dem Spieler ein neues Random Item gegeben.
                     App.players[o].items[i] = App.getRndmItem();
                 }
             }
         }
     }
-
+    //Done
     public void enableTilePhase() {
+        //Updates das Label mit Instructions
         updateLabel();
-
+        //Setzt alle player ImageViews auf halb-durchsichtig
         player_red.setOpacity(0.5);
         player_blue.setOpacity(0.5);
         player_yellow.setOpacity(0.5);
         player_green.setOpacity(0.5);
-
+        //Disabled alle player imageViews, damit diese nicht verschoben werden können
         player_red.setDisable(true);
         player_blue.setDisable(true);
         player_yellow.setDisable(true);
         player_green.setDisable(true);
-
+        //Das Tile außerhalb des Feldes wird enabled, damit man es bewegen kann.
         currTile.setDisable(false);
+        //Und es wird sichtbar gemacht.
         currTile.setOpacity(1);
     }
-
+    //Done
     public void enableMovingPhase() {
+        //Updates das Label mit Instructions
         updateLabel();
-
+        //Das tile außerhalb des Feldes wird disabled, damit man es nicht bewegen kann
         currTile.setDisable(true);
         currTile.setOpacity(0.5);
-
+        //Setzt alle player ImageViews auf halb-durchsichtig
         player_red.setOpacity(0.5);
         player_blue.setOpacity(0.5);
         player_yellow.setOpacity(0.5);
         player_green.setOpacity(0.5);
-
+        //Disabled alle imageViews der Spieler
         player_red.setDisable(true);
         player_blue.setDisable(true);
         player_yellow.setDisable(true);
         player_green.setDisable(true);
-
+        //Henachdem welcher Spieler am Zug ist, wird dessen ImageView enabled und sichtbar gemacht
         switch (playerTurn) {
             case 0:
                 player_red.setDisable(false);
@@ -792,32 +789,17 @@ public class GameController extends GameControllerVar implements Initializable {
 
         lblInstr.setText("Der Spieler " + player + "ist am Zug und muss " + instr);
     }
-
-    @FXML
-    private void tryAnimat(ActionEvent event) throws Exception {
-        TranslateTransition newTranslate = new TranslateTransition();
-        newTranslate.setDuration(Duration.millis(2000));
-        newTranslate.setNode(player_red);
-        newTranslate.setToX(545);
-        newTranslate.setToY(375);
-        newTranslate.setCycleCount(1);
-        newTranslate.setAutoReverse(false);
-        //newTranslate.play();
-        botFindTiles();
-        //botAnimateOffTile(0);
-        //startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], App.boardTiles);
-
-        //moveBot(2, 2);
-    }
-
+    //Done
     public void startMoveRow(int row, int direction) throws Exception {
+        //Es wird überprüft ob der Input Valide ist.
+        //Dies ist zur Fehlervermeidung
         if (row == 1 || row == 3 || row == 5) {
             moveRow(row, direction);
         } else {
             throw new Exception("Diese Reihe kann nicht bewegt werden.");
         }
     }
-
+    //Done
     public void moveRow(int row, int direction) throws InterruptedException, Exception {
         //Von rechts schiebend
         if (direction == 0) {
@@ -864,8 +846,9 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
             }
+            //Es wird eine Kopie des OffBoardTiles erstellt.
             tileModel offBoardTemp = offBoardTile;
-
+            //Alle tileModels werden in dem Array in App verschoben
             offBoardTile = boardTiles[row][0];
             boardTiles[row][0] = boardTiles[row][1];
             boardTiles[row][1] = boardTiles[row][2];
@@ -874,9 +857,12 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[row][4] = boardTiles[row][5];
             boardTiles[row][5] = boardTiles[row][6];
             boardTiles[row][6] = offBoardTemp;
-
+            //Und Das OffBoardTile wird reingeschoben
+            //Es wird eine Animation gestarted
             switch (row) {
                 case 1:
+                    //Der Animation wird mitgegeben wieviele Pixel das Tile sich bewegen muss, welches aus dem Feld geschoben wird.
+                    //Alle imageViews beteiligt werden auch als Argumente mitgegeben
                     ImageView[] imgs = {i16, i15, i14, i13, i12, i11, i10};
                     int[] offSetNode = {275, -220};
                     startAnimation(imgs, offSetNode, 2, 1);
@@ -937,8 +923,9 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
             }
+            //Es wird eine Kopie des OffBoardTiles erstellt.
             tileModel offBoardTemp = offBoardTile;
-
+            //Alle tileModels werden in dem Array in App verschoben
             offBoardTile = boardTiles[row][6];
             boardTiles[row][6] = boardTiles[row][5];
             boardTiles[row][5] = boardTiles[row][4];
@@ -947,9 +934,12 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[row][2] = boardTiles[row][1];
             boardTiles[row][1] = boardTiles[row][0];
             boardTiles[row][0] = offBoardTemp;
-
+            //Und Das OffBoardTile wird reingeschoben
+            //Es wird eine Animation gestarted
             switch (row) {
                 case 1:
+                    //Der Animation wird mitgegeben wieviele Pixel das Tile sich bewegen muss, welches aus dem Feld geschoben wird.
+                    //Alle imageViews beteiligt werden auch als Argumente mitgegeben
                     ImageView[] imgs = {i15, i14, i13, i12, i11, i10, i16};
                     int[] offSetNode = {275, -730};
                     startAnimation(imgs, offSetNode, 1, 1);
@@ -966,22 +956,26 @@ public class GameController extends GameControllerVar implements Initializable {
                     break;
             }
         }
-        //makeBoard();
+        //Es wird überprüft, ob ein Spieler nach einer Reihenbewegung auf einem seiner 
+        //Items steht, welche er sucht.
         checkItemFound();
-
+        //Falls diese Bewegung durch einen Bot gemacht wurde, wird die entsprechende 
+        //Phase des Zuges des Bots als beendet erklärt
         if (App.players[playerTurn].isBot) {
             botTilePhaseOver = true;
         }
     }
-
+    //Done
     public void startMoveColumn(int column, int direction) throws Exception {
+        //Es wird überprüft ob der Input Valide ist.
+        //Dies ist zur Fehlervermeidung
         if (column == 1 || column == 3 || column == 5) {
             moveColumn(column, direction);
         } else {
             throw new Exception("Diese Zeile kann nicht bewegt werden.");
         }
     }
-
+    //Done
     public void moveColumn(int column, int direction) throws Exception {
         //Von unten schiebend
         if (direction == 0) {
@@ -1027,11 +1021,10 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
             }
-
+            //Es wird eine Kopie des OffBoardTiles erstellt.
             tileModel offBoardTemp = offBoardTile;
-
+            //Alle tileModels werden in dem Array in App verschoben
             offBoardTile = boardTiles[0][column];
-
             boardTiles[0][column] = boardTiles[1][column];
             boardTiles[1][column] = boardTiles[2][column];
             boardTiles[2][column] = boardTiles[3][column];
@@ -1039,8 +1032,11 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[4][column] = boardTiles[5][column];
             boardTiles[5][column] = boardTiles[6][column];
             boardTiles[6][column] = offBoardTemp;
-
+            //Und Das OffBoardTile wird reingeschoben
+            //Es wird eine Animation gestarted
             switch (column) {
+                //Der Animation wird mitgegeben wieviele Pixel das Tile sich bewegen muss, welches aus dem Feld geschoben wird.
+                //Alle imageViews beteiligt werden auch als Argumente mitgegeben
                 case 1:
                     ImageView[] imgs = {i11, i21, i31, i41, i51, i61, i01};
                     int[] offSetNode = {360, -305};
@@ -1101,9 +1097,9 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
             }
-
+            //Es wird eine Kopie des OffBoardTiles erstellt.
             tileModel offBoardTemp = offBoardTile;
-
+            //Alle tileModels werden in dem Array in App verschoben
             offBoardTile = boardTiles[6][column];
             boardTiles[6][column] = boardTiles[5][column];
             boardTiles[5][column] = boardTiles[4][column];
@@ -1112,9 +1108,12 @@ public class GameController extends GameControllerVar implements Initializable {
             boardTiles[2][column] = boardTiles[1][column];
             boardTiles[1][column] = boardTiles[0][column];
             boardTiles[0][column] = offBoardTemp;
-
+            //Und Das OffBoardTile wird reingeschoben
+            //Es wird eine Animation gestarted
             switch (column) {
                 case 1:
+                    //Der Animation wird mitgegeben wieviele Pixel das Tile sich bewegen muss, welches aus dem Feld geschoben wird.
+                    //Alle imageViews beteiligt werden auch als Argumente mitgegeben
                     ImageView[] imgs = {i01, i11, i21, i31, i41, i51, i61};
                     int[] offSetNode = {-150, -305};
                     startAnimation(imgs, offSetNode, 1, 2);
@@ -1131,9 +1130,11 @@ public class GameController extends GameControllerVar implements Initializable {
                     break;
             }
         }
-        //makeBoard();
+        //Es wird überprüft, ob ein Spieler nach einer Reihenbewegung auf einem seiner 
+        //Items steht, welche er sucht.
         checkItemFound();
-
+        //Falls diese Bewegung durch einen Bot gemacht wurde, wird die entsprechende 
+        //Phase des Zuges des Bots als beendet erklärt
         if (App.players[playerTurn].isBot) {
             botTilePhaseOver = true;
         }
@@ -1320,16 +1321,20 @@ public class GameController extends GameControllerVar implements Initializable {
         rotateImages();
         updateTileLoc();
     }
-
+    //Done
     public void checkExits() {
+        //Es werden alle Tiles auf dem Board durchgegangen
         int x, y;
         for (x = 0; x < 7; x++) {
             for (y = 0; y < 7; y++) {
+                //Es wird nur zur sicherheit alle Koordinaten erneut gesetzt 
+                //Und die Exits aller Tiles werden noch einmal überprüft.
                 App.boardTiles[x][y].getLocation().setxCoor(x);
                 App.boardTiles[x][y].getLocation().setyCoor(y);
                 App.boardTiles[x][y].checkExit();
             }
         }
+        //Dies wird außerdem für das Offboardtile gemacht.
         App.offBoardTile.checkExit();
     }
 
@@ -1406,62 +1411,11 @@ public class GameController extends GameControllerVar implements Initializable {
 
         checkExits();
     }
-    /*
-    ArrayList<pathfinderPathModel> allPaths = new ArrayList();
-    
-    public void startPathfinder(int[] startPoint, int[] endPoint){
-        boolean[] directions = checkPathDir(startPoint, endPoint);
-        
-        tileModel startTile, endTile;
-        startTile = App.boardTiles[startPoint[0]][startPoint[1]];
-        endTile = App.boardTiles[endPoint[0]][endPoint[1]];
-        
-        if(!(directions[0])){
-            //Es geht nach Unten
-            if(startTile.ableToExit[2] && checkNextTileInput(startTile, 2)){
-                
-            }
-        }
-        else if(directions[0]){
-            //Es geht nach Oben
-            
-        }
-    }
-    
-    public void newPath(tileModel tile, int dir){
-        
-    }
     
     
-    public boolean[] checkPathDir(int[] startPoint, int[] endPoint){
-        boolean[] directions = new boolean[2];
-        //[0] Die X Dir
-        //[1] Die Y Dir
-        if(startPoint[0] > endPoint[0]){
-            directions[0] = false;
-        }
-        else if(startPoint[0] < endPoint[0]){
-            directions[1] = true;
-        }
-        
-        if(startPoint[1] > endPoint[1]){
-            directions[1] = false;
-        }
-        else if(startPoint[1] < endPoint[1]){
-            directions[1] = true;
-        }
-        
-        return directions;
-    }
-     */
-
     //ALGORITHM for evaluating if walking is possible
     //---------------
-    //Tiles which are connected to the startTile, but not yet looked at.
-    ArrayList<algoTile> currObsTile = new ArrayList();
-    //All tiles already looked at.
-    ArrayList<tileModel> alrObsTiles = new ArrayList();
-
+    
     public boolean startCheckAlgo(int startX, int startY, int endX, int endY) throws Exception {
         boolean erfolgreich = false;
         //Clearing everything and resetting it.
