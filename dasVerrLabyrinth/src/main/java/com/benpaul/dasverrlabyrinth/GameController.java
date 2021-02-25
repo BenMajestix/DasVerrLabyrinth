@@ -1413,13 +1413,13 @@ public class GameController extends GameControllerVar implements Initializable {
     }
     
     
-    //ALGORITHM for evaluating if walking is possible
+    //ALGORITHM for evaluating if walking is possible for a Player
     //---------------
-    
+    //Done
     public boolean startCheckAlgo(int startX, int startY, int endX, int endY) throws Exception {
         boolean erfolgreich = false;
         //Clearing everything and resetting it.
-
+        //Die Variablen der Ausgänge aller Tiles werden zurückgesetzt
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
                 App.boardTiles[x][y].ableToExit[0] = false;
@@ -1428,13 +1428,16 @@ public class GameController extends GameControllerVar implements Initializable {
                 App.boardTiles[x][y].ableToExit[3] = false;
             }
         }
-
+        //Und die Variablen der Ausgänge werden neu geladen. Dies wird zur Fehlervorbeugung getan.
         checkExits();
-
+        //Alle Variablen werden zurückgesetzt damit die Methode ohne Fehler laufen kann.
+        //Dies ist die Liste mit allen Tiles, welche noch überprüft werden müssen
         currObsTile.clear();
+        //Alle Tiles welche schon überprüft wurden
         alrObsTiles.clear();
+        //Ob das gesuchte Objekt schon gefunden wurde
         objecFound = false;
-
+        //Das Start und Endtile wird erstellt damit man einfach damit arbeiten kann.
         tileModel startTile;
         tileModel endTile;
 
@@ -1442,89 +1445,94 @@ public class GameController extends GameControllerVar implements Initializable {
         if (startX < 0 || startX > 6 || startY < 0 || startY > 6 || endX < 0 || endX > 6 || endY < 0 || endY > 6) {
             throw new Exception("Die Koordinaten sind ungültig.");
         } else {
-            //Setzt Start und End Tile
+            //Setzt Start und Endtile mit den mitgegebenen Koordinaten
             startTile = App.boardTiles[startX][startY];
             endTile = App.boardTiles[endX][endY];
         }
-
+        //Falls der Spieler schon auf dem gesuchten Tile steht wird die Methode schnell beendet.
         if (startX == endX && startY == endY) {
+            //Dies überspringt die while-schleife
             objecFound = true;
             System.out.println("Der Spieler ist schon auf dem Richtigen Tile!");
         } else {
             System.out.println("EndX: " + endTile.location.xCoor);
             System.out.println("EndY: " + endTile.location.yCoor);
 
-            //currObsTile.add(new algoTile(0, startTile));
             System.out.println("Exits of StartTile :");
             System.out.println("Oben" + startTile.ableToExit[0]);
             System.out.println("Rechts" + startTile.ableToExit[1]);
             System.out.println("Unten" + startTile.ableToExit[2]);
             System.out.println("Links" + startTile.ableToExit[3]);
             System.out.println(" ");
-
+            //Es wird ein Object von der Klasse AlgoTile erstellt, welches das tileModel und eine Richtung aus der der Algorithmus gekommen ist beinhalted.
+            //Da dies das Starttile ist, wird die Richtung auf Null gesetzt
             algoTile startAlgoTile = new algoTile(null, startTile);
+            //Dieses Tile wird zu der "zu überprüfen" Liste hinzugefügt
             currObsTile.add(startAlgoTile);
+            //Die Methode startTile überprüft ein bestimmtes tile und sucht nach grenzenden tiles in den der Algorithmus gehen kann
+            //Hier wird das Starttile überprüft
             startTile(startAlgoTile, 0);
         }
-
+        //Diese Variable wird erhöht, wenn es kein tile zum überprüfen gibt. Bei der Value 10, wird die Schleife beendet und das EndTile als nicht gefunden erklärt.
         int fCount = 0;
         //Break Flag für die While Loop
         breakWhile:
-        //wird ausgeführt während das Ziel noch nicht gefunden wurde
+        //Es wird geloopt so lange das Ziel noch nicht gefunden wurde
         while (!(objecFound)) {
+            //Falls öfter als 10mal es keine tiles zum überprüfen gibt, wird die Methode gestoppt
             if (fCount >= 10) {
                 System.out.println("---fbreak");
                 break;
-            } else if (currObsTile.isEmpty()) {
+            } 
+            //Falls es nichts zum überprüfen gibt, dann wird der Counter um eins erhöht.
+            else if (currObsTile.isEmpty()) {
                 fCount++;
                 System.out.println("F: " + fCount);
             }
 
             //continue flag für die For Loop
             breakFor:
-            //Geht alle currently observed tiles durch
+            //Geht alle zum überprüfenden tiles durch
             for (int i = 0; i < currObsTile.size(); i++) {
                 //Geht alle currently Observed Tiles durch und checkt ob diese das Endtile sind
+                //CompareTiles überprüft ob zwei tiles dasselbe sind.
                 if (compareTiles(currObsTile.get(i).tile, endTile)) {
                     objecFound = true;
                     System.out.println("--Found EndTile!");
-                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
+                    //Also, breaks to stop the whole thing immediatly, and not to wait for everything to finish first
                     //Better performance
                     break breakWhile;
                 }
                 //Wenn dieses Tile schon in der alreadyObservedList ist, dann wird beim nächsten weitergemacht
                 for (int o = 0; o < alrObsTiles.size(); o++) {
+                    //CompareTiles überprüft ob zwei tiles dasselbe sind.
                     if (compareTiles(alrObsTiles.get(o), (currObsTile.get(i).tile))) {
+                        //Dieses Tile wird dann auch aus der "zum überprüfen" liste removed.
                         currObsTile.remove(i);
+                        //Es wird beim nächsten tile weitergemacht.
                         continue breakFor;
                     }
                 }
-
-                //checkDistance(currObsTile.get(i).tile);
+                
                 System.out.println("-----------------");
                 System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
                 System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
-                if (compareTiles(currObsTile.get(i).tile, endTile)) {
-                    objecFound = true;
-                    System.out.println("--Found EndTile!");
-                    //Also breaks to stop the whole thing immediatly, and not to wait for everything to finish first
-                    //Better performance
-                    break breakWhile;
-                } else {
-                    startTile(currObsTile.get(i), i);
-                }
+                //started eine Überprüfung des tiles.
+                //Die Funktion sucht nun tiles, welche neben dem tile sind und erreichbar sind.
+                startTile(currObsTile.get(i), i);
             }
         }
+        //Nachdem keine Tiles mehr zum überprüfen geben, dann wird nocheinmal geschaut ob das endtile als gefunden erklärt wurde
         if (objecFound) {
             System.out.println("--Algorithmus erfolgreich!");
             erfolgreich = true;
         } else {
             System.out.println("|--Der Spieler kann dort nicht hinlaufen!--|");
         }
-
+        //Es wird zurückgegeben ob der Spieler zu dem EndTile gehen kann.
         return erfolgreich;
     }
-
+    //Done
     public algoTile startTile(algoTile tile, int index) {
         //Alle Seiten aus denen ein Weg geht
         System.out.println("Oben Ausgang: " + tile.tile.ableToExit[0]);
@@ -1542,20 +1550,25 @@ public class GameController extends GameControllerVar implements Initializable {
             //Wenn die Seite einen Ausgang hat, und das Angrenzende Tile auch, dann true
             if (tile.tile.ableToExit[i] && checkNextTileInput(tile.tile, i)) {
                 System.out.println("Hit at Exit Nr.: " + i);
+                //o ist die Seite aus der der Algorithmus gekommen ist.
+                //Dieser ist das Gegenteil von i, also dem Ausgang, bei dem das currentlyObsTile angeschlagen hat.
+                /*
+                In diesem beispiel ist die linke Karte das Tile welches gerade überprüft wird, also dieser Methode als Argument gegeben wurde
+                Die rechte Karte ist die Karte welche einen Eingang bei der Seite hat, bei welcher die linke karte einen ausgang hat.
+                Gleich wird o auf das gegenteil von i gesetzt und die Rechte Karte wird in Schlange zum überprüfen gesetzt.
+                der Karte wird o als Direction, aus welcher der Algorithmus gekommen ist, als Argument mitgegeben, damit dieser nicht dahin zurückgeht, wo er schon war.
+                |-----|         |------| 
+                |     |i=1      |      | 
+                |     |      o=3|      | 
+                |-----|         |------|
+                
+                */
                 int o = 5;
                 switch (i) {
-                    case 0:
-                        o = 2;
-                        break;
-                    case 1:
-                        o = 3;
-                        break;
-                    case 2:
-                        o = 0;
-                        break;
-                    case 3:
-                        o = 1;
-                        break;
+                    case 0: o = 2; break;
+                    case 1: o = 3; break;
+                    case 2: o = 0; break;
+                    case 3: o = 1; break;
                 }
                 switch (i) {//HIER--------------------
                     //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
@@ -1578,12 +1591,14 @@ public class GameController extends GameControllerVar implements Initializable {
                 }
             }
         }
+        //Das fertig überprüfte Tile wird der "Fertige Tiles" liste hinzugefügt.
         currObsTile.remove(index);
         alrObsTiles.add(tile.tile);
         return tile;
     }
-
+    //Done
     public boolean compareTiles(tileModel tile1, tileModel tile2) {
+        //Eine HelperFunktion, welche Zwei tiles überprüft ob diese auf der selben Position ist, also das selbe tile ist.
         int x1, y1, x2, y2;
         x1 = tile1.location.xCoor;
         y1 = tile1.location.yCoor;
@@ -1597,44 +1612,44 @@ public class GameController extends GameControllerVar implements Initializable {
         }
         return match;
     }
-
+    //Done
     public boolean checkNextTileInput(tileModel currTile, int dir) {
+        //Diese Methode überprüft ob das angrenzende tile einen Eingang hat, wo überprüft werden soll.
         boolean w = false;
-        try {
-            switch (dir) {
-                case 0:
-                    System.out.println("-Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
-                    if (App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]) {
-                        w = true;
-                    }
-                    break;
-                case 1:
-                    System.out.println("-Rechtes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
-                    if (App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[3]) {
-                        w = true;
-                    }
-                    break;
-                case 2:
-                    System.out.println("-Unteres Tile: " + App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
-                    if (App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[0]) {
-                        w = true;
-                    }
-                    break;
-                case 3:
-                    System.out.println("-Linkes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
-                    if (App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[1]) {
-                        w = true;
-                    }
-                    break;
-            }
-        } catch (Exception e) {
-            w = false;
+        //Jenachdem welche Seite als Argument mitgegeben wurde, wird geschaut ob es dort einen Eingang gibt.
+        switch (dir) {
+            case 0:
+                //Falls ableToExit auf der Richtigen seite true ist, dann gibt es einen Eingang und es ist true
+                System.out.println("-Oberes Tile: " + App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
+                if (App.boardTiles[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]) {
+                    w = true;
+                }
+                break;
+            case 1:
+                System.out.println("-Rechtes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
+                if (App.boardTiles[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[3]) {
+                    w = true;
+                }
+                break;
+            case 2:
+                System.out.println("-Unteres Tile: " + App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
+                if (App.boardTiles[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[0]) {
+                    w = true;
+                }
+                break;
+            case 3:
+                System.out.println("-Linkes Tile: " + App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
+                if (App.boardTiles[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[1]) {
+                    w = true;
+                }
+                break;
         }
         return w;
     }
-
+    //Done    
     public class algoTile {
-
+        //Eine Helfer Klasse welche ein tileModel und die Richtung aus der der Algorithmus gekommen ist beinhalted. 
+        //Dies ist benötigt, da man so ein Paar von Variablen einfach zusammen in einer ArrayList speicher kann.
         Integer fromDir;
         tileModel tile;
 
@@ -1962,8 +1977,9 @@ public class GameController extends GameControllerVar implements Initializable {
         db.setContent(content);
     }
 
-    //TARGETs FOR DROPPING
     
+    
+    //TARGETs FOR DROPPING
     //---------------------------------------------------------------------------------------------------
     @FXML
     private void dp1DragOver(DragEvent event) {
