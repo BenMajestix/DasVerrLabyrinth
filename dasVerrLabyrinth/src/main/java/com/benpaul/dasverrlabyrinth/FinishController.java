@@ -50,12 +50,15 @@ public class FinishController implements Initializable {
             Image firstPlaceImg;
             File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
             firstPlaceImg = new Image(firstPlaceFile.toURI().toString());
+            firstPlace.setImage(firstPlaceImg);
+            firstPlace.toFront();
     }
     }    
 
     @FXML
     private void btnRestart(ActionEvent event) throws IOException {
         App.setRoot("homeView");
+        
     }
     
     private void determinWinner(){
@@ -73,7 +76,4 @@ public class FinishController implements Initializable {
             }
         }
     }
-
-    
-    
 }

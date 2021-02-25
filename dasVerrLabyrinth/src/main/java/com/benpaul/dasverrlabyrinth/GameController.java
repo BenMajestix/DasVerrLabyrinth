@@ -32,10 +32,6 @@ import javafx.util.Duration;
 public class GameController extends GameControllerVar implements Initializable {
     
     
-    //Helper ArrayLists for the Bot
-    //The Final, possible Tiles and Locations are stored here.
-    ArrayList<Integer[]> botTileOptCoorNew = new ArrayList();
-    ArrayList<Integer[]> botTileOptConfNew = new ArrayList();
     
     /**
      * Initializes the controller class.
@@ -263,8 +259,10 @@ public class GameController extends GameControllerVar implements Initializable {
             botBestTileSide = null;
             botBestTileRot = null;
             currTileSide = null;
-            botTileOptCoorNew.clear();
-            botTileOptConfNew.clear();
+            
+            botTileOptCoor.clear();
+            botTileOptConf.clear();
+            
             System.out.println("Start Eval Phase");
             botFindTiles();
             botEvalPhaseOver = true;
@@ -337,13 +335,13 @@ public class GameController extends GameControllerVar implements Initializable {
             else {
                 ArrayList<Integer[]> goodCoor = new ArrayList();
                 
-                for (int i = 0; i < botTileOptCoorNew.size(); i++) {
-                    if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoorNew.get(i)[0], botTileOptCoorNew.get(i)[1])) {
-                        goodCoor.add(botTileOptCoorNew.get(i));
+                for (int i = 0; i < botTileOptCoor.size(); i++) {
+                    if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoor.get(i)[0], botTileOptCoor.get(i)[1])) {
+                        goodCoor.add(botTileOptCoor.get(i));
                         System.out.println("Coords that Work:----------   >>>");
-                        System.out.println(botTileOptCoorNew.get(i)[0] + botTileOptCoorNew.get(i)[1]);
-                        //botBestPos[0] = botTileOptCoorNew.get(i)[0];
-                        //botBestPos[1] = botTileOptCoorNew.get(i)[1];
+                        System.out.println(botTileOptCoor.get(i)[0] + botTileOptCoor.get(i)[1]);
+                        //botBestPos[0] = botTileOptCoor.get(i)[0];
+                        //botBestPos[1] = botTileOptCoor.get(i)[1];
                     } else {
                         System.out.println("Cant find good tile for Bot!");
                         botBestPos[0] = App.players[playerTurn].pos[0];
@@ -394,16 +392,16 @@ public class GameController extends GameControllerVar implements Initializable {
             botTilePhaseOver = false;
             runGame();
         }
-
     }
+    
+    //Two Temporary ArrLists for Storing all Possible Combinations of Tiles the Bot can Move to, 
+    //The Tile Coordinates are Stored in ...Coor and the Configuration in ...Conf.
+    //The Configuration consists of two integers, the First indicating the Point where the tile is put into, and the Second, the Rotation of the tile to put into.
+    ArrayList<Integer[]> botTileOptCoor = new ArrayList();
+    ArrayList<Integer[]> botTileOptConf = new ArrayList();
 
     @SuppressWarnings("ManualArrayToCollectionCopy")
     public void botFindTiles() throws Exception {
-        //Two Temporary ArrLists for Storing all Possible Combinations of Tiles the Bot can Move to, 
-        //The Tile Coordinates are Stored in ...Coor and the Configuration in ...Conf.
-        //The Configuration consists of two integers, the First indicating the Point where the tile is put into, and the Second, the Rotation of the tile to put into.
-        ArrayList<Integer[]> botTileOptCoor = new ArrayList();
-        ArrayList<Integer[]> botTileOptConf = new ArrayList();
 
         //We Loop through all the Rotations of the OffBoard Tile.
         for (int d = 0; d < 4; d++) {
@@ -427,51 +425,48 @@ public class GameController extends GameControllerVar implements Initializable {
                 //Nun wird das Board an Funktion weitergegeben, welche alle Tiles in einer ArrayList speichert, zu der der Spieler dann gehen könnte.
                 //Es wird dann in der ArrayList botDoneTiles gespeichert.
                 startCheckAlgoBot(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], board);
+                
                 //Es werden alle Tiles, welcher dem Bot zugänglich sind, durchgegangen.
-                for (Integer[] botDoneTile : botDoneTiles) {
-                    //In den ArrayLists botTileOptCoor und botTileOptConf werden nun als Paar, auf dem selben Index, einmal die Koordinaten des Tiles und die Configuration(also wo und in welcher Rotation)
-                    //in den Lists gespeichert.
-                    botTileOptCoor.add(botDoneTile.clone());
-                    Integer[] ld = {l, d};
-                    botTileOptConf.add(ld);
-                }
-            }
-        }
-        if (botTileOptCoor.isEmpty()) {
-            Integer[] coord = {App.players[playerTurn].pos[0], App.players[playerTurn].pos[1]};
-            Integer[] conf = {2, 0};
-            botTileOptCoorNew.add(coord);
-            botTileOptConfNew.add(conf);
-        } else {
-            for (int i = 0; i < botTileOptCoor.size(); i++) {
-                boolean duplicate = false;
-                if (!botTileOptCoorNew.isEmpty()) {
-                    for (int j = 0; j < botTileOptCoorNew.size(); j++) {
-                        if (botTileOptCoor.get(i)[0] == botTileOptCoorNew.get(j)[0] && botTileOptCoor.get(i)[1] == botTileOptCoorNew.get(j)[1]) {
-                            duplicate = true;
+                for(int i = 0; i < botDoneTiles.size(); i++){
+                    if(!(botDoneTiles.isEmpty()) && !(botTileOptCoor.isEmpty())){
+                        //Falls dieses tile schon in der neuen Liste eingetragen ist, dann wird dieses übersprungen
+                        //Durch diese Methode können Duplicate vermieden werden.
+                        if(!(botTileOptCoor.contains(botDoneTiles.get(i)))){
+                            botTileOptCoor.add(botDoneTiles.get(i).clone());
+                            Integer[] ld = {l, d};
+                            botTileOptConf.add(ld);
                         }
                     }
-                    if (!duplicate) {
-                        botTileOptCoorNew.add(botTileOptCoor.get(i));
-                        botTileOptConfNew.add(botTileOptConf.get(i));
+                    else if(botDoneTiles.isEmpty()){
+                        //Wenn der Algorithmus keine Ergebnisse hervorbringt.
                     }
-                } else {
-                    botTileOptCoorNew.add(botTileOptCoor.get(i));
-                    botTileOptConfNew.add(botTileOptConf.get(i));
+                    else if(botTileOptCoor.isEmpty()){
+                        //Wenn es noch keine Einträge in dem Neuen Array gibt, dann wird es auf jeden fall hinzugefügt.
+                        botTileOptCoor.add(botDoneTiles.get(i).clone());
+                        Integer[] ld = {l, d};
+                        botTileOptConf.add(ld);
+                    }
                 }
             }
         }
-        for (int i = 0; i < botTileOptCoorNew.size(); i++) {
-            System.out.println("Available Tiles for Player:");
-            System.out.println("Coor: " + botTileOptCoorNew.get(i)[0] + " " + botTileOptCoorNew.get(i)[1]);
-            System.out.println("Conf: " + botTileOptConfNew.get(i)[0] + " " + botTileOptConfNew.get(i)[1]);
-        }
-        int rndm = (int) (Math.random() * botTileOptCoorNew.size());
-        botBestPos = botTileOptCoorNew.get(rndm).clone();
-
-        botBestTileSide = botTileOptConfNew.get(rndm)[0];
-        botBestTileRot = botTileOptConfNew.get(rndm)[1];
         
+        if(botTileOptCoor.isEmpty()){
+            Integer[] coor = {App.players[playerTurn].pos[0], App.players[playerTurn].pos[1]};
+            botTileOptCoor.add(coor);
+            Integer[] ld = {0, 0};
+            botTileOptConf.add(ld);
+        }
+        
+        for (int i = 0; i < botTileOptCoor.size(); i++) {
+            System.out.println("Available Tiles for Player:");
+            System.out.println("Coor: " + botTileOptCoor.get(i)[0] + " " + botTileOptCoor.get(i)[1]);
+            System.out.println("Conf: " + botTileOptConf.get(i)[0] + " " + botTileOptConf.get(i)[1]);
+        }
+        int rndm = (int) (Math.random() * botTileOptCoor.size());
+        botBestPos = botTileOptCoor.get(rndm).clone();
+
+        botBestTileSide = botTileOptConf.get(rndm)[0];
+        botBestTileRot = botTileOptConf.get(rndm)[1];
     }
 
     public tileModel[][] botInsertTileBoard(int l, tileModel[][] tempBoard, tileModel offTempTile) {
@@ -1617,6 +1612,7 @@ public class GameController extends GameControllerVar implements Initializable {
         //Diese Methode überprüft ob das angrenzende tile einen Eingang hat, wo überprüft werden soll.
         boolean w = false;
         //Jenachdem welche Seite als Argument mitgegeben wurde, wird geschaut ob es dort einen Eingang gibt.
+        try{
         switch (dir) {
             case 0:
                 //Falls ableToExit auf der Richtigen seite true ist, dann gibt es einen Eingang und es ist true
@@ -1643,6 +1639,9 @@ public class GameController extends GameControllerVar implements Initializable {
                     w = true;
                 }
                 break;
+        }}
+        catch(Exception e){
+            w = false;
         }
         return w;
     }

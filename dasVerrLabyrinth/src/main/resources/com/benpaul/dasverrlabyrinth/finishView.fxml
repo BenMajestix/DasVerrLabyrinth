@@ -39,7 +39,6 @@
             <Image url="@../../../Colors/BRONZE.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="firstPlace" fitHeight="65.0" fitWidth="65.0" layoutX="1100.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="secondPlace" fitHeight="65.0" fitWidth="65.0" layoutX="1100.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="thirdPlace" fitHeight="65.0" fitWidth="65.0" layoutX="1100.0" layoutY="763.0" pickOnBounds="true" preserveRatio="true" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="113.0" layoutX="-321.0" layoutY="476.0" stroke="WHITE" strokeType="INSIDE" width="910.0" />
@@ -68,5 +67,9 @@
             <Font name="Monospaced Regular" size="42.0" />
          </font>
       </Button>
+      <ImageView fx:id="firstPlace" fitHeight="65.0" fitWidth="65.0" layoutX="1036.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../all_tiles/red_player.png" />
+         </image></ImageView>
    </children>
 </AnchorPane>
