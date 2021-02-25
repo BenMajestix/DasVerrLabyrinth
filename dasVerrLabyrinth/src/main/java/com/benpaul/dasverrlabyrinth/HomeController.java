@@ -28,20 +28,23 @@ public class HomeController implements Initializable {
     private CheckBox checkYellowBot;
     @FXML
     private CheckBox checkGreenBot;
-    //static int colorType;
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //colorType = 0;
+        
+        //setzt den Button für den Bot in Team Rot auf deaktiviert
         checkRedBot.setDisable(true);
     }    
 
+    
     @FXML
     private void btnStartGame(ActionEvent event) throws IOException {
+        
+        //schickt in die Gameview
         App.setRoot("gameView");
+        
+        //setzt die Variable isBot bei jedem Spieler auf true oder false, je nach Auswahl bei den Checkboxes
+        //steuert also, welche Spieler von Bots gespielt werden
         App.players[0].setIsBot(checkRedBot.isSelected());
         App.players[1].setIsBot(checkBlueBot.isSelected());
         App.players[2].setIsBot(checkYellowBot.isSelected());

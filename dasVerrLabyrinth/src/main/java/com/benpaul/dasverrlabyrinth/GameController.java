@@ -1879,45 +1879,71 @@ public class GameController extends GameControllerVar implements Initializable {
 
     //-------------------------------
     //Drag 'n Drop --> OffBoard Tile
+    
+    
+    //-------------------------------ALLES HIER UNTER DONE--------------------------------------------------------
     @FXML
     private void tileDrag(MouseEvent event) {
+        
+        //setzt die Variable dragDetect in event auf true, d.h. dass erkannt wird, dass die Maus gedragt wird
         event.setDragDetect(true);
     }
 
     @FXML
     private void tileDragDetec(MouseEvent event) {
+        
+        //gibt in der Konsole aus, dass ein Drag geschieht
         System.out.println("Source Img drag detected");
 
+        //erstellt ein Dragboard mit der Node des aktuellen Tiles
         Dragboard db = currTile.startDragAndDrop(TransferMode.ANY);
+        
+        //erstellt ein neues Clipboard mit dem Content "ImageView source text"
         ClipboardContent content = new ClipboardContent();
         content.putString("ImageView source text");
 
+        //legt die Einstellungen für den Screenshot fest
         SnapshotParameters param = new SnapshotParameters();
         param.setFill(Color.TRANSPARENT);
+        
+        //erstellt einen Screenshot der ImageView currTile
         Image temp = currTile.snapshot(param, null);
 
+        //packt das Bild in des Content des Clipboards
         content.putImage(temp);
+        //packt den Content in das Dragboard
         db.setContent(content);
     }
 
+    
+    //---------------------------------------------------------------------------------------------------
     @FXML
     private void redPlayerDrag(MouseEvent event) {
+        
+        //setzt die Variable dragDetect in event auf true, d.h. dass erkannt wird, dass die Maus gedragt wird
         event.setDragDetect(true);
     }
 
     @FXML
     private void redPlayerDragDetec(MouseEvent event) {
+        
+        //gibt in der Konsole aus, dass ein Drag geschieht
         System.out.println("Source Img drag detected");
 
+        //erstellt ein Dragboard mit der Node des roten Spielers
         Dragboard db = player_red.startDragAndDrop(TransferMode.ANY);
 
+        //erstellt ein neues Clipboard mit dem Content "player"
         ClipboardContent content = new ClipboardContent();
         content.putString("player");
 
+        //stellt ein, dass man wenn man dragt ein Bild des Spielers unter der Maus hat (fügt dem Content ein Bild hinzu)
         File red = new File("src/main/resources/all_tiles/red_player.png");
         content.putImage(new Image(red.toURI().toString()));
         db.setContent(content);
     }
+    //---------------------------------------------------------------------------------------------------
+    //Dieser Bereich wird für alle Farben wiederholt 
 
     @FXML
     private void yellowPlayerDrag(MouseEvent event) {
