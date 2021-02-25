@@ -29,6 +29,9 @@ public class HomeController implements Initializable {
     @FXML
     private CheckBox checkGreenBot;
     
+    //-------------------------------------------Ganzer Controller Done-----------------------------------------------------------------
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

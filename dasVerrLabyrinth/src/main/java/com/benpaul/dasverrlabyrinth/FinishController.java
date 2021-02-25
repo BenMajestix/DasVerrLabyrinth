@@ -35,6 +35,7 @@ public class FinishController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if(App.players[0] != null){
+            //erstellt und füllt die ArrayList scores
             scores = new ArrayList();
             scores.add(App.players[0]);
             scores.add(App.players[1]);
@@ -42,16 +43,20 @@ public class FinishController implements Initializable {
             scores.add(App.players[3]);
 
             determinWinner();
+            //gibt die Gewinner in der Konsole aus
             System.out.println("Winner: " + scores.get(3).name + " " + scores.get(3).score);
             System.out.println("Second: " + scores.get(2).score);
             System.out.println("Third: " + scores.get(1).score);
             System.out.println("Last: " + scores.get(0).score);
 
+            
+            //-------------------------TO DO-------------------------------------
             Image firstPlaceImg;
-            File firstPlaceFile = new File("src/main/resources/img/cardbackRed.png");
+            File firstPlaceFile = new File("src/main/resources/all_tiles/red_player.png");
             firstPlaceImg = new Image(firstPlaceFile.toURI().toString());
             firstPlace.setImage(firstPlaceImg);
             firstPlace.toFront();
+            //-------------------------------------------------------------------
     }
     }    
 
