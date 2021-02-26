@@ -260,7 +260,7 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
     }
-
+    //Done
     public void startCompTurn() throws Exception {
         //Started den Zug des Bots. Er überprüft ob bestimmte Phasen des Zuges schon Fertig ist, wenn nicht wird dieser Zug gemacht der Zugteil wird als fertig erklärt 
         //und startCompTurn wird solange ausgeführt bis alle teile des Zuges fertig sind.
@@ -302,7 +302,7 @@ public class GameController extends GameControllerVar implements Initializable {
             System.out.println(botBestTileSide);
             
             App.offBoardTile = botRotateOffTile(App.offBoardTile, botBestTileRot);
-
+            //Es werden die Funktionen moveColumn oder moveRow mit den richtigen Parametern aufgerufen.
             switch (botBestTileSide) {
                 case 0: moveColumn(1, 1);   break;
                 case 1: moveColumn(3, 1);   break;
@@ -317,25 +317,30 @@ public class GameController extends GameControllerVar implements Initializable {
                 case 10: moveRow(3, 1);     break;
                 case 11: moveRow(1, 1);     break;
             }
+            //Diese Phase ist jetzt fertig
             botTilePhaseOver = true;
+            //Es wird eine 1sec pause gemacht damit die Tile-Verschieb Animation genug Zeit hat.
             PauseTransition p = new PauseTransition(Duration.millis(1000));
             p.play();
             p.setOnFinished(e -> {
                 try {
+                    //Wenn die Zeit um ist, dann wird diese Funktion nochmal aufgerufen, aber ist mit diesem Part fertig.
                     startCompTurn();
                 } catch (Exception ex) {
                 }
             });
         } else if (!(botMovingPhaseOver)) {
+            //In dieser Phase wird der Bot sich bewegen.
             enableMovingPhase();
             System.out.println("Bot Moving phase reached");
-            
             
             System.out.println("Move to:");
             System.out.println("X: " + botBestPos[0]);
             System.out.println("Y: " + botBestPos[1]);
+            //Der Bot bewegt sich mit den Koordinaten, welche vorhin ermittelt wurden.
+            //Dieser Part des Zuges wird auch in moveBot als beendet erklärt.
             moveBot(botBestPos[1], botBestPos[0]);
-
+            //Dem Bot wird Zeit gelassen bevor Sein Zug beendet wird.
             PauseTransition p = new PauseTransition(Duration.millis(1000));
             p.play();
             p.setOnFinished(e -> {
@@ -346,28 +351,37 @@ public class GameController extends GameControllerVar implements Initializable {
             });
             //startCompTurn();
         } else {
+            //Wenn alle parts des Zuges zuende sind, dann wird Überprüft ob der Bot auf einem seiner Items steht welche er sucht.
+            //Es werden alle Items überprüft.
             for (int i = 0; i < 3; i++) {
+                //Wenn der Bot auf dem Item steht.
                 if (App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)) {
+                    //Der Score des Bots wird erhöht.
                     App.players[playerTurn].score = App.players[playerTurn].score + 1;
-                    System.out.println("Tile youre looking for found.");
+                    System.out.println("Bot found a tile.");
+                    //Wenn es keine Items mehr zum ziehen gibt, dann ist das Spiel vorbei.
                     if (App.allItems.isEmpty()) {
                         System.out.println("Game is Over");
                         App.setRoot("finishView");
                     } else {
+                        //Wenn es noch Items gibt, dann wird dem Bot ein neues Random Item zugeteilt.
                         App.players[playerTurn].items[i] = App.getRndmItem();
                     }
                 }
             }
             System.out.println("PlayerTurn ++");
-            playerTurn++;
+            //Der nächste Zug ist dran.
+            if(playerTurn == 3){playerTurn = 0;}
+            else{playerTurn++;}
+            //Alle Phasen des Zuges werden als noch nicht Fertig markiert, damit der Nächste Zug gut beginnen kann.
             botEvalPhaseOver = false;
             botMovingPhaseOver = false;
             botTilePhaseOver = false;
+            //Der nächste Zug started, ob Bot oder Spieler.
             runGame();
         }
     }
-    
-    
+    //Done
     public void findBestTile() throws Exception{
         
         boolean goodMoveFound = false;
@@ -417,8 +431,11 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
         */
+        //Geht alle möglichen Tiles durch und überprüft nochmal ob der Bot dort wirklich hinlaufen kann.
         for(int i = 0; i < botTileOptCoor.size(); i++){
             if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoor.get(i)[0], botTileOptCoor.get(i)[1])) {
+                //Wenn ja, dann werden die Koordinaten des Tiles und die Drehung des OffBoardTiles und die Location, wo das OffBoardtile eingeschoben wird in einer neuen 
+                //ArrayList hinzugefügt.
                 goodCoords.add(botTileOptCoor.get(i));
                 goodConf.add(botTileOptConf.get(i));
             }
@@ -426,11 +443,18 @@ public class GameController extends GameControllerVar implements Initializable {
         
         System.out.println("Print all Possible Tiles:");
         tileFound:
+        //Es werden alle tiles, zu den der Bot gehen kann, durchgegangen.
+        //Es wird überprüft ob auf einem der Tiles ein Item ist was der Bot sucht.
         for(int i = 0; i < goodCoords.size(); i++){
+            //Es werden alle Items vom Bot durchgegangen
             for(int o = 0; o < 3; o++){
+                //zur Verkürzung der If-Abfragen wird das tile hier kurz gespeichert.
                 tileModel tempTile = App.boardTiles[goodCoords.get(i)[0]][goodCoords.get(i)[1]];
+                //Wenn es überhaupt ein Item auf dem tile gibt
                 if(tempTile.collectableOnTile){
+                    //Wenn das Tile das gesuchte Tile ist.
                     if(tempTile.collectable.equals(App.players[playerTurn].items[o])){
+                        //Dann werden diese Koordinaten als Super gespeichert und die Funktion wird beendet.
                         botBestPos[0] = goodCoords.get(i)[0];
                         botBestPos[1] = goodCoords.get(i)[1];
                         botBestTileRot = goodConf.get(i)[1];
@@ -442,6 +466,7 @@ public class GameController extends GameControllerVar implements Initializable {
             }
             System.out.println(goodCoords.get(i)[0] + " " + goodCoords.get(i)[1]);
         }
+        //Falls kein gutes tile gefunden wurde, dann wird ein Random Tile genoomen.
         int rndmMove = (int) (Math.random() * goodCoords.size());
         if(!(goodMoveFound)){
             botBestPos[0] = goodCoords.get(rndmMove)[0];
@@ -1672,6 +1697,7 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
         //Das fertig überprüfte Tile wird der "Fertige Tiles" liste hinzugefügt.
+        //Und aus der "zum überprüfen" ArrayList removed
         currObsTile.remove(index);
         alrObsTiles.add(tile.tile);
         return tile;
@@ -1748,10 +1774,13 @@ public class GameController extends GameControllerVar implements Initializable {
     //BOT Algorithm START
     //----------------------------
     ArrayList<Integer[]> botDoneTiles = new ArrayList();
-
+    //Done
     public void startCheckAlgoBot(int startX, int startY, tileModel[][] compBoard) throws Exception {
+        //Diese Funktion bekommt ein board und die Location eines Bots
+        //und sammelt alle Tiles zu den der Bot gehen kann auf diesem Board.
+        //Dies ist eine Abwandlung des Oberen "Algorithmus"
+        
         //Clearing everything and resetting it.
-
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
                 compBoard[x][y].ableToExit[0] = false;
@@ -1763,11 +1792,11 @@ public class GameController extends GameControllerVar implements Initializable {
                 compBoard[x][y].checkExit();
             }
         }
-
+        
         botDoneTiles.clear();
         currObsTile.clear();
         boolean goodTileFound = false;
-
+        //Das StartTile, auf dem der Bot steht wird erstellt.
         tileModel startTile = compBoard[startX][startY];
 
         algoTile startAlgoTile = new algoTile(null, startTile);
@@ -1778,12 +1807,14 @@ public class GameController extends GameControllerVar implements Initializable {
         int fCount = 0;
         //Break Flag für die While Loop
         breakWhile:
-        //wird ausgeführt während das Ziel noch nicht gefunden wurde
+        //Wird solange asusgeführt bis fbreak es nicht stopt. Es gibt kein Ziel, es müssen nur alle Tiles gefunden werden.
         while (!(goodTileFound)) {
+            //Wenn f 10 ist, dann wird die while-schleife gestoppt.
             if (fCount >= 10) {
                 System.out.println("---fbreak");
                 break;
             } else if (currObsTile.isEmpty()) {
+                //Wenn es keine Tiles zum überprüfen gibt, dann wird f erhöht.
                 fCount++;
                 System.out.println("F: " + fCount);
             }
@@ -1799,22 +1830,18 @@ public class GameController extends GameControllerVar implements Initializable {
                         continue breakFor;
                     }
                 }
-
-                //System.out.println("-----------------");
-                //System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
-                //System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
-
+                //Das nächste Tile wird überprüft, das heist es wird nach Übergängen zu anderen Tiles gesucht.
                 startTileBot(currObsTile.get(i), i, compBoard);
             }
         }
-        
+        //Es werden die Ergebnisse der Methode zum Debuggen ausgegeben.
         System.out.println("Tiles From This Algo: -------------------------------------");
         for (Integer[] tileCoor : botDoneTiles) {
             System.out.println(" ");
             System.out.println(tileCoor[0] + " " + tileCoor[1]);
         }
     }
-
+    //Done
     public algoTile startTileBot(algoTile tile, int index, tileModel[][] compBoard) {
         //Die Seite aus der der Algorithmus gekommen ist wird als false gesetzt
         //Damit er nicht in eine Loop verfällt
@@ -1826,20 +1853,25 @@ public class GameController extends GameControllerVar implements Initializable {
         for (int i = 0; i < 4; i++) {
             //Wenn die Seite einen Ausgang hat, und das Angrenzende Tile auch, dann true
             if (tile.tile.ableToExit[i] && checkNextTileInputBot(tile.tile, i, compBoard)) {
+                //o ist die Seite aus der der Algorithmus gekommen ist.
+                //Dieser ist das Gegenteil von i, also dem Ausgang, bei dem das currentlyObsTile angeschlagen hat.
+                /*
+                In diesem beispiel ist die linke Karte das Tile welches gerade überprüft wird, also dieser Methode als Argument gegeben wurde
+                Die rechte Karte ist die Karte welche einen Eingang bei der Seite hat, bei welcher die linke karte einen ausgang hat.
+                Gleich wird o auf das gegenteil von i gesetzt und die Rechte Karte wird in Schlange zum überprüfen gesetzt.
+                der Karte wird o als Direction, aus welcher der Algorithmus gekommen ist, als Argument mitgegeben, damit dieser nicht dahin zurückgeht, wo er schon war.
+                |-----|         |------| 
+                |     |i=1      |      | 
+                |     |      o=3|      | 
+                |-----|         |------|
+                
+                */
                 int o = 5;
                 switch (i) {
-                    case 0:
-                        o = 2;
-                        break;
-                    case 1:
-                        o = 3;
-                        break;
-                    case 2:
-                        o = 0;
-                        break;
-                    case 3:
-                        o = 1;
-                        break;
+                    case 0: o = 2; break;
+                    case 1: o = 3; break;
+                    case 2: o = 0; break;
+                    case 3: o = 1; break;
                 }
                 switch (i) {//HIER--------------------
                     //jenachdem auf welcher seite des tiles das passende tile ist, wird dieses der arrList hinzugefügt
@@ -1858,36 +1890,38 @@ public class GameController extends GameControllerVar implements Initializable {
                 }
             }
         }
+        //Das Tile wird aus der "zum überprüfen" ArrayList removed
         currObsTile.remove(index);
+        //Es wird ein intArray erstellt mit den Koordinaten des Tiles, dies Wird in die ArrayList
+        //Für die Ergebnisse hinzugeügt.
         Integer[] coorTile = {tile.tile.location.xCoor, tile.tile.location.yCoor};
         botDoneTiles.add(coorTile);
         return tile;
     }
-
+    //Done
     public boolean checkNextTileInputBot(tileModel currTile, int dir, tileModel[][] compBoard) {
+        //Diese Methode überprüft ob das angrenzende tile einen Eingang hat, wo überprüft werden soll.
         boolean w = false;
+        //Jenachdem welche Seite als Argument mitgegeben wurde, wird geschaut ob es dort einen Eingang gibt.
         try {
-            switch (dir) {//HIER--------------------
+            switch (dir) {
                 case 0:
-                    //System.out.println("-Oberes Tile: " + compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
+                    //Falls ableToExit auf der Richtigen seite true ist, dann gibt es einen Eingang und es ist true
                     if (compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]) {
                         w = true;
                     }
                     break;
                 case 1:
-                    //System.out.println("-Rechtes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
                     if (compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[3]) {
                         w = true;
                     }
                     break;
                 case 2:
-                    //System.out.println("-Unteres Tile: " + compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
                     if (compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[0]) {
                         w = true;
                     }
                     break;
                 case 3:
-                    //System.out.println("-Linkes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
                     if (compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[1]) {
                         w = true;
                     }
@@ -1898,8 +1932,10 @@ public class GameController extends GameControllerVar implements Initializable {
         }
         return w;
     }
-
+    //Done
     public void checkDistance(tileModel currTile) {
+        /*
+                    Eine gerade nicht Benutzte Helfer Methode, misst die Distance zwischen Zwei tiles.
         //botCurrObjective
         System.out.println("------------------------------------------------------->");
         System.out.println("Start Check Distance");
@@ -1931,8 +1967,9 @@ public class GameController extends GameControllerVar implements Initializable {
             System.out.println("New Best Tile, Dist: " + botBestPosDist + " Location: " + botBestPos[0] + botBestPos[1]);
         }
         System.out.println("------------------------------------------------------->");
+        */
     }
-
+    
     //Rotates the Off-Board Tile
     //Done
     @FXML

@@ -21,6 +21,7 @@ public class tileModel {
     String tileKind;
     //In welche Richtung der Spieler gehen kann
     boolean[] ableToExit = new boolean[4];
+    //Das Image des tiles.
     Image tileImage;
 
     public tileModel(locationModel location, boolean collectableOnTile, itemModel collectable, boolean playerOnTile, String tileKind, Image tileImage) {
@@ -30,14 +31,15 @@ public class tileModel {
         this.playerOnTile = playerOnTile;
         this.tileKind = tileKind;
         this.tileImage = tileImage;
-        
-        //checkExit();
     }
 
     public void checkExit(){
+        //Setzt die Booleans für alle Seiten, ob dort ein Ausgang ist auf dem Tile.
         switch(tileKind){
+            //Jenachdem welches tile es ist, wird es verschiedene Arten von Ausgängen geben.
             case "t-crossing": 
                 switch(location.rotation){
+                    //Jenachdem in welche Richtung das Tile gedreht ist, werden verschiedene Seiten offen sein.
                     case 0: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = false; ableToExit[3] = true; break;
                     case 90: ableToExit[0] = true; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = false; break;
                     case 180: ableToExit[0] = false; ableToExit[1] = true; ableToExit[2] = true; ableToExit[3] = true; break;
