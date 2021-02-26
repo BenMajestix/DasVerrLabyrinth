@@ -1181,9 +1181,10 @@ public class GameController extends GameControllerVar implements Initializable {
             botTilePhaseOver = true;
         }
     }
-
+    //Done
     public void startAnimation(ImageView[] images, int[] offsetNode7, int dir, int mode) {
 
+        //erstellt neue TranslateTransitions für jedes Tile in der Reihe, die verschoben wird
         TranslateTransition rowTranslate1 = new TranslateTransition();
         TranslateTransition rowTranslate2 = new TranslateTransition();
         TranslateTransition rowTranslate3 = new TranslateTransition();
@@ -1192,6 +1193,7 @@ public class GameController extends GameControllerVar implements Initializable {
         TranslateTransition rowTranslate6 = new TranslateTransition();
         TranslateTransition rowTranslate7 = new TranslateTransition();
 
+        //stellt die Eigenschaften der TranslateTransition ein (Dauer, Durchäufe, Automatische Wiederholung, Node)
         rowTranslate1.setDuration(Duration.millis(500));
         rowTranslate1.setCycleCount(1);
         rowTranslate1.setAutoReverse(false);
@@ -1226,18 +1228,25 @@ public class GameController extends GameControllerVar implements Initializable {
         rowTranslate7.setCycleCount(1);
         rowTranslate7.setAutoReverse(false);
         rowTranslate7.setNode(images[6]);
+        
+        //stellt den Offset der letzten ImageView ein, sodass sie genau auf das OffboardTile geht
         rowTranslate7.setByX(offsetNode7[1]);
         rowTranslate7.setByY(offsetNode7[0]);
 
+        //überprüft, ob die Reihe auf der X-Achse liegt
         if (mode == 1) {
+            //überprüft, ob die Reihe nach rechts geschoben wird
             if (dir == 1) {
+                //stellt die Bewegung aller ImageViews ein (auf der X-Achse nach rechts)
                 rowTranslate1.setByX(85);
                 rowTranslate2.setByX(85);
                 rowTranslate3.setByX(85);
                 rowTranslate4.setByX(85);
                 rowTranslate5.setByX(85);
                 rowTranslate6.setByX(85);
+            //überprüft, ob die Reihe nach links geschoben wird
             } else if (dir == 2) {
+                //stellt die Bewegung aller ImageViews ein (auf der X-Achse nach links)
                 rowTranslate1.setByX(-85);
                 rowTranslate2.setByX(-85);
                 rowTranslate3.setByX(-85);
@@ -1245,15 +1254,20 @@ public class GameController extends GameControllerVar implements Initializable {
                 rowTranslate5.setByX(-85);
                 rowTranslate6.setByX(-85);
             }
+        //überprüft, ob die Reihe auf der Y-Achse liegt
         } else if (mode == 2) {
+            //überprüft, ob die Reihe nach oben geschoben wird
             if (dir == 1) {
+                //stellt die Bewegung aller ImageViews ein (auf der Y-Achse nach oben)
                 rowTranslate1.setByY(85);
                 rowTranslate2.setByY(85);
                 rowTranslate3.setByY(85);
                 rowTranslate4.setByY(85);
                 rowTranslate5.setByY(85);
                 rowTranslate6.setByY(85);
+            //überprüft, ob die Reihe nach unten geschoben wird
             } else if (dir == 2) {
+                //stellt die Bewegung aller ImageViews ein (auf der Y-Achse nach unten)
                 rowTranslate1.setByY(-85);
                 rowTranslate2.setByY(-85);
                 rowTranslate3.setByY(-85);
@@ -1263,6 +1277,7 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
 
+        //spielt alle TranslateTransitions ab
         rowTranslate1.play();
         rowTranslate2.play();
         rowTranslate3.play();
@@ -1271,6 +1286,10 @@ public class GameController extends GameControllerVar implements Initializable {
         rowTranslate6.play();
         rowTranslate7.play();
 
+        //Funktion zur zurücksetzung der Positionen der ImageViews
+        //Erklärung: Wir verschieben die ImageViews, dann setzen wir ihre Position zurück
+        //und ändern zur selben Zeit das Image in der ImageView zu dem richtigen Tile, welches eigentlich dort wäre.
+        //dies passiert so schnell, dass man nicht bemerkt, dass die ImageViews nicht ihre Positionen welchseln
         rowTranslate7.setOnFinished((ActionEvent event) -> {
             if (mode == 1) {
                 if (dir == 1) {
@@ -1309,6 +1328,7 @@ public class GameController extends GameControllerVar implements Initializable {
             images[6].setX(images[6].getX() - offsetNode7[1]);
             images[6].setY(images[6].getY() - offsetNode7[0]);
 
+            //tauscht die Images in den ImageViews durch die richtigen aus
             makeBoard();
         });
     }
@@ -1899,19 +1919,25 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     //Rotates the Off-Board Tile
+    //Done
     @FXML
     private void currTileRight(ActionEvent event) {
         
+        //erstellt eine neue Rotatetransition (Animation einer Rotation)
         RotateTransition newTrans = new RotateTransition();
+        //legt die Einstellungen der Rotatetransition fest (Dauer, Node, Rotation, Durchläufe, Automatische Wiederholung)
         newTrans.setDuration(Duration.millis(200));
         newTrans.setNode(currTile);
         newTrans.setByAngle(90);
         newTrans.setCycleCount(1);
         newTrans.setAutoReverse(false);
+        //spielt die RotateTransition ab
         newTrans.play();
 
+        //deaktiviert den Button zum Rotieren, während die Animation läuft
         btnDrehen.setDisable(true);
 
+        //reaktiviert den Button zum Rotieren, wenn die Animation vorbei ist
         newTrans.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -1919,11 +1945,13 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         });
 
+        //überträgt die neue Rotation der Imageview auf das TileModel in offBoardTile in App
         if (App.offBoardTile.location.rotation == 270) {
             App.offBoardTile.location.setRotation(0);
         } else {
             App.offBoardTile.location.setRotation(App.offBoardTile.location.rotation + 90);
         }
+        //gibt die Rotation des OffboardTiles in der Konsole aus
         System.out.println("Rotate OffBoard Tile to: " + App.offBoardTile.location.rotation);
     }
 
