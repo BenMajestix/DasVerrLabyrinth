@@ -67,9 +67,21 @@
             <Font name="Monospaced Regular" size="42.0" />
          </font>
       </Button>
-      <ImageView fx:id="firstPlace" fitHeight="65.0" fitWidth="65.0" layoutX="1036.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../all_tiles/red_player.png" />
-         </image></ImageView>
+      <ImageView fx:id="firstPlace" fitHeight="65.0" fitWidth="65.0" layoutX="1036.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lbl1stPl" layoutX="1043.0" layoutY="241.0" text="Test Player">
+         <font>
+            <Font name="Monospaced Regular" size="55.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl2ndPl" layoutX="1038.0" layoutY="502.0" text="Test Player">
+         <font>
+            <Font name="Monospaced Regular" size="55.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl3rdPl" layoutX="1052.0" layoutY="763.0" text="Test Player">
+         <font>
+            <Font name="Monospaced Regular" size="55.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

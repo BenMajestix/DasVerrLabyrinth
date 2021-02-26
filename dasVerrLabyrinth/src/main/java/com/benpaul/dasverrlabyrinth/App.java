@@ -15,21 +15,36 @@ import javafx.scene.image.Image;
  */
 
 public class App extends Application {
-    static ArrayList<tileModel> allTiles;
-    static tileModel[][] boardTiles =  new tileModel[7][7];
-    static tileModel offBoardTile;
-    public static playerModel[] players;
-    public static ArrayList<itemModel> allItems;
+    /*
+    ------------DISCLAIMER-----------
+        Ich habe am Anfang der Programmierung einen Fehler gemacht und den nie behoben.
+        Immer, wenn hier mit Koordinaten gearbeitet wird(Außer mit Koordinaten der ImageViews) dann ist die erste Zahl, das X, die Koordinate in der Vertikalen Richtung.
+        Y, die zweite Zahl hingegen ist die horizontale Koordinate. 
     
+        Es tut mir wirklich leid, das war ein bescheueter Fehler
+        --Ben
+    
+    --------------------------------
+    */
+    //Die ArrayList mit allen Tiles, welche später nach und nach entfernt werden und auf das Board gelegt werden.
+    static ArrayList<tileModel> allTiles;
+    //Das Spiel Board, hier wird das Board immer aktuell gespeichert und hiermit werden auch alle Calculations gemacht.
+    static tileModel[][] boardTiles =  new tileModel[7][7];
+    //Hier ist das Tile gespeichert, welches Außerhalb des Feldes liegt.
+    static tileModel offBoardTile;
+    //In diesem Array werden alle Spieler gespeichert. Von 0 bis 3: Rot, Blau, Gelb, Grün
+    public static playerModel[] players;
+    //Die ArrayList mit allen Itemkarten welche die Spieler nach und nach ziehen können, wenn diese List leer ist, dann ist das Spiel vorbei.
+    public static ArrayList<itemModel> allItems;
+    //Die Szene
     private static Scene scene;
     
-    boolean[] isBotList = new boolean[4];
-
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("homeView"), 1500, 1000);
         stage.setScene(scene);
         stage.show();
+        //Wir setzen einen Titel der Szene.
         stage.setTitle("--Das Verrückte Labyrinth--");
         
     }
@@ -44,11 +59,12 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        //Die Arrays und die ArrayLists werden initialisiert.
         players = new playerModel[4];
         allItems = new ArrayList();
-        
-        
+        //Es werden alle Karten der ArrayList hinzugefügt.
         createCards();
+        //Es wird das Spielfeld erstellt.
         createGame();
         
         launch();
@@ -136,6 +152,7 @@ public class App extends Application {
     }
     
     public static int randomRotation(){
+        //Erstellt eine Random Rotation, welche für die Random generierung des Spielfeldes genutzt wird.
         int rotation;
         rotation = (int) (Math.random() * 4);
         switch(rotation){
@@ -149,8 +166,9 @@ public class App extends Application {
     }
     
     public static void createTiles(){
+        //Initialisiert die tiles ArrayList.
         allTiles = new ArrayList();
-        
+        //Erstellt alle Dateien von den Bildern der Tiles.
         File file = new File("src/main/resources/all_tiles/straight.png");
         File fileT = new File("src/main/resources/all_tiles/turn.png");
         File file1 = new File("src/main/resources/all_tiles/bat.png");
@@ -166,9 +184,9 @@ public class App extends Application {
         File file10 = new File("src/main/resources/all_tiles/spider.png");
         File file11 = new File("src/main/resources/all_tiles/witch.png");
         
-        
-        
-        //CORNERS
+        //                                                                                 WElches Item drauf ist.   
+        //Erstellt alle Tiles.                               Ob ein Item Auf dem Tile ist.    |    Ob ein Spieler auf dem Tile ist.
+        //CORNERS            LocationModel beinhaltet Rotation, Pos und ifAtEdge.       |     |     |    welche Art Tile es ist.   Es wird ein Image erstellt und mitgegeben.                
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn", new Image(fileT.toURI().toString())));
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn", new Image(fileT.toURI().toString())));
         allTiles.add(new tileModel(new locationModel(randomRotation(), 0, 0, false), false, null, false, "turn", new Image(fileT.toURI().toString())));
@@ -211,6 +229,7 @@ public class App extends Application {
     }
     
     public static itemModel getRndmItem(){
+        //Erstellt eine Random Nummer, gibt ein itemModel aus der ArrayList wieder und removed dieses Item
         int rndm = (int) (Math.random() * allItems.size());
         itemModel item = allItems.get(rndm);
         allItems.remove(rndm);
@@ -218,6 +237,7 @@ public class App extends Application {
     }
     
     public static void createCards(){
+        //Erstellt alle Files der Images aller Cards.
         File batFile = new File("src/main/resources/img/batCard.png");
         File candleHolderFile = new File("src/main/resources/img/candleHolderCard.png");
         File bibleFile = new File("src/main/resources/img/bibleCard.png");
@@ -242,7 +262,7 @@ public class App extends Application {
         File spiderFile = new File("src/main/resources/img/spiderCard.png");
         File swordFile = new File("src/main/resources/img/swordCard.png");
         File witchFile = new File("src/main/resources/img/witchCard.png");
-        
+        //Erstellt alle Items, mit Namen und Image.
         itemModel batItem = new itemModel("Bat", new Image(batFile.toURI().toString()));
         itemModel candleHolderItem = new itemModel("CandleHolder", new Image(candleHolderFile.toURI().toString()));
         itemModel bibleItem = new itemModel("Bible", new Image(bibleFile.toURI().toString()));
@@ -267,7 +287,7 @@ public class App extends Application {
         itemModel spiderItem = new itemModel("Spider", new Image(spiderFile.toURI().toString()));
         itemModel swordItem = new itemModel("Sword", new Image(swordFile.toURI().toString()));
         itemModel witchItem = new itemModel("Witch", new Image(witchFile.toURI().toString()));
-        
+        //Und alle werden der ArrList hinzugefügt.
         allItems.add(batItem);
         allItems.add(candleHolderItem);
         allItems.add(bibleItem);
@@ -294,22 +314,31 @@ public class App extends Application {
         allItems.add(witchItem);
     }
     
-    public void resetGame(){
+    public static void resetGame(){
+        //Löscht alle Spieler
         for(int i = 0; i < 4; i++){
             players[i] = null;
         }
+        //Löscht das Spielbrett
         for(int i = 0; i < 7; i++){
             for(int o = 0; o < 7; o++){
                 boardTiles[i][o] = null;
             }
         }
+        //Löscht das OffBoardTile
         offBoardTile = null;
-        
+        //Cleared alle Items
+        allItems.clear();
+        //Erstellt neue Karten
+        createCards();
+        //Erstellt neue Tiles und ein neues Spielfeld.
         createGame();
     }
     
     public static void createGame(){
+        //Erstellt zuerst alle Tiles, welche dann auf das Board gelegt werden.
         createTiles();
+        //Legt alle Tiles auf das Board.
         createBoard();
     }
     

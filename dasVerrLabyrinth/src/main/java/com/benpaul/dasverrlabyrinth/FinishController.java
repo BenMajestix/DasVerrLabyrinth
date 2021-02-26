@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -31,6 +32,12 @@ public class FinishController implements Initializable {
     private ImageView secondPlace;
     @FXML
     private ImageView thirdPlace;
+    @FXML
+    private Label lbl1stPl;
+    @FXML
+    private Label lbl2ndPl;
+    @FXML
+    private Label lbl3rdPl;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,21 +56,16 @@ public class FinishController implements Initializable {
             System.out.println("Third: " + scores.get(1).score);
             System.out.println("Last: " + scores.get(0).score);
 
-            
-            //-------------------------TO DO-------------------------------------
-            Image firstPlaceImg;
-            File firstPlaceFile = new File("src/main/resources/all_tiles/red_player.png");
-            firstPlaceImg = new Image(firstPlaceFile.toURI().toString());
-            firstPlace.setImage(firstPlaceImg);
-            firstPlace.toFront();
-            //-------------------------------------------------------------------
-    }
+            lbl1stPl.setText(scores.get(3).name);
+            lbl2ndPl.setText(scores.get(2).name);
+            lbl3rdPl.setText(scores.get(1).name);
+        }
     }    
 
     @FXML
     private void btnRestart(ActionEvent event) throws IOException {
         App.setRoot("homeView");
-        
+        App.resetGame();
     }
     
     private void determinWinner(){

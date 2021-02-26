@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,10 +17,17 @@ import javafx.scene.image.ImageView;
  * @author benbartel
  */
 public class GameControllerVar {
+    
+    //ENTHÄLT ALLE VARIABLEN DES GAMECONTROLLERS.
+    //GEMACHT, DAMIT DER GAMECONTROLLER ÜBERSICHTLICHER IST.
+    
+    //Für Algorithmus, welcher überprüft, ob der Spieler von einem Punkt zu einem anderen laufen kann. 
+    //Falls das Ziel gefunden wurde, wird dieser boolean true -- objectiveFound
     boolean objecFound;
-    //Straight
+    
+    //Bild einer Geraden
     Image imageS;
-    //Turn
+    //Bild einer Kurve
     Image imageT;
     //Alle Images mit Objekten
     Image imageBat;
@@ -37,6 +43,7 @@ public class GameControllerVar {
     Image imageSpider;
     Image imageWitch;
     
+    //Alle ImageViews der Tiles
     @FXML
     public ImageView i10;
     @FXML
@@ -105,6 +112,7 @@ public class GameControllerVar {
     public ImageView i56;
     @FXML
     public ImageView currTile;
+    
     @FXML
     public ImageView imgBackgr;
     @FXML
@@ -115,27 +123,27 @@ public class GameControllerVar {
     public ImageView player_blue;
     @FXML
     public ImageView player_green;
-    //For testing, for removal later
-    @FXML
-    public TextField txtAlgoStart;
-    @FXML
-    public TextField txtAlgoEnd;
+    
+    
     
     //The first Phase of a move, where the Player is putting a tile onto the Board
     boolean tilePhaseOver = false;
     //The second Phase of a move, where the Player is moving his piece
     boolean movingPhaseOver = false;
-    
+    //The first Phase of a bot move, where he evaluates, where to go and what to move.
     boolean botTilePhaseOver = false;
+    //The first Phase of a move, where the Bot is putting a tile onto the Board
     boolean botMovingPhaseOver = false;
+    //The second Phase of a move, where the Bot is moving his piece
     boolean botEvalPhaseOver = false;
-    
+    //Zeigt welcher Spieler am Zug ist.
     public int playerTurn;
-    
+    //Alle Koordinaten aller ImageViews der Tiles
     public final int[] tileXCoor = new int[7];
     public final int[] tileYCoor = new int[7];
-    
+    //Ob das Spiel vorbei ist.
     boolean gameOver;
+    
     @FXML
     public Label lblInstr;
     @FXML

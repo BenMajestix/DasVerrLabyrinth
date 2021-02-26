@@ -5,6 +5,7 @@ import static com.benpaul.dasverrlabyrinth.App.offBoardTile;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
@@ -276,42 +277,18 @@ public class GameController extends GameControllerVar implements Initializable {
             App.offBoardTile = botRotateOffTile(App.offBoardTile, botBestTileRot);
 
             switch (botBestTileSide) {
-                case 0:
-                    moveColumn(1, 1);
-                    break;
-                case 1:
-                    moveColumn(3, 1);
-                    break;
-                case 2:
-                    moveColumn(5, 1);
-                    break;
-                case 3:
-                    moveRow(1, 0);
-                    break;
-                case 4:
-                    moveRow(3, 0);
-                    break;
-                case 5:
-                    moveRow(5, 0);
-                    break;
-                case 6:
-                    moveColumn(5, 0);
-                    break;
-                case 7:
-                    moveColumn(3, 0);
-                    break;
-                case 8:
-                    moveColumn(1, 0);
-                    break;
-                case 9:
-                    moveRow(5, 1);
-                    break;
-                case 10:
-                    moveRow(3, 1);
-                    break;
-                case 11:
-                    moveRow(1, 1);
-                    break;
+                case 0: moveColumn(1, 1);   break;
+                case 1: moveColumn(3, 1);   break;
+                case 2: moveColumn(5, 1);   break;
+                case 3: moveRow(1, 0);      break;
+                case 4: moveRow(3, 0);      break;
+                case 5: moveRow(5, 0);      break;
+                case 6: moveColumn(5, 0);   break;
+                case 7: moveColumn(3, 0);   break;
+                case 8: moveColumn(1, 0);   break;
+                case 9: moveRow(5, 1);      break;
+                case 10: moveRow(3, 1);     break;
+                case 11: moveRow(1, 1);     break;
             }
             botTilePhaseOver = true;
             PauseTransition p = new PauseTransition(Duration.millis(1000));
@@ -336,19 +313,23 @@ public class GameController extends GameControllerVar implements Initializable {
                 ArrayList<Integer[]> goodCoor = new ArrayList();
                 
                 for (int i = 0; i < botTileOptCoor.size(); i++) {
+                    
                     if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoor.get(i)[0], botTileOptCoor.get(i)[1])) {
                         goodCoor.add(botTileOptCoor.get(i));
                         System.out.println("Coords that Work:----------   >>>");
                         System.out.println(botTileOptCoor.get(i)[0] + botTileOptCoor.get(i)[1]);
-                        //botBestPos[0] = botTileOptCoor.get(i)[0];
-                        //botBestPos[1] = botTileOptCoor.get(i)[1];
+                        
                     } else {
                         System.out.println("Cant find good tile for Bot!");
                         botBestPos[0] = App.players[playerTurn].pos[0];
                         botBestPos[1] = App.players[playerTurn].pos[1];
                     }
                 }
-                
+                for (int i = 0; i < botTileOptCoor.size(); i++) {
+                    System.out.println("All Cords:");
+                    System.out.println(botTileOptCoor.get(i)[0] + " " + botTileOptCoor.get(i)[1]);
+                    System.out.println("--");
+                }
                 if(goodCoor.isEmpty()){}
                 else{
                     int rndm = (int) (Math.random() * goodCoor.size());
@@ -394,6 +375,47 @@ public class GameController extends GameControllerVar implements Initializable {
         }
     }
     
+    
+    public int findBestTile(){
+        int bestTilePush = (int) (Math.random() * botTileOptCoor.size());
+        boolean anyExit = false;
+        for(int i = 0; i < 4; i++){
+            tileModel toBeObs = App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]];
+            if(toBeObs.ableToExit[i] && checkNextTileInput(toBeObs, i)){
+                anyExit = true;
+            }
+        }
+        
+        ArrayList<Integer> rowsToBeMov = new ArrayList();
+        ArrayList<Integer> colToBeMov = new ArrayList();
+        
+        if(!(anyExit)){
+            switch(App.players[playerTurn].pos[0]){
+                case 0: rowsToBeMov.add(1); break;
+                case 1: rowsToBeMov.add(1); break;
+                case 2: rowsToBeMov.add(1); rowsToBeMov.add(3); break;
+                case 3: rowsToBeMov.add(3); break;
+                case 4: rowsToBeMov.add(3); rowsToBeMov.add(5); break;
+                case 5: rowsToBeMov.add(5); break;
+                case 6: rowsToBeMov.add(5); break;
+            }
+            switch(App.players[playerTurn].pos[1]){
+                case 0: colToBeMov.add(1); break;
+                case 1: colToBeMov.add(1); break;
+                case 2: colToBeMov.add(1); colToBeMov.add(3); break;
+                case 3: colToBeMov.add(3); break;
+                case 4: colToBeMov.add(3); colToBeMov.add(5); break;
+                case 5: colToBeMov.add(5); break;
+                case 6: colToBeMov.add(5); break;
+            }
+        }
+        
+        
+        
+        return bestTilePush;
+    }
+    
+    
     //Two Temporary ArrLists for Storing all Possible Combinations of Tiles the Bot can Move to, 
     //The Tile Coordinates are Stored in ...Coor and the Configuration in ...Conf.
     //The Configuration consists of two integers, the First indicating the Point where the tile is put into, and the Second, the Rotation of the tile to put into.
@@ -431,7 +453,13 @@ public class GameController extends GameControllerVar implements Initializable {
                     if(!(botDoneTiles.isEmpty()) && !(botTileOptCoor.isEmpty())){
                         //Falls dieses tile schon in der neuen Liste eingetragen ist, dann wird dieses übersprungen
                         //Durch diese Methode können Duplicate vermieden werden.
-                        if(!(botTileOptCoor.contains(botDoneTiles.get(i)))){
+                        boolean duplicate = false;
+                        for(int r = 0; r < botTileOptCoor.size(); r++){
+                            if(Objects.equals(botTileOptCoor.get(r)[0], botDoneTiles.get(i)[0]) && Objects.equals(botTileOptCoor.get(r)[1], botDoneTiles.get(i)[1])){
+                                duplicate = true;
+                            }
+                        }
+                        if(!(duplicate)){
                             botTileOptCoor.add(botDoneTiles.get(i).clone());
                             Integer[] ld = {l, d};
                             botTileOptConf.add(ld);
@@ -464,7 +492,7 @@ public class GameController extends GameControllerVar implements Initializable {
         }
         int rndm = (int) (Math.random() * botTileOptCoor.size());
         botBestPos = botTileOptCoor.get(rndm).clone();
-
+        
         botBestTileSide = botTileOptConf.get(rndm)[0];
         botBestTileRot = botTileOptConf.get(rndm)[1];
     }
@@ -1715,14 +1743,14 @@ public class GameController extends GameControllerVar implements Initializable {
                     }
                 }
 
-                System.out.println("-----------------");
-                System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
-                System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
+                //System.out.println("-----------------");
+                //System.out.println("     Check Tile at: " + currObsTile.get(i).tile.location.xCoor + currObsTile.get(i).tile.location.yCoor);
+                //System.out.println("Tile: " + currObsTile.get(i).tile.tileKind + currObsTile.get(i).tile.collectable + currObsTile.get(i).tile.location.rotation);
 
                 startTileBot(currObsTile.get(i), i, compBoard);
             }
         }
-
+        
         System.out.println("Tiles From This Algo: -------------------------------------");
         for (Integer[] tileCoor : botDoneTiles) {
             System.out.println(" ");
@@ -1784,25 +1812,25 @@ public class GameController extends GameControllerVar implements Initializable {
         try {
             switch (dir) {//HIER--------------------
                 case 0:
-                    System.out.println("-Oberes Tile: " + compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
+                    //System.out.println("-Oberes Tile: " + compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].tileKind);
                     if (compBoard[currTile.location.xCoor - 1][currTile.location.yCoor].ableToExit[2]) {
                         w = true;
                     }
                     break;
                 case 1:
-                    System.out.println("-Rechtes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
+                    //System.out.println("-Rechtes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].tileKind);
                     if (compBoard[currTile.location.xCoor][currTile.location.yCoor + 1].ableToExit[3]) {
                         w = true;
                     }
                     break;
                 case 2:
-                    System.out.println("-Unteres Tile: " + compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
+                    //System.out.println("-Unteres Tile: " + compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].tileKind);
                     if (compBoard[currTile.location.xCoor + 1][currTile.location.yCoor].ableToExit[0]) {
                         w = true;
                     }
                     break;
                 case 3:
-                    System.out.println("-Linkes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
+                    //System.out.println("-Linkes Tile: " + compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].tileKind);
                     if (compBoard[currTile.location.xCoor][currTile.location.yCoor - 1].ableToExit[1]) {
                         w = true;
                     }
