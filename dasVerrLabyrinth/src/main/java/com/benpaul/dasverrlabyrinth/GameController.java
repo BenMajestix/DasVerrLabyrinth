@@ -132,6 +132,7 @@ public class GameController extends GameControllerVar implements Initializable {
     
     //GAME
     //--------------
+    //Done
     public void runGame() throws Exception {
         //stellt den Text auf dem Kartenstapel ein
         labelCardsLeft.setText(App.allItems.size() + "");
