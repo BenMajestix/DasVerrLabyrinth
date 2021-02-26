@@ -35,7 +35,6 @@ public class FinishController implements Initializable {
     //--------------------Komplett DONE--------------------------------
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(App.players[0] != null){
             //erstellt und füllt die ArrayList scores
             scores = new ArrayList();
             scores.add(App.players[0]);
@@ -54,7 +53,7 @@ public class FinishController implements Initializable {
             lbl1stPl.setText(scores.get(3).name);
             lbl2ndPl.setText(scores.get(2).name);
             lbl3rdPl.setText(scores.get(1).name);
-        }
+        
     }    
 
     @FXML
