@@ -266,6 +266,7 @@ public class GameController extends GameControllerVar implements Initializable {
             
             System.out.println("Start Eval Phase");
             botFindTiles();
+            findBestTile();
             botEvalPhaseOver = true;
             startCompTurn();
         } else if (!(botTilePhaseOver)) {
@@ -302,46 +303,11 @@ public class GameController extends GameControllerVar implements Initializable {
         } else if (!(botMovingPhaseOver)) {
             enableMovingPhase();
             System.out.println("Bot Moving phase reached");
-
-            if (!(perfectMoveLoc.isEmpty())) {
-                int moveTo = (int) (Math.random() * perfectMoveLoc.size());
-                System.out.println("Perfekt: ");
-                System.out.println("X: " + perfectMoveLoc.get(moveTo)[0]);
-                System.out.println("Y: " + perfectMoveLoc.get(moveTo)[1]);
-            } 
-            else {
-                ArrayList<Integer[]> goodCoor = new ArrayList();
-                
-                for (int i = 0; i < botTileOptCoor.size(); i++) {
-                    
-                    if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoor.get(i)[0], botTileOptCoor.get(i)[1])) {
-                        goodCoor.add(botTileOptCoor.get(i));
-                        System.out.println("Coords that Work:----------   >>>");
-                        System.out.println(botTileOptCoor.get(i)[0] + botTileOptCoor.get(i)[1]);
-                        
-                    } else {
-                        System.out.println("Cant find good tile for Bot!");
-                        botBestPos[0] = App.players[playerTurn].pos[0];
-                        botBestPos[1] = App.players[playerTurn].pos[1];
-                    }
-                }
-                for (int i = 0; i < botTileOptCoor.size(); i++) {
-                    System.out.println("All Cords:");
-                    System.out.println(botTileOptCoor.get(i)[0] + " " + botTileOptCoor.get(i)[1]);
-                    System.out.println("--");
-                }
-                if(goodCoor.isEmpty()){}
-                else{
-                    int rndm = (int) (Math.random() * goodCoor.size());
-                    botBestPos[0] = goodCoor.get(rndm)[0];
-                    botBestPos[1] = goodCoor.get(rndm)[1];
-                }
-                
-
-                System.out.println("Nicht Perfekt:");
-                System.out.println("X: " + botBestPos[0]);
-                System.out.println("Y: " + botBestPos[1]);
-            }
+            
+            
+            System.out.println("Move to:");
+            System.out.println("X: " + botBestPos[0]);
+            System.out.println("Y: " + botBestPos[1]);
             moveBot(botBestPos[1], botBestPos[0]);
 
             PauseTransition p = new PauseTransition(Duration.millis(1000));
@@ -376,9 +342,13 @@ public class GameController extends GameControllerVar implements Initializable {
     }
     
     
-    public int findBestTile(){
-        int bestTilePush = (int) (Math.random() * botTileOptCoor.size());
-        boolean anyExit = false;
+    public void findBestTile() throws Exception{
+        
+        boolean goodMoveFound = false;
+        
+        ArrayList<Integer[]> goodCoords = new ArrayList();
+        ArrayList<Integer[]> goodConf = new ArrayList();
+        /*boolean anyExit = false;
         for(int i = 0; i < 4; i++){
             tileModel toBeObs = App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]];
             if(toBeObs.ableToExit[i] && checkNextTileInput(toBeObs, i)){
@@ -409,10 +379,40 @@ public class GameController extends GameControllerVar implements Initializable {
                 case 6: colToBeMov.add(5); break;
             }
         }
+        */
+        for(int i = 0; i < botTileOptCoor.size(); i++){
+            if (startCheckAlgo(App.players[playerTurn].pos[0], App.players[playerTurn].pos[1], botTileOptCoor.get(i)[0], botTileOptCoor.get(i)[1])) {
+                goodCoords.add(botTileOptCoor.get(i));
+                goodConf.add(botTileOptConf.get(i));
+            }
+        }
         
+        System.out.println("Print all Possible Tiles:");
+        tileFound:
+        for(int i = 0; i < goodCoords.size(); i++){
+            for(int o = 0; o < 3; o++){
+                tileModel tempTile = App.boardTiles[goodCoords.get(i)[0]][goodCoords.get(i)[1]];
+                if(tempTile.collectableOnTile){
+                    if(tempTile.collectable.equals(App.players[playerTurn].items[o])){
+                        botBestPos[0] = goodCoords.get(i)[0];
+                        botBestPos[1] = goodCoords.get(i)[1];
+                        botBestTileRot = goodConf.get(i)[1];
+                        botBestTileSide = goodConf.get(i)[0];
+                        goodMoveFound = true;
+                        break tileFound;
+                    }
+                }
+            }
+            System.out.println(goodCoords.get(i)[0] + " " + goodCoords.get(i)[1]);
+        }
+        int rndmMove = (int) (Math.random() * goodCoords.size());
+        if(!(goodMoveFound)){
+            botBestPos[0] = goodCoords.get(rndmMove)[0];
+            botBestPos[1] = goodCoords.get(rndmMove)[1];
+            botBestTileRot = goodConf.get(rndmMove)[1];
+            botBestTileSide = goodConf.get(rndmMove)[0];
+        }
         
-        
-        return bestTilePush;
     }
     
     
@@ -680,40 +680,36 @@ public class GameController extends GameControllerVar implements Initializable {
         newTrans.setAutoReverse(false);
         newTrans.play();
     }
-
+    //Done
     public void moveBot(int x, int y) {
-
-        double[] xCoords = {290, 375, 460, 545, 630, 715, 800};
-        //double[] xCoords = {270, 355, 440, 325, 610, 695, 780};
-        double[] yCoords = {120, 205, 290, 375, 460, 545, 630};
-        //double[] yCoords = {100, 185, 270, 355, 440, 325, 610};
-
+        //Bewegt den Spieler und dessen Imageview zu den gegebenen Koordinaten.
         switch (playerTurn) {
             case 0:
-                player_red.setX(xCoords[x]);
-                player_red.setY(yCoords[y]);
+                //Es werden die Koordinaten der ImageViews geändert.
+                player_red.setX(tileYCoor[x]);
+                player_red.setY(tileXCoor[y]);
                 break;
             case 1:
-                player_blue.setX(xCoords[x]);
-                player_blue.setY(yCoords[y]);
+                player_blue.setX(tileYCoor[x]);
+                player_blue.setY(tileXCoor[y]);
                 break;
             case 2:
-                player_yellow.setX(xCoords[x]);
-                player_yellow.setY(yCoords[y]);
+                player_yellow.setX(tileYCoor[x]);
+                player_yellow.setY(tileXCoor[y]);
                 break;
             case 3:
-                player_green.setX(xCoords[x]);
-                player_green.setY(yCoords[y]);
+                player_green.setX(tileYCoor[x]);
+                player_green.setY(tileXCoor[y]);
                 break;
         }
-
+        //Dann werden die Koordinaten im Objekt des Spielers gspeichert.
         App.players[playerTurn].pos[1] = x;
         App.players[playerTurn].pos[0] = y;
 
         botMovingPhaseOver = true;
 
     }
-
+    //Done
     public void checkItemFound() {
         //Überprüft alle Spieler ob diese auf Tiles stehen, mit Items welche die Spieler
         //gerade suchen.
