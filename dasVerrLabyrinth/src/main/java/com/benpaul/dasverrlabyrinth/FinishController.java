@@ -5,17 +5,14 @@
  */
 package com.benpaul.dasverrlabyrinth;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -26,12 +23,7 @@ import javafx.scene.image.ImageView;
 public class FinishController implements Initializable {
 
     ArrayList<playerModel> scores;
-    @FXML
-    private ImageView firstPlace;
-    @FXML
-    private ImageView secondPlace;
-    @FXML
-    private ImageView thirdPlace;
+    
     @FXML
     private Label lbl1stPl;
     @FXML

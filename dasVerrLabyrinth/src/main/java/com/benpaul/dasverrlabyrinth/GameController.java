@@ -247,11 +247,15 @@ public class GameController extends GameControllerVar implements Initializable {
     }
 
     public void startCompTurn() throws Exception {
+        //Started den Zug des Bots. Er überprüft ob bestimmte Phasen des Zuges schon Fertig ist, wenn nicht wird dieser Zug gemacht der Zugteil wird als fertig erklärt 
+        //und startCompTurn wird solange ausgeführt bis alle teile des Zuges fertig sind.
         System.out.println("-------------Player: " + App.players[playerTurn].name);
-
+        
         ArrayList<int[]> perfectMoveLoc = new ArrayList();
-
+        
         if (!(botEvalPhaseOver)) {
+            //Die Phase in der der Bot sich einen guten Zug sucht.
+            //Es werden alle Variablen zurückgesetzt
             botBestPos[0] = null;
             botBestPos[1] = null;
             botBestPosDist = null;
@@ -265,16 +269,23 @@ public class GameController extends GameControllerVar implements Initializable {
             botTileOptConf.clear();
             
             System.out.println("Start Eval Phase");
+            //Sucht und findet alle Tiles zu welchen der Bot gehen könnte.
             botFindTiles();
+            //Such aus den tiles, von der Methode zuvor.
+            //Diese Methode ist das Herz des Bots da man hier genau bestimmen kann auf welchen Parameter der Bot sich den Besten Zug aussucht.
+            //Ich hatte jedoch nicht die Zeit hier zu viel zu schreiben.
             findBestTile();
+            //Diese Phase ist jetzt vorbei.
             botEvalPhaseOver = true;
+            //Es wird mit der nächsten Phase weitergemacht.
             startCompTurn();
-        } else if (!(botTilePhaseOver)) {
+            } 
+        else if (!(botTilePhaseOver)) {
+            //Dies ist die Phase in der der Bot ein Tile in das Board einschiebt.
             enableTilePhase();
             System.out.println("Bot Start Tile Phase");
             System.out.println(botBestTileSide);
-
-            botAnimateOffTile(botBestTileRot);
+            
             App.offBoardTile = botRotateOffTile(App.offBoardTile, botBestTileRot);
 
             switch (botBestTileSide) {
@@ -638,8 +649,9 @@ public class GameController extends GameControllerVar implements Initializable {
         tileModel[][] newBoard = tempBoard.clone();
         return newBoard;
     }
-
+    //Done
     public tileModel botRotateOffTile(tileModel tile, int d) {
+        //Es werden die rotations in dem tileModel gesetzt
         switch (d) {
             case 0:
                 tile.location.setRotation(0);
@@ -654,6 +666,7 @@ public class GameController extends GameControllerVar implements Initializable {
                 tile.location.setRotation(270);
                 break;
         }
+        //Überprüft alle Exits des Tiles, da es gedreht wurde.
         tile.checkExit();
         System.out.println(" ");
         System.out.println("Rotate Bot OffBoard Tile to: " + App.offBoardTile.location.rotation);
@@ -789,10 +802,12 @@ public class GameController extends GameControllerVar implements Initializable {
                 break;
         }
     }
-
+    //Done
     public void updateLabel() {
+        //Updates das Label mit Erklärung für die Spieler
         String player = null;
         String instr = null;
+        //Jenachdem wer dran ist, ist der Name verschieden.
         switch (playerTurn) {
             case 0:
                 player = "Rot ";
@@ -807,12 +822,13 @@ public class GameController extends GameControllerVar implements Initializable {
                 player = "Grün ";
                 break;
         }
+        //Jenachdem welche Phase Fertig ist, sind die Anweisungen verschieden.
         if (!(tilePhaseOver)) {
             instr = "eine Karte an das Feld anlegen.";
         } else if (!(movingPhaseOver)) {
             instr = "seine Figur bewegen.";
         }
-
+        //Setzt den Text.
         lblInstr.setText("Der Spieler " + player + "ist am Zug und muss " + instr);
     }
     //Done
@@ -1296,8 +1312,9 @@ public class GameController extends GameControllerVar implements Initializable {
             makeBoard();
         });
     }
-
+    //Done
     public void updateTileLoc() {
+        //Updates die Location aller Tiles in dem tileModel
         int x, y;
         for (x = 0; x < 7; x++) {
             for (y = 0; y < 7; y++) {
@@ -1306,8 +1323,10 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
     }
-
+    //Done
     public void makeBoard() {
+        //Es werden alle ImageVies mit den Richtigen Images besetzt.
+        //Die Images sind alle im board in App gespeichert.
         i01.setImage(App.boardTiles[0][1].tileImage);
         i03.setImage(App.boardTiles[0][3].tileImage);
         i05.setImage(App.boardTiles[0][5].tileImage);
@@ -1341,11 +1360,10 @@ public class GameController extends GameControllerVar implements Initializable {
         i61.setImage(App.boardTiles[6][1].tileImage);
         i63.setImage(App.boardTiles[6][3].tileImage);
         i65.setImage(App.boardTiles[6][5].tileImage);
-
+        //Es wird auch das Offboardtile mit dem richtigen Image gesetzt
         currTile.setImage(App.offBoardTile.tileImage);
-
+        //Dreht alle ImageViews richitg rum
         rotateImages();
-        updateTileLoc();
     }
     //Done
     public void checkExits() {
@@ -1363,8 +1381,9 @@ public class GameController extends GameControllerVar implements Initializable {
         //Dies wird außerdem für das Offboardtile gemacht.
         App.offBoardTile.checkExit();
     }
-
+    //Done
     public void rotateImages() {
+        //Dreht alle ImageViews auf die richtige weise.
         i01.setRotate(App.boardTiles[0][1].location.rotation);
         App.boardTiles[0][1].getLocation().setRotation((int) i01.getRotate());
         i03.setRotate(App.boardTiles[0][3].location.rotation);
@@ -1431,10 +1450,10 @@ public class GameController extends GameControllerVar implements Initializable {
         App.boardTiles[6][3].getLocation().setRotation((int) i63.getRotate());
         i65.setRotate(App.boardTiles[6][5].location.rotation);
         App.boardTiles[6][5].getLocation().setRotation((int) i65.getRotate());
-
+        //Dreht auch das OffBoardTile auf die richtige rotation.
         currTile.setRotate(App.offBoardTile.location.rotation);
         App.offBoardTile.location.setRotation((int) (currTile.getRotate()));
-
+        //Wenn ein Tie gedreht wird, müssen die Exits neu überprüft werden.
         checkExits();
     }
     
@@ -1882,7 +1901,7 @@ public class GameController extends GameControllerVar implements Initializable {
     //Rotates the Off-Board Tile
     @FXML
     private void currTileRight(ActionEvent event) {
-
+        
         RotateTransition newTrans = new RotateTransition();
         newTrans.setDuration(Duration.millis(200));
         newTrans.setNode(currTile);
