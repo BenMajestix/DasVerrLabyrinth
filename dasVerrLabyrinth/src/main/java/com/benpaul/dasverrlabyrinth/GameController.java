@@ -346,6 +346,17 @@ public class GameController extends GameControllerVar implements Initializable {
         
         boolean goodMoveFound = false;
         
+        //Wenn es überhaupt keine Ergebnisse, keine Züge für den Bot gibt, dann wird einfach die Position des Spielers als zug hinzugefügt.
+        //Das heist der Spieler bewegt sich nicht.
+        if(botTileOptCoor.isEmpty()){
+            Integer[] coor = {App.players[playerTurn].pos[0], App.players[playerTurn].pos[1]};
+            botTileOptCoor.add(coor);
+            Integer[] ld = {0, 0};
+            //Es wird auch eingestellt das ganz oben links das tile eingeschoben wird. Dieser Punkt ist random gewählt von mir.
+            botTileOptConf.add(ld);
+        }
+        
+        
         ArrayList<Integer[]> goodCoords = new ArrayList();
         ArrayList<Integer[]> goodConf = new ArrayList();
         /*boolean anyExit = false;
@@ -415,13 +426,12 @@ public class GameController extends GameControllerVar implements Initializable {
         
     }
     
-    
     //Two Temporary ArrLists for Storing all Possible Combinations of Tiles the Bot can Move to, 
     //The Tile Coordinates are Stored in ...Coor and the Configuration in ...Conf.
     //The Configuration consists of two integers, the First indicating the Point where the tile is put into, and the Second, the Rotation of the tile to put into.
     ArrayList<Integer[]> botTileOptCoor = new ArrayList();
     ArrayList<Integer[]> botTileOptConf = new ArrayList();
-
+    //Done
     @SuppressWarnings("ManualArrayToCollectionCopy")
     public void botFindTiles() throws Exception {
 
@@ -478,30 +488,23 @@ public class GameController extends GameControllerVar implements Initializable {
             }
         }
         
-        if(botTileOptCoor.isEmpty()){
-            Integer[] coor = {App.players[playerTurn].pos[0], App.players[playerTurn].pos[1]};
-            botTileOptCoor.add(coor);
-            Integer[] ld = {0, 0};
-            botTileOptConf.add(ld);
-        }
-        
+        //Printed alle Werte in die Konsole. Zum Debugging
         for (int i = 0; i < botTileOptCoor.size(); i++) {
             System.out.println("Available Tiles for Player:");
             System.out.println("Coor: " + botTileOptCoor.get(i)[0] + " " + botTileOptCoor.get(i)[1]);
             System.out.println("Conf: " + botTileOptConf.get(i)[0] + " " + botTileOptConf.get(i)[1]);
         }
-        int rndm = (int) (Math.random() * botTileOptCoor.size());
-        botBestPos = botTileOptCoor.get(rndm).clone();
-        
-        botBestTileSide = botTileOptConf.get(rndm)[0];
-        botBestTileRot = botTileOptConf.get(rndm)[1];
     }
-
+    //Done
     public tileModel[][] botInsertTileBoard(int l, tileModel[][] tempBoard, tileModel offTempTile) {
+        //Das mitgegebene tile wird an der Seite l in das mitgegebene board geschoben.
+        //offTemp ist ein ZwischenSpeicher für das OffBoardTile
         tileModel offTemp;
+        //Switch für welche seite es eingelegt wird
         switch (l) {
             //Von OBEN nach Unten
             case 0:
+                //Es werden alle Tiles einfach in die Bestimmte richtung verschoben
                 offTemp = tempBoard[6][1];
                 tempBoard[6][1] = tempBoard[5][1];
                 tempBoard[5][1] = tempBoard[4][1];
@@ -625,6 +628,7 @@ public class GameController extends GameControllerVar implements Initializable {
                 tempBoard[1][0] = offTempTile;
                 break;
         }
+        //Es werden die in den tileModels gespeicherten Coordinates neu erneuert.
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
                 tempBoard[x][y].location.setxCoor(x);
@@ -656,11 +660,14 @@ public class GameController extends GameControllerVar implements Initializable {
         System.out.println(" ");
         return tile;
     }
-
+    //Done
     public void botAnimateOffTile(int d) {
+        //Creates new Animation welche das offTile Dreht.
+        //Ich habe die Animationszeit auf 0 gesetzt, da es fehler verursacht hat.
         RotateTransition newTrans = new RotateTransition();
         newTrans.setDuration(Duration.millis(0));
         newTrans.setNode(currTile);
+        //Je nachdem welche Rotation mitgegeben wurde, wird es zu diesem Angle gedreht.
         switch (d) {
             case 0:
                 newTrans.setToAngle(0);
