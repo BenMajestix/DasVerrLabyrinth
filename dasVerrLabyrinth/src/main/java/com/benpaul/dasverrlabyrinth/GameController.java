@@ -133,12 +133,15 @@ public class GameController extends GameControllerVar implements Initializable {
     //GAME
     //--------------
     public void runGame() throws Exception {
+        //stellt den Text auf dem Kartenstapel ein
         labelCardsLeft.setText(App.allItems.size() + "");
         
+        //definiert, dass es keinen playerturn 4 gibt und dann die Züge wieder bei null starten, also nach grün wieder Rot am zug ist
         if (playerTurn == 4) {
             playerTurn = 0;
         }
 
+        //definiert die Bilder für die Cardbacks je nach Farbe
         Image cardbackRed;
         File cardbackRedFile = new File("src/main/resources/img/cardbackRed.png");
         cardbackRed = new Image(cardbackRedFile.toURI().toString());
@@ -152,6 +155,7 @@ public class GameController extends GameControllerVar implements Initializable {
         File cardbackGreenFile = new File("src/main/resources/img/cardbackGreen.png");
         cardbackGreen = new Image(cardbackGreenFile.toURI().toString());
 
+        //stellt ein, dass während des Zuges eines Spielers man nur dessen Objekte sehen kann
         switch (playerTurn) {
             case 0:
                 imgObjRed1.setImage(App.players[0].items[0].img);
@@ -214,19 +218,29 @@ public class GameController extends GameControllerVar implements Initializable {
                 break;
         }
 
+        //überprüft, ob der Turn von einem Bot gespielt wird
         if (App.players[playerTurn].isBot) {
+            //gibt in der Konsole "Start Comp Turn" aus und startet den Zug des Bots
             System.out.println("Start Comp Turn");
             startCompTurn();
+        //wenn der Turn nicht von einem Bot gespielt wird:
         } else {
+            //überprüft, ob die TilePhase vorbei ist (wenn die TilePhase nicht vorbei ist:)
             if (!(tilePhaseOver)) {
+                //startet die Tilephase
                 enableTilePhase();
             } else if (!(movingPhaseOver)) {
                 enableMovingPhase();
             } else if (tilePhaseOver && movingPhaseOver) {
+                //wenn beide Teile des Zuges vorbei sind, wird überprüftb ob der Spieler auf einem seiner Items steht
+                //es werden alle Items des Spielers überprüft
                 for (int i = 0; i < 3; i++) {
+                    //überprüft, ob der Spieler auf einem seiner gesuchten Items steht
                     if (App.players[playerTurn].items[i].equals(App.boardTiles[App.players[playerTurn].pos[0]][App.players[playerTurn].pos[1]].collectable)) {
+                        //der Score des Spielers wird erhöht
                         App.players[playerTurn].score = App.players[playerTurn].score + 1;
                         System.out.println("Tile youre looking for found.");
+                        //wenn es keine Items mehr gibt ist das spiel vorbei und man wird in die FinishView geschickt
                         if (App.allItems.isEmpty()) {
                             System.out.println("Game is Over");
                             App.setRoot("finishView");
