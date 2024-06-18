@@ -1,2 +1,2 @@
 # DasVerrLabyrinth
-Ben und Paul
+Schulprojekt in Java & JavaFx.
